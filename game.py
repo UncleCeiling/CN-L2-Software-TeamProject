@@ -1,14 +1,14 @@
 # Initialisation
 
-    # Import
+    # Import functions from libraries
 from os import chdir, path
 from random import sample
 
-    # Set Working directory
+    # Set Working directory to file directory
 
 chdir(path.dirname(__file__))
 
-    # import data from .txt into arrays
+    # import data from .txt into arrays, example layout:
     # var_name = (open("txt_file_name.txt","r").readlines())[0].split(","))
 
 adjective = (open("weapon_adjectives.txt", "r").readlines())[0].split(",")
