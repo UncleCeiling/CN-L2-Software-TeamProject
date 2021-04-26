@@ -10,14 +10,14 @@ colour_options = [["d","r","y","g","c","b","m","i"],["Default","Red","Yellow","G
 player_health = 50                                # Player hitpoints, when this reaches 0 you lose.
 weapon = ["I want twenty attack plz",20]          # Your weapon name, weapon points =len() of this string (- white space maybe?) 
 armour = ["Okay Armour",10]                       # Your armour name, armour points =len() of this string (- white space maybe?) 
-weapon_points = len(weapon.replace(" ", ""))      # player weapon points, effects how much damage player attacks do.
-armour_points = len(armour.replace(" ", ""))      # Player armour points, effects how much damage player blocks when they defend.
+weapon_points = len(weapon[0].replace(" ", ""))      # player weapon points, effects how much damage player attacks do.
+armour_points = len(armour[0].replace(" ", ""))      # Player armour points, effects how much damage player blocks when they defend.
 
     # Import functions from libraries
 
 import time
 from os import chdir, path                              # To set Working Directory
-from random import sample                               # For sampling lists
+from random import sample, randint, shuffle             # For sampling lists
 
     # Set Working directory to file directory
 
@@ -166,7 +166,6 @@ def main_menu(): # is main menu - call to use menu - returns 1 (gamestart), 2(op
     menu()
     option = int(input("Enter your option "))
     print("Thanks for playing, you can check out other games at....")
-
 
 def room_generator():
     combat_room = (open(path.join("storage", "roomscombat.txt"),"r").readlines())[0].split(",")
