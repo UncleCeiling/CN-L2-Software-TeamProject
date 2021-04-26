@@ -165,10 +165,6 @@ def main_menu(): # is main menu - call to use menu - returns 1 (gamestart), 2(op
             print("Invalid option")
     quit()
 
-# Testing
-
-# print(buff_weapon("sword",20))
-
 def room_generator(): # generates rooms and takes player selection - returns true if combat room selected, false if puzzle room
     combat_room = (open(path.join("storage", "roomscombat.txt"),"r").readlines())[0].split(",")
     puzzle_room = (open(path.join("storage", "roomspuzzle.txt"), "r").readlines())[0].split(",")
@@ -207,6 +203,10 @@ def room_generator(): # generates rooms and takes player selection - returns tru
         else:
             print("It's a puzzle room!")
             return False
+
+# Testing
+
+# print(buff_weapon("sword",20))
 
 # Main block
 
