@@ -126,7 +126,7 @@ def main_menu(): # PLACEHOLDERS
     option = int(input("Enter your selection "))
     while option != 0:
         if option == 1:
-            #Excecute option 1 
+            game_start()
             print("Lets Goooo!1")
         elif option == 2:
             options_menu()
