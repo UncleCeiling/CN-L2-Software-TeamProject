@@ -6,7 +6,7 @@
 difficulty = 1                                          # Current difficulty setting - indexes via: difficulty_options[difficulty]
 difficulty_options = ["Easy","Normal","Hard"]           # Possible difficulty options
 colour = "d"                                            # Current colour setting - indexes via: colour_options[0][colour_options.index(colour)]
-colour_options = [["d","r","y","g","c","b","m","i"],["Default","Red","Yellow","Green","Cyan","Blue","Magenta","Default Inverted"],["\u001b[0m","\u001b[31m","\u001b[33m","\u001b[32m","\u001b[36m","\u001b[34m","\u001b[35m","\u001b[30;47m"]] # Possible colour options, names and codes
+colour_options = [["d","r","y","g","c","b","m","i"],["Default","Red","Yellow","Green","Cyan","Blue","Magenta","Default Inverted"],["\u001b[0m","\u001b[0m\u001b[31m","\u001b[0m\u001b[33m","\u001b[0m\u001b[32m","\u001b[0m\u001b[36m","\u001b[0m\u001b[34m","\u001b[0m\u001b[35m","\u001b[0m\u001b[30;47m"]] # Possible colour options, names and codes
 
     # Import functions from libraries
 
@@ -26,6 +26,14 @@ noun1 = (open("weapon_nouns1.txt", "r").readlines())[0].split(",")
 noun2 = (open("weapon_nouns2.txt", "r").readlines())[0].split(",")
 
 # Functions
+
+def sar_start_function():
+    print("start screen")
+    var = input("Please enter something to continue : ")
+    if var == (""):
+        sar_start_function()
+    else:
+        return
 
 def gen_weapon(): # Weapon Generator - call to generate a weapon - returns a string
     sample_adjective = sample(adjective,1)[0]
