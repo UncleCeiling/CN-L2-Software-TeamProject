@@ -217,4 +217,5 @@ while main_menu_selection != 1:
 intro_complete = game_intro()
 if intro_complete == False:
     print("THE END") # PLACEHOLDER
-print("You play the game") # PLACEHOLDER
+else:
+    print("You play the game") # PLACEHOLDER
