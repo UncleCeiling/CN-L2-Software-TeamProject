@@ -37,10 +37,15 @@ def sar_start_function(): # Syed's start function (HAS PLACEHOLDER - line 31)
 
 def print_credits():
     print("""
-========Codenation Blue-hats========
-    
-        Crara Loft made by:\n\nPesh B\n\nSyed R\n\nAmir H\n\nMike D\n\nChris F\n\n""")
+========Codenation Blue-hats========\n\n        Crara Loft made by:\n\nPesh B\n\nSyed R\n\nAmir H\n\nMike D\n\nChris F\n\n""")
 
+def highscore():
+    hs1 = [highscore[0]]
+    hs2 = [highscore[1]]
+    hs3 = [highscore[2]]
+    def print_hs():
+        print(f"=============HIGH SCORES============\n\n{hs1[0]}:{hs1[1]}\n\n{hs2[0]}:{hs2[1]}\n\n{hs3[0]}:{hs3[1]}")
+    
 def gen_weapon(): # Weapon Generator - call to generate a weapon - returns a string
     sample_adjective = sample(adjective,1)[0]
     sample_noun1 = sample(noun1,1)[0]
