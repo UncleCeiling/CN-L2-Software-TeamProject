@@ -30,11 +30,11 @@ noun2 = (open("weapon_nouns2.txt", "r").readlines())[0].split(",")
 
 # Functions
 
-def sar_start_function(): # Syed's start function (HAS PLACEHOLDER - line 31)
+def start_function(): # Syed's start function (HAS PLACEHOLDER - line 31)
     print("start screen")
     var = input("Please enter something to continue : ")
     if var == (""):
-        sar_start_function()
+        start_function()
     else:
         return
     
