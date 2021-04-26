@@ -1,15 +1,8 @@
 # import data from .txt file read first line only print in sorted order highest to lowest
 
 def highscore():
-    file=open(highscores.txt, "r",)
-    for i in range(0, 2):
-        name = file.readlines(int+str)
-        file.read(str(score)+name+"\n")
-        file.close()
-
-    file = open("highscores.txt","r")
-    readthefile = file.readlines()
-    sortedData = sorted(readthefile,reverse= True)
-
-    print("top 3 scores!")
-    print("pos\tpoints, Name")
+    hs1 = [highscore[0]]
+    hs2 = [highscore[1]]
+    hs3 = [highscore[2]]
+    def print_hs():
+        print(f"=============HIGH SCORES============\n\n{hs1[0]}:{hs1[1]}\n\n{hs2[0]}:{hs2[1]}\n\n{hs3[0]}:{hs3[1]}")
