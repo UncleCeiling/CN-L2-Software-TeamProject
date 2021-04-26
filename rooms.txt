@@ -1,3 +1,0 @@
-roomdesc,integer (0 for combat, 1 for puzzle)
-You can hear something on the other side of the door,0
-There's a sign on the door that says not combat,1
