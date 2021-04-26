@@ -167,5 +167,48 @@ def main_menu(): # is main menu - call to use menu - returns 1 (gamestart), 2(op
     option = int(input("Enter your option "))
     print("Thanks for playing, you can check out other games at....")
 
+
+def room_generator():
+    combat_room = (open(path.join("storage", "roomscombat.txt"),"r").readlines())[0].split(",")
+    puzzle_room = (open(path.join("storage", "roomspuzzle.txt"), "r").readlines())[0].split(",")
+    combat_samples = randint(0, 3)   # Generates a random int from 0-3.
+    options = sample(combat_room, combat_samples) + sample(puzzle_room, 3 - combat_samples) # Creates a list of 3 randomised strings from roomscombat.txt and roomspuzzle.txt.
+    shuffle(options)   # Shuffles the list so they aren't always in combat-puzzle order. 
+
+    print(f"""There are 3 rooms before you:
+    Door 1: {options[0]}
+    Door 2: {options[1]}
+    Door 3: {options[2]}""")
+    input_var = (input("Please choose a door (A, B or C)"))[0].lower()
+    while input_var not in ["a","b","c"]:
+        input_var = (input("For real this time, pick an option from A, B or C : "))[0].lower()
+    if input_var == "a":
+        print("You open door A")
+        if options[0] in (open(path.join("storage", "roomscombat.txt"),"r").readlines())[0].split(","):
+            print("It's a combat room!")
+            return True
+        else:
+            print("It's a puzzle room!")
+            return False
+    elif input_var == "b":
+        print("You open door B")
+        if options[1] in (open(path.join("storage", "roomscombat.txt"),"r").readlines())[0].split(","):
+            print("It's a combat room!")
+            return True
+        else:
+            print("It's a puzzle room!")
+            return False
+    else:
+        print("You open door C")
+        if options[2] in (open(path.join("storage", "roomscombat.txt"),"r").readlines())[0].split(","):
+            print("It's a combat room!")
+            return True
+        else:
+            print("It's a puzzle room!")
+            return False
+# You choose between doors A, B and C and the function returns true if that door is a combat room and false if it is a puzzle room.
+
+room_generator()
+
 # Main block
 
