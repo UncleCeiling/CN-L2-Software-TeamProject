@@ -18,8 +18,9 @@ from random import sample                               # For sampling lists
 chdir(path.dirname(__file__))
 
     # Import data from .txt into arrays - example layout:
-    # var_name = (open("txt_file_name.txt","r").readlines())[0].split(","))
+    # var_name = (open("txt_file_name.txt","r").readlines())[0].split(",")
 
+highscore = (open("highscore.txt","r").readlines())[0].split(",")
 adjective = (open("weapon_adjectives.txt", "r").readlines())[0].split(",")
 noun1 = (open("weapon_nouns1.txt", "r").readlines())[0].split(",")
 noun2 = (open("weapon_nouns2.txt", "r").readlines())[0].split(",")
@@ -36,11 +37,8 @@ def sar_start_function():
 
 def gen_weapon(): # Weapon Generator - call to generate a weapon - returns a string
     sample_adjective = sample(adjective,1)[0]
-    print(sample_adjective)
     sample_noun1 = sample(noun1,1)[0]
-    print(sample_noun1)
     sample_noun2 = sample(noun2,1)[0]
-    print(sample_noun2)
     return (f"{sample_adjective} {sample_noun1} of {sample_noun2}")
 
 def options_menu(): # Options Menu - call to run options - does not return anything
@@ -97,6 +95,5 @@ def options_menu(): # Options Menu - call to run options - does not return anyth
         options_menu()                                                      # After colour menu is finished, open up the options menu again
     print("\nReturning to Main Menu...")                                    # Exit must have been selected so print a message and exit
     return
-
 
 # Main block
