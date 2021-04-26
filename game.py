@@ -125,8 +125,10 @@ def game_intro():
         input_var = (input("For real this time, pick an option from yes or no : "))[0].lower()
     if input_var == "y":
         print("You enter the dungeon!")
+        return True
     else:
         print("Go home, the burial chamber will remain unpilfered.")
+        reuturn False
 
 # Call to start the game
 
