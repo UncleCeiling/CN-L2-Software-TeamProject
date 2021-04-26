@@ -112,14 +112,13 @@ def start():
     print("You are Crara Loft, international burial chamber pilferer. You approach the entrance of an ancient tomb, rumoured to harbour untold dangers and even less told treasures.")
     print("ᒥつ⑉⚊⑉ᒣつ <---This is you")
     player_stats()
-    print("Head forward? (y/n)")
-    choice = input(">>>")
-    if choice in yes:
+    input_var = (input("Head forward? (y/n)"))[0].lower()
+    while input_var not in ["y","n"]:
+        input_var = (input("For real this time, pick an option from yes or no : "))[0].lower()
+    if input_var == "y":
         print("You enter the dungeon!")
-    elif choice in no:
-        print("Go go home, the burial chamber will remain unpilfered.")
     else:
-        print(invalid_ans)
+        print("Go home, the burial chamber will remain unpilfered.")
 
 start()
 # Main block
