@@ -128,7 +128,7 @@ def game_intro():
         return True
     else:
         print("Go home, the burial chamber will remain unpilfered.")
-        reuturn False
+        return False
 
 # Call to start the game
 
