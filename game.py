@@ -60,10 +60,10 @@ def gen_weapon(): # Weapon Generator - call to generate a weapon - returns a str
     sample_noun2 = sample(noun2,1)[0]
     return (f"{sample_noun1} of {sample_noun2}")
 
-def buff_weapon(weapon_in,num_of_buffs): # adds adjectives to weapon_in - returns a string
+def add_buff(equip_in,num_of_buffs): # adds adjectives to weapon_in - returns a string
     sample_adj = sample(adjective,num_of_buffs)
     buff = ' '.join(sample_adj)
-    return (f"{buff} {weapon_in}".title())
+    return (f"{buff} {equip_in}".title())
 
 def options_menu(): # Options Menu - call to run options - does not return anything
     def print_options_main():                                               # Prints the options menu
@@ -204,8 +204,8 @@ def room_generator(): # generates rooms and takes player selection - returns tru
 
 # Testing
 
-# print(buff_weapon(gen_weapon(),4))
-# print(buff_weapon("sword",20))
+# print(add_buff(gen_weapon(),4))
+# print(add_buff("sword",20))
 
 # Main block
 
