@@ -112,4 +112,40 @@ def options_menu(): # Options Menu - call to run options - does not return anyth
     print("\nReturning to Main Menu...")                                    # Exit must have been selected so print a message and exit
     return
 
+
+
+player_health = 50                                # Player hitpoints, when this reaches 0 you lose.
+weapon = "I want twenty attack plz"               # Your weapon name, weapon points =len() of this string (- white space maybe?) 
+armour = "Okay Armour"                            # Your armour name, armour points =len() of this string (- white space maybe?) 
+weapon_points = len(weapon.replace(" ", ""))      # player weapon points, effects how much damage player attacks do.
+armour_points = len(armour.replace(" ", ""))      # Player armour points, effects how much damage player blocks when they defend.
+
+def equipment_calc():
+    weapon_points = len(weapon.replace(" ", "")) 
+    armour_points = len(armour.replace(" ", "")) 
+
+# Call to update weapon and armour points.
+
+def player_stats():
+    equipment_calc() 
+    print(f"You have:\n{player_health} hit points remaining\n{weapon}: {weapon_points} power\n{armour}: {armour_points} defence")
+
+# Call to update weapon and armour points and print the current player stats.
+
+def game_intro():
+    print("You are Crara Loft, international burial chamber pilferer. You approach the entrance of an ancient tomb, rumoured to harbour untold dangers and even less told treasures.")
+    print("ᒥつ⑉⚊⑉ᒣつ <---This is you")
+    player_stats()
+    input_var = (input("Head forward? (y/n)"))[0].lower()
+    while input_var not in ["y","n"]:
+        input_var = (input("For real this time, pick an option from yes or no : "))[0].lower()
+    if input_var == "y":
+        print("You enter the dungeon!")
+        return True
+    else:
+        print("Go home, the burial chamber will remain unpilfered.")
+        return False
+
+# Call to start the game
+
 # Main block
