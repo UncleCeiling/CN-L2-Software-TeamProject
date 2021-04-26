@@ -15,6 +15,7 @@ armour_points = len(armour.replace(" ", ""))      # Player armour points, effect
 
     # Import functions from libraries
 
+import time
 from os import chdir, path                              # To set Working Directory
 from random import sample                               # For sampling lists
 
@@ -42,7 +43,7 @@ def start_function(): # Syed's start function (HAS PLACEHOLDER - line 31)
         start_function()
     else:
         return
-    
+  
 def hs_creds_page():
     def print_highscore():
         print(f"\n=============HIGH SCORES============\n\n{hs1[0]} : {hs1[1]}\n\n{hs2[0]} : {hs2[1]}\n\n{hs3[0]} : {hs3[1]}\n")
@@ -123,13 +124,9 @@ def update_equipment(): # Updates integer values for equipment
     weapon[1] = len(weapon[0].replace(" ", "")) 
     armour[1] = len(armour[0].replace(" ", "")) 
 
-# Call to update weapon and armour points.
-
 def player_stats(): # prints player inv/stats
     update_equipment() 
     print(f"You have:\n{player_health} hit points remaining\n{weapon[0]}: {weapon[1]} power\n{armour[0]}: {armour[1]} defence")
-
-# Call to update weapon and armour points and print the current player stats.
 
 def game_intro(): # gives intro - call to start game process - returns true for start game, false for you lose
     print("You are Crara Loft, international burial chamber pilferer. You approach the entrance of an ancient tomb, rumoured to harbour untold dangers and even less told treasures.")
@@ -145,4 +142,30 @@ def game_intro(): # gives intro - call to start game process - returns true for 
         print("Go home, the burial chamber will remain unpilfered.")
         return False
 
+def main_menu(): # is main menu - call to use menu - returns 1 (gamestart), 2(options), or 3(hs_creds)
+    def menu():
+        print("""Welcome to Dracula Pilferer game
+        """)
+        time.sleep(0.5)
+        print("[1] Start Game")
+        print("[2] Settings")
+        print("[3] Highscores and Credits")
+        print("[0] Quit")
+    menu()
+    option = int(input("Enter your selection "))
+    while option != 0:
+        if option == 1:
+            print("Lets Goooo!1")
+            return 1
+        elif option == 2:
+            return 2
+        elif option == 3:
+            return 3
+        else:
+            print("Invalid option")
+    menu()
+    option = int(input("Enter your option "))
+    print("Thanks for playing, you can check out other games at....")
+
 # Main block
+
