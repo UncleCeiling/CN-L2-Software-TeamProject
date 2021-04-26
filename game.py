@@ -96,4 +96,30 @@ def options_menu(): # Options Menu - call to run options - does not return anyth
     print("\nReturning to Main Menu...")                                    # Exit must have been selected so print a message and exit
     return
 
+
+yes = ["Y", "y", "Yes", "yes", "YES"]             # Change this to Chris's verfication code?
+no = ["N", "n", "No", "no", "NO"]
+invalid_ans = ("\nPlease use a valid input!\n") 
+player_health = 50                                # Player hitpoints, when this reaches 0 you lose.
+weapon = "I want twenty attack plz"               # Your weapon name, weapon points =len() of this string (- white space maybe?) 
+armour = "Okay Armour"                            # Your armour name, armour points =len() of this string (- white space maybe?) 
+weapon_points = len(weapon.replace(" ", ""))      # player weapon points, effects how much damage player attacks do.
+armour_points = len(armour.replace(" ", ""))      # Player armour points, effects how much damage player blocks when they defend.
+def player_stats():
+    print(f"You have:\n{player_health} hit points remaining\n{weapon}: {weapon_points} power\n{armour}: {armour_points} defence")
+
+def start():
+    print("You are Crara Loft, international burial chamber pilferer. You approach the entrance of an ancient tomb, rumoured to harbour untold dangers and even less told treasures.")
+    print("ᒥつ⑉⚊⑉ᒣつ <---This is you")
+    player_stats()
+    print("Head forward? (y/n)")
+    choice = input(">>>")
+    if choice in yes:
+        print("You enter the dungeon!")
+    elif choice in no:
+        print("Go go home, the burial chamber will remain unpilfered.")
+    else:
+        print(invalid_ans)
+
+start()
 # Main block
