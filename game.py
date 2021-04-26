@@ -10,6 +10,7 @@ colour_options = [["d","r","y","g","c","b","m","i"],["Default","Red","Yellow","G
 
     # Import functions from libraries
 
+import time
 from os import chdir, path                              # To set Working Directory
 from random import sample                               # For sampling lists
 
@@ -37,7 +38,6 @@ def start_function(): # Syed's start function (HAS PLACEHOLDER - line 31)
         start_function()
     else:
         return
-import time
   
 def hs_creds_page():
     def print_highscore():
