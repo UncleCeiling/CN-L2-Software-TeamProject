@@ -26,6 +26,14 @@ noun2 = (open("weapon_nouns2.txt", "r").readlines())[0].split(",")
 
 # Functions
 
+def sar_start_function():
+    print("start screen")
+    var = input("Please enter something to continue : ")
+    if var == (""):
+        sar_start_function()
+    else:
+        return
+
 def gen_weapon(): # Weapon Generator - call to generate a weapon - returns a string
     sample_adjective = sample(adjective,1)[0]
     print(sample_adjective)
