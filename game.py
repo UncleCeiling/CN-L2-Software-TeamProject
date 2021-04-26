@@ -9,9 +9,7 @@ colour = "d"                                            # Current colour setting
 colour_options = [["d","r","y","g","c","b","m","i"],["Default","Red","Yellow","Green","Cyan","Blue","Magenta","Default Inverted"],["\u001b[0m","\u001b[0m\u001b[31m","\u001b[0m\u001b[33m","\u001b[0m\u001b[32m","\u001b[0m\u001b[36m","\u001b[0m\u001b[34m","\u001b[0m\u001b[35m","\u001b[0m\u001b[30;47m"]] # Possible colour options, names and codes
 player_health = 50                                # Player hitpoints, when this reaches 0 you lose.
 weapon = ["I want twenty attack plz",20]          # Your weapon name, weapon points =len() of this string (- white space maybe?) 
-armour = ["Okay Armour",10]                       # Your armour name, armour points =len() of this string (- white space maybe?) 
-weapon_points = len(weapon.replace(" ", ""))      # player weapon points, effects how much damage player attacks do.
-armour_points = len(armour.replace(" ", ""))      # Player armour points, effects how much damage player blocks when they defend.
+armour = ["Okay Armour",10]                       # Your armour name, armour points =len() of this string (- white space maybe?)
 
     # Import functions from libraries
 
@@ -37,13 +35,13 @@ noun2 = (open("weapon_nouns2.txt", "r").readlines())[0].split(",")
 # Functions
 
 def start_function(): # Syed's start function (HAS PLACEHOLDER - line 31)
-    print("start screen")
+    print("\nstart screen\n")
     var = input("Please enter something to continue : ")
     if var == (""):
         start_function()
     else:
         return
-  
+
 def hs_creds_page():
     def print_highscore():
         print(f"\n=============HIGH SCORES============\n\n{hs1[0]} : {hs1[1]}\n\n{hs2[0]} : {hs2[1]}\n\n{hs3[0]} : {hs3[1]}\n")
@@ -52,20 +50,26 @@ def hs_creds_page():
     print_highscore()
     print_credits()
     print("====================================\n")
-    taken_input = input("Type something to return to the menu : ")
+    taken_input = input("\nType something to return to the menu : ")
     while taken_input == "":
-        taken_input = input("Type something to return to the menu : ")
+        taken_input = input("\nType something to return to the menu : ")
     return
-    
+
 def gen_weapon(): # Weapon Generator - call to generate a weapon - returns a string
-    sample_adjective = sample(adjective,1)[0]
     sample_noun1 = sample(noun1,1)[0]
     sample_noun2 = sample(noun2,1)[0]
-    return (f"{sample_adjective} {sample_noun1} of {sample_noun2}")
+    return (f"{sample_noun1} of {sample_noun2}")
+
+def buff_weapon(weapon_in,num_of_buffs): # adds adjectives to weapon_in - returns a string
+    temp_weapon = weapon_in
+    for x in range(int(num_of_buffs)):
+        sample_adjective = sample(adjective,1)[0]
+        temp_weapon = (f"{sample_adjective} {temp_weapon.lower()}".capitalize())
+    return str(temp_weapon)
 
 def options_menu(): # Options Menu - call to run options - does not return anything
     def print_options_main():                                               # Prints the options menu
-        print(f"\n============OPTIONS MENU============\n\n       Difficulty||{difficulty_options[difficulty]}\n\n      Text Colour||{colour_options[1][colour_options[0].index(colour)]}\n\n================Exit================") #36 characters wide - print menu
+        print(f"\n============OPTIONS MENU============\n\n       Difficulty||{difficulty_options[difficulty]}\n\n      Text Colour||{colour_options[1][colour_options[0].index(colour)]}\n\n================Exit================\n") #36 characters wide - print menu
     def difficulty_menu():                                                  # Difficulty Menu - call to run diff options - does not return anything
         def print_diff_menu(): # Prints the diff menu
             print(f"\n==========DIFFICULTY MENU===========\n\n  Difficulty is currently: {difficulty_options[difficulty]}\n\n    Easy       Normal       Hard\n\n================Exit================")
@@ -129,43 +133,49 @@ def player_stats(): # prints player inv/stats
     print(f"You have:\n{player_health} hit points remaining\n{weapon[0]}: {weapon[1]} power\n{armour[0]}: {armour[1]} defence")
 
 def game_intro(): # gives intro - call to start game process - returns true for start game, false for you lose
-    print("You are Crara Loft, international burial chamber pilferer. You approach the entrance of an ancient tomb, rumoured to harbour untold dangers and even less told treasures.")
-    print("ᒥつ⑉⚊⑉ᒣつ <---This is you")
+    print("You are Crara Loft, international burial chamber pilferer.\n\nYou approach the entrance of an ancient tomb, rumoured to harbour untold dangers and even less told treasures.\n")
+    print("ᒥつ⑉⚊⑉ᒣつ <---This is you\n")
     player_stats()
-    input_var = (input("Head forward? (y/n)"))[0].lower()
+    input_var = (input("\nHead forward? (y/n) : "))[0].lower()
     while input_var not in ["y","n"]:
-        input_var = (input("For real this time, pick an option from yes or no : "))[0].lower()
+        input_var = (input("\nFor real this time, pick an option from yes or no : "))[0].lower()
     if input_var == "y":
-        print("You enter the dungeon!")
+        print("\nYou enter the dungeon!")
         return True
     else:
-        print("Go home, the burial chamber will remain unpilfered.")
+        print("\nGo home, the burial chamber will remain unpilfered.")
         return False
 
 def main_menu(): # is main menu - call to use menu - returns 1 (gamestart), 2(options), or 3(hs_creds)
-    def menu():
-        print("""Welcome to Dracula Pilferer game
-        """)
-        time.sleep(0.5)
-        print("[1] Start Game")
-        print("[2] Settings")
-        print("[3] Highscores and Credits")
-        print("[0] Quit")
-    menu()
+    def print_main_menu():
+        print("\nWelcome to Crara Loft: Dracula Pilferer!\n\n====================================\n\n    [1] Start Game\n    [2] Settings\n    [3] Highscores and Credits\n    [0] Quit\n")
+    print_main_menu()
     option = int(input("Enter your selection "))
     while option != 0:
         if option == 1:
-            print("Lets Goooo!1")
+            print("Lets Goooo!")
             return 1
         elif option == 2:
-            return 2
+            options_menu()
+            return
         elif option == 3:
-            return 3
+            hs_creds_page()
+            return
         else:
             print("Invalid option")
-    menu()
-    option = int(input("Enter your option "))
-    print("Thanks for playing, you can check out other games at....")
+    quit()
+
+# Testing
+
+# print(buff_weapon("sword",20))
 
 # Main block
 
+start_function()
+main_menu_selection = 0
+while main_menu_selection != 1:
+    main_menu_selection = main_menu()
+intro_complete = game_intro()
+if intro_complete == False:
+    print("THE END") # PLACEHOLDER
+print("You play the game") # PLACEHOLDER
