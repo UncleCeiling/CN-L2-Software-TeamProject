@@ -1,1 +1,3 @@
 AmirIsBoss,9000
+SomeoneElse,8000
+A third person,2000

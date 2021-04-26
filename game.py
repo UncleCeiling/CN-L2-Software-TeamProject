@@ -20,7 +20,10 @@ chdir(path.dirname(__file__))
     # Import data from .txt into arrays - example layout:
     # var_name = (open("txt_file_name.txt","r").readlines())[0].split(",")
 
-highscore = (open("highscore.txt","r").readlines())[0].split(",")
+highscore = (open("highscore.txt","r").read()).split("\n")
+hs1 = str(highscore[0]).split(",")
+hs2 = str(highscore[1]).split(",")
+hs3 = str(highscore[2]).split(",")
 adjective = (open("weapon_adjectives.txt", "r").readlines())[0].split(",")
 noun1 = (open("weapon_nouns1.txt", "r").readlines())[0].split(",")
 noun2 = (open("weapon_nouns2.txt", "r").readlines())[0].split(",")
@@ -35,6 +38,12 @@ def sar_start_function(): # Syed's start function (HAS PLACEHOLDER - line 31)
     else:
         return
 
+def print_credits():
+    print("========Codenation Blue-hats========\n\n        Crara Loft made by:\n\nPesh B\n\nSyed R\n\nAmir H\n\nMike D\n\nChris F\n\n")
+
+def print_highscore():
+    print(f"=============HIGH SCORES============\n\n{hs1[0]} : {hs1[1]}\n\n{hs2[0]} : {hs2[1]}\n\n{hs3[0]} : {hs3[1]}")
+    
 def gen_weapon(): # Weapon Generator - call to generate a weapon - returns a string
     sample_adjective = sample(adjective,1)[0]
     sample_noun1 = sample(noun1,1)[0]
@@ -97,3 +106,5 @@ def options_menu(): # Options Menu - call to run options - does not return anyth
     return
 
 # Main block
+
+print_highscore()
