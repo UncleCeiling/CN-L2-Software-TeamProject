@@ -35,6 +35,12 @@ def sar_start_function(): # Syed's start function (HAS PLACEHOLDER - line 31)
     else:
         return
 
+def print_credits():
+    print("""
+========Codenation Blue-hats========
+    
+        Crara Loft made by:\n\nPesh B\n\nSyed R\n\nAmir H\n\nMike D\n\nChris F\n\n""")
+
 def gen_weapon(): # Weapon Generator - call to generate a weapon - returns a string
     sample_adjective = sample(adjective,1)[0]
     sample_noun1 = sample(noun1,1)[0]
