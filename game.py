@@ -37,12 +37,19 @@ def sar_start_function(): # Syed's start function (HAS PLACEHOLDER - line 31)
         sar_start_function()
     else:
         return
-
-def print_credits():
-    print("========Codenation Blue-hats========\n\n        Crara Loft made by:\n\nPesh B\n\nSyed R\n\nAmir H\n\nMike D\n\nChris F\n\n")
-
-def print_highscore():
-    print(f"=============HIGH SCORES============\n\n{hs1[0]} : {hs1[1]}\n\n{hs2[0]} : {hs2[1]}\n\n{hs3[0]} : {hs3[1]}")
+    
+def hs_creds_page():
+    def print_highscore():
+        print(f"\n=============HIGH SCORES============\n\n{hs1[0]} : {hs1[1]}\n\n{hs2[0]} : {hs2[1]}\n\n{hs3[0]} : {hs3[1]}\n")
+    def print_credits():
+        print("\n========Codenation Blue-hats========\n\n        Crara Loft made by:\n\nPesh B\n\nSyed R\n\nAmir H\n\nMike D\n\nChris F\n")
+    print_highscore()
+    print_credits()
+    print("====================================\n")
+    taken_input = input("Type something to return to the menu : ")
+    while taken_input == "":
+        taken_input = input("Type something to return to the menu : ")
+    return
     
 def gen_weapon(): # Weapon Generator - call to generate a weapon - returns a string
     sample_adjective = sample(adjective,1)[0]
@@ -106,5 +113,3 @@ def options_menu(): # Options Menu - call to run options - does not return anyth
     return
 
 # Main block
-
-print_highscore()
