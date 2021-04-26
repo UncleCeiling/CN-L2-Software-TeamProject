@@ -61,11 +61,9 @@ def gen_weapon(): # Weapon Generator - call to generate a weapon - returns a str
     return (f"{sample_noun1} of {sample_noun2}")
 
 def buff_weapon(weapon_in,num_of_buffs): # adds adjectives to weapon_in - returns a string
-    temp_weapon = weapon_in
-    for x in range(int(num_of_buffs)):
-        sample_adjective = sample(adjective,1)[0]
-        temp_weapon = (f"{sample_adjective} {temp_weapon.lower()}".capitalize())
-    return str(temp_weapon)
+    sample_adj = sample(adjective,num_of_buffs)
+    buff = ' '.join(sample_adj)
+    return (f"{buff} {weapon_in}".title())
 
 def options_menu(): # Options Menu - call to run options - does not return anything
     def print_options_main():                                               # Prints the options menu
@@ -206,16 +204,17 @@ def room_generator(): # generates rooms and takes player selection - returns tru
 
 # Testing
 
+# print(buff_weapon(gen_weapon(),4))
 # print(buff_weapon("sword",20))
 
 # Main block
 
-start_function()
-main_menu_selection = 0
-while main_menu_selection != 1:
-    main_menu_selection = main_menu()
-intro_complete = game_intro()
-if intro_complete == False:
-    print("THE END") # PLACEHOLDER
-else:
-    print("You play the game") # PLACEHOLDER
+# start_function()
+# main_menu_selection = 0
+# while main_menu_selection != 1:
+#     main_menu_selection = main_menu()
+# intro_complete = game_intro()
+# if intro_complete == False:
+#     print("THE END") # PLACEHOLDER
+# else:
+#     print("You play the game") # PLACEHOLDER
