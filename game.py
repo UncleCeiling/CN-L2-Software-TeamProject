@@ -37,7 +37,8 @@ def start_function(): # Syed's start function (HAS PLACEHOLDER - line 31)
         start_function()
     else:
         return
-    
+import time
+  
 def hs_creds_page():
     def print_highscore():
         print(f"\n=============HIGH SCORES============\n\n{hs1[0]} : {hs1[1]}\n\n{hs2[0]} : {hs2[1]}\n\n{hs3[0]} : {hs3[1]}\n")
@@ -112,4 +113,32 @@ def options_menu(): # Options Menu - call to run options - does not return anyth
     print("\nReturning to Main Menu...")                                    # Exit must have been selected so print a message and exit
     return
 
+def main_menu(): # PLACEHOLDERS
+    def menu():
+        print("""Welcome to Dracula Pilferer game
+        """)
+        time.sleep(0.5)
+        print("[1] Start Game")
+        print("[2] Settings")
+        print("[3] Highscores and Credits")
+        print("[0] Quit")
+    menu()
+    option = int(input("Enter your selection "))
+    while option != 0:
+        if option == 1:
+            #Excecute option 1 
+            print("Lets Goooo!1")
+        elif option == 2:
+            options_menu()
+            pass
+        elif option == 3:
+            hs_creds_page()
+            pass
+        else:
+            print("invalid option1")
+    menu()
+    option = int(input("Enter your option "))
+    print("Thanks for playing, you can check out other games at....")
+
 # Main block
+
