@@ -7,6 +7,11 @@ difficulty = 1                                          # Current difficulty set
 difficulty_options = ["Easy","Normal","Hard"]           # Possible difficulty options
 colour = "d"                                            # Current colour setting - indexes via: colour_options[0][colour_options.index(colour)]
 colour_options = [["d","r","y","g","c","b","m","i"],["Default","Red","Yellow","Green","Cyan","Blue","Magenta","Default Inverted"],["\u001b[0m","\u001b[0m\u001b[31m","\u001b[0m\u001b[33m","\u001b[0m\u001b[32m","\u001b[0m\u001b[36m","\u001b[0m\u001b[34m","\u001b[0m\u001b[35m","\u001b[0m\u001b[30;47m"]] # Possible colour options, names and codes
+player_health = 50                                # Player hitpoints, when this reaches 0 you lose.
+weapon = ["I want twenty attack plz",20]          # Your weapon name, weapon points =len() of this string (- white space maybe?) 
+armour = ["Okay Armour",10]                       # Your armour name, armour points =len() of this string (- white space maybe?) 
+weapon_points = len(weapon.replace(" ", ""))      # player weapon points, effects how much damage player attacks do.
+armour_points = len(armour.replace(" ", ""))      # Player armour points, effects how much damage player blocks when they defend.
 
     # Import functions from libraries
 
@@ -112,27 +117,21 @@ def options_menu(): # Options Menu - call to run options - does not return anyth
     print("\nReturning to Main Menu...")                                    # Exit must have been selected so print a message and exit
     return
 
-
-
-player_health = 50                                # Player hitpoints, when this reaches 0 you lose.
-weapon = "I want twenty attack plz"               # Your weapon name, weapon points =len() of this string (- white space maybe?) 
-armour = "Okay Armour"                            # Your armour name, armour points =len() of this string (- white space maybe?) 
-weapon_points = len(weapon.replace(" ", ""))      # player weapon points, effects how much damage player attacks do.
-armour_points = len(armour.replace(" ", ""))      # Player armour points, effects how much damage player blocks when they defend.
-
-def equipment_calc():
-    weapon_points = len(weapon.replace(" ", "")) 
-    armour_points = len(armour.replace(" ", "")) 
+def update_equipment(): # Updates integer values for equipment
+    global weapon
+    global armour
+    weapon[1] = len(weapon[0].replace(" ", "")) 
+    armour[1] = len(armour[0].replace(" ", "")) 
 
 # Call to update weapon and armour points.
 
-def player_stats():
-    equipment_calc() 
-    print(f"You have:\n{player_health} hit points remaining\n{weapon}: {weapon_points} power\n{armour}: {armour_points} defence")
+def player_stats(): # prints player inv/stats
+    update_equipment() 
+    print(f"You have:\n{player_health} hit points remaining\n{weapon[0]}: {weapon[1]} power\n{armour[0]}: {armour[1]} defence")
 
 # Call to update weapon and armour points and print the current player stats.
 
-def game_intro():
+def game_intro(): # gives intro - call to start game process - returns true for start game, false for you lose
     print("You are Crara Loft, international burial chamber pilferer. You approach the entrance of an ancient tomb, rumoured to harbour untold dangers and even less told treasures.")
     print("ᒥつ⑉⚊⑉ᒣつ <---This is you")
     player_stats()
@@ -145,7 +144,5 @@ def game_intro():
     else:
         print("Go home, the burial chamber will remain unpilfered.")
         return False
-
-# Call to start the game
 
 # Main block
