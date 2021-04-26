@@ -7,6 +7,11 @@ difficulty = 1                                          # Current difficulty set
 difficulty_options = ["Easy","Normal","Hard"]           # Possible difficulty options
 colour = "d"                                            # Current colour setting - indexes via: colour_options[0][colour_options.index(colour)]
 colour_options = [["d","r","y","g","c","b","m","i"],["Default","Red","Yellow","Green","Cyan","Blue","Magenta","Default Inverted"],["\u001b[0m","\u001b[0m\u001b[31m","\u001b[0m\u001b[33m","\u001b[0m\u001b[32m","\u001b[0m\u001b[36m","\u001b[0m\u001b[34m","\u001b[0m\u001b[35m","\u001b[0m\u001b[30;47m"]] # Possible colour options, names and codes
+player_health = 50                                # Player hitpoints, when this reaches 0 you lose.
+weapon = ["I want twenty attack plz",20]          # Your weapon name, weapon points =len() of this string (- white space maybe?) 
+armour = ["Okay Armour",10]                       # Your armour name, armour points =len() of this string (- white space maybe?) 
+weapon_points = len(weapon.replace(" ", ""))      # player weapon points, effects how much damage player attacks do.
+armour_points = len(armour.replace(" ", ""))      # Player armour points, effects how much damage player blocks when they defend.
 
     # Import functions from libraries
 
@@ -113,7 +118,31 @@ def options_menu(): # Options Menu - call to run options - does not return anyth
     print("\nReturning to Main Menu...")                                    # Exit must have been selected so print a message and exit
     return
 
-def main_menu(): # PLACEHOLDERS
+def update_equipment(): # Updates integer values for equipment
+    global weapon
+    global armour
+    weapon[1] = len(weapon[0].replace(" ", "")) 
+    armour[1] = len(armour[0].replace(" ", "")) 
+
+def player_stats(): # prints player inv/stats
+    update_equipment() 
+    print(f"You have:\n{player_health} hit points remaining\n{weapon[0]}: {weapon[1]} power\n{armour[0]}: {armour[1]} defence")
+
+def game_intro(): # gives intro - call to start game process - returns true for start game, false for you lose
+    print("You are Crara Loft, international burial chamber pilferer. You approach the entrance of an ancient tomb, rumoured to harbour untold dangers and even less told treasures.")
+    print("ᒥつ⑉⚊⑉ᒣつ <---This is you")
+    player_stats()
+    input_var = (input("Head forward? (y/n)"))[0].lower()
+    while input_var not in ["y","n"]:
+        input_var = (input("For real this time, pick an option from yes or no : "))[0].lower()
+    if input_var == "y":
+        print("You enter the dungeon!")
+        return True
+    else:
+        print("Go home, the burial chamber will remain unpilfered.")
+        return False
+
+def main_menu(): # is main menu - call to use menu - returns 1 (gamestart), 2(options), or 3(hs_creds)
     def menu():
         print("""Welcome to Dracula Pilferer game
         """)
@@ -126,16 +155,14 @@ def main_menu(): # PLACEHOLDERS
     option = int(input("Enter your selection "))
     while option != 0:
         if option == 1:
-            game_start()
             print("Lets Goooo!1")
+            return 1
         elif option == 2:
-            options_menu()
-            pass
+            return 2
         elif option == 3:
-            hs_creds_page()
-            pass
+            return 3
         else:
-            print("invalid option1")
+            print("Invalid option")
     menu()
     option = int(input("Enter your option "))
     print("Thanks for playing, you can check out other games at....")
