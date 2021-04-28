@@ -557,3 +557,22 @@ def enemy_1():
     print(f"You have dealt {damage_dealt} damage.")    
     print(f"You have taken {damage_taken} damage.")    
 # A basic enemy/ template for combats.
+
+
+combat_rooms = 0
+puzzle_rooms = 0
+kill_count = 0
+
+def death_screen():
+    print(f"""Oh no! You died.
+    Run statistics:
+    Total damage dealt: {damage_dealt}
+    Total damage taken: {damage_taken}
+    Combat rooms visited: {combat_rooms}
+    Puzzle rooms visited: {puzzle_rooms}
+    Enemies killed: {kill_count}
+    """)
+    input_var = input("Continue to credits?")
+    # Go to credits screen
+
+death_screen()
