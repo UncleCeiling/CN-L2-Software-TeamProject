@@ -16,6 +16,10 @@ puzzle_room_count = 0                                   # Logs the number of puz
 damage_dealt = 0                                        # Logs how much damage player has dealt for scoring purposes
 damage_taken = 0                                        # Logs how much damage player has taken for scoring purposes
 kill_count = 0
+enemy_name = ""
+enemy_health = 0
+enemy_attack = 0
+enemy_defence = 0
 
     # Import functions from libraries
 
@@ -487,8 +491,97 @@ def puzzle_room():
     choice(puzzle_list)()
     return
 
-def combat_room(): #DO THIS
-    print()
+def player_turn(): # Function for player attacking the enemy.
+    global enemy_health
+    global damage_dealt
+    player_damage = randint(int(round(weapon[1]-weapon[1]/2)), weapon[1])
+    enemy_block = randint(int(round(enemy_defence-enemy_defence/2)), enemy_defence)
+    damage = player_damage - enemy_block
+    
+    if damage > 0:
+        enemy_health = enemy_health - damage
+        damage_dealt = damage_dealt + damage
+        print(f"You attacked for {player_damage} damage!")
+        sleep(0.5)
+        print(f"{enemy_name} blocked {enemy_block}!")
+        sleep(0.5)
+        print(f"You dealt {damage} damage to the enemy!")
+    else:
+        print(f"You attacked {enemy_name} for {player_damage} damage!")
+        sleep(0.5)
+        print(f"{enemy_name} blocked {enemy_block}!")
+        sleep(0.5)
+        print(f"You dealt no damage to {enemy_name}!")
+
+def enemy_turn(): # Function for basic enemy attack
+    global player_health
+    global damage_taken
+    enemy_damage = randint(int(round(enemy_attack-enemy_attack/2)), enemy_attack)
+    player_block = randint(int(round(armour[1]-armour[1]/2)), armour[1])
+    damage = enemy_damage - player_block
+    
+    if damage > 0:
+        player_health = player_health - damage
+        damage_taken = damage_taken + damage
+        print(f"{enemy_name} attacked for {enemy_damage} damage!")
+        sleep(0.5)
+        print(f"You blocked {player_block}!")
+        sleep(0.5)
+        print(f"{enemy_name} did {damage} damage to you!")
+        if player_health < 0:
+            death_screen()
+    else:
+        print(f"{enemy_name} attacked for {enemy_damage} damage!")
+        sleep(0.5)
+        print(f"You blocked {player_block}!")
+        sleep(0.5)
+        print(f"You blocked all the damage!")
+
+def combat_room():
+    global player_health,enemy_name,enemy_health,enemy_attack,enemy_defence,kill_count
+    combat = True
+    dead = False
+    dead = False
+    enemy_stats = sample(enemies,1)[0]
+    print(enemy_stats)
+    enemy_name = enemy_stats[0]
+    enemy_health = int(enemy_stats[1])
+    enemy_attack = int(enemy_stats[2])
+    enemy_defence = int(enemy_stats[3])
+    print(f"A {enemy_name} appears! What do you do?")
+    while combat == True:
+        input_var = (input("Attack, talk or run?"))[0].lower()
+        while input_var not in ["a","t", "r"]:
+            input_var = (input("For real this time, pick an option from attack, talk or run : "))[0].lower()
+        if input_var == "a":
+            player_turn()
+            sleep(0.5)
+            if enemy_health > 0:
+                print(f"***{enemy_name}'s turn***")
+                enemy_turn()
+            else:
+                combat = False
+                dead = True
+        elif input_var == "t":
+            print("You try making smalltalk with the enemy.")
+            sleep(0.5)
+            print("...")
+            sleep(0.5)
+            print("The enemy attacks you!")
+            enemy_turn()
+        else:
+            combat = False
+    if dead == True:
+        kill_count += 1
+        print("You killed the enemy!")
+        sleep(0.5)
+        prize_give(level)
+    else:
+        if enemy_health < weapon[1] + armour[1]:
+            print(f"You managed to escape {enemy_name}!")
+        else:
+            print("Can't escape!") 
+
 
 def death_screen():
     print(f"""
