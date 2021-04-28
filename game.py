@@ -40,6 +40,9 @@ arm_noun = (open("storage/armour_nouns.txt", "r").readlines())[0].split(",")
 noun2 = (open("storage/nouns2.txt", "r").readlines())[0].split(",")
 combat_room_desc = (open("storage/roomscombat.txt","r").readlines())[0].split(",")
 puzzle_room_desc = (open("storage/roomspuzzle.txt", "r").readlines())[0].split(",")
+enemies = (open("storage/enemies.txt","r").read()).split("\n")
+for x in range(len(enemies)):
+    enemies[(x-1)] = enemies[(x-1)].split(",")
 
 # Functions
 
