@@ -62,13 +62,12 @@ def hs_creds_page():
 def gen_weapon(): # Weapon Generator - call to generate a weapon - returns a string
     sample_noun1 = sample(wep_noun,1)[0]
     sample_noun2 = sample(noun2,1)[0]
-    return (f"{sample_noun1} of {sample_noun2}")
+    return (f"{sample_noun1} of {sample_noun2}".title())
 
 def gen_armour(): # Weapon Generator - call to generate armour - returns a string
     sample_noun1 = sample(arm_noun,1)[0]
     sample_noun2 = sample(noun2,1)[0]
-    return (f"{sample_noun1} of {sample_noun2}")
-
+    return (f"{sample_noun1} of {sample_noun2}".title())
 
 def add_buff(equip_in,num_of_buffs): # adds adjectives to weapon_in - returns a string
     sample_adj = sample(adjective,num_of_buffs)
@@ -156,7 +155,7 @@ def game_intro(): # gives intro - call to start game process - returns true for 
 
 def main_menu(): # is main menu - call to use menu - returns 1 (gamestart), 2(options), or 3(hs_creds)
     def print_main_menu():
-        print("\nWelcome to Crara Loft: Dracula Pilferer!\n\n====================================\n\n    [1] Start Game\n    [2] Settings\n    [3] Highscores and Credits\n    [0] Quit\n")
+        print("\nWelcome to Crara Loft: Burial Chamber Pilferer!\n\n====================================\n\n    [1] Start Game\n    [2] Settings\n    [3] Highscores and Credits\n    [0] Quit\n")
     print_main_menu()
     option = int(input("Enter your selection "))
     while option != 0:
@@ -212,9 +211,7 @@ def room_generator(): # generates rooms and takes player selection - returns tru
 
 # Testing
 
-# print(add_buff(gen_weapon(),4))
-# print(add_buff("sword",20))
-print("Épée".lower())
+print(add_buff(gen_weapon(),2))
 
 # Main block
 
