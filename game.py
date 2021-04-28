@@ -24,13 +24,17 @@ chdir(path.dirname(__file__))
     # Import data from .txt into arrays - example layout:
     # var_name = (open("txt_file_name.txt","r").readlines())[0].split(",")
 
-highscore = (open("highscore.txt","r").read()).split("\n")
+highscore = (open("storage/highscore.txt","r").read()).split("\n")
 hs1 = str(highscore[0]).split(",")
 hs2 = str(highscore[1]).split(",")
 hs3 = str(highscore[2]).split(",")
-adjective = (open("weapon_adjectives.txt", "r").readlines())[0].split(",")
-noun1 = (open("weapon_nouns1.txt", "r").readlines())[0].split(",")
-noun2 = (open("weapon_nouns2.txt", "r").readlines())[0].split(",")
+adjective = (open("storage/adjectives.txt","r").readlines())[0].split(",")
+wep_noun = (open("storage/weapon_nouns.txt", "r").readlines())[0].split(",")
+arm_noun = (open("storage/armour_nouns.txt", "r").readlines())[0].split(",")
+noun2 = (open("storage/nouns2.txt", "r").readlines())[0].split(",")
+combat_room = (open("storage/roomscombat.txt","r").readlines())[0].split(",")
+puzzle_room = (open("storage/roomspuzzle.txt", "r").readlines())[0].split(",")
+# print(highscore, adjective,wep_noun,arm_noun,noun2,combat_room,puzzle_room) # Debug line
 
 # Functions
 
@@ -56,9 +60,15 @@ def hs_creds_page():
     return
 
 def gen_weapon(): # Weapon Generator - call to generate a weapon - returns a string
-    sample_noun1 = sample(noun1,1)[0]
+    sample_noun1 = sample(wep_noun,1)[0]
     sample_noun2 = sample(noun2,1)[0]
     return (f"{sample_noun1} of {sample_noun2}")
+
+def gen_armour(): # Weapon Generator - call to generate armour - returns a string
+    sample_noun1 = sample(arm_noun,1)[0]
+    sample_noun2 = sample(noun2,1)[0]
+    return (f"{sample_noun1} of {sample_noun2}")
+
 
 def add_buff(equip_in,num_of_buffs): # adds adjectives to weapon_in - returns a string
     sample_adj = sample(adjective,num_of_buffs)
@@ -164,8 +174,6 @@ def main_menu(): # is main menu - call to use menu - returns 1 (gamestart), 2(op
     quit()
 
 def room_generator(): # generates rooms and takes player selection - returns true if combat room selected, false if puzzle room
-    combat_room = (open(path.join("storage", "roomscombat.txt"),"r").readlines())[0].split(",")
-    puzzle_room = (open(path.join("storage", "roomspuzzle.txt"), "r").readlines())[0].split(",")
     combat_samples = randint(0, 3)   # Generates a random int from 0-3.
     options = sample(combat_room, combat_samples) + sample(puzzle_room, 3 - combat_samples) # Creates a list of 3 randomised strings from roomscombat.txt and roomspuzzle.txt.
     shuffle(options)   # Shuffles the list so they aren't always in combat-puzzle order. 
@@ -206,6 +214,7 @@ def room_generator(): # generates rooms and takes player selection - returns tru
 
 # print(add_buff(gen_weapon(),4))
 # print(add_buff("sword",20))
+print("Épée".lower())
 
 # Main block
 
