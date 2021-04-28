@@ -5,17 +5,23 @@
 
 difficulty = 1                                          # Current difficulty setting - indexes via: difficulty_options[difficulty]
 difficulty_options = ["Easy","Normal","Hard"]           # Possible difficulty options
+level = 1
 colour = "d"                                            # Current colour setting - indexes via: colour_options[0][colour_options.index(colour)]
 colour_options = [["d","r","y","g","c","b","m","i"],["Default","Red","Yellow","Green","Cyan","Blue","Magenta","Default Inverted"],["\u001b[0m","\u001b[0m\u001b[31m","\u001b[0m\u001b[33m","\u001b[0m\u001b[32m","\u001b[0m\u001b[36m","\u001b[0m\u001b[34m","\u001b[0m\u001b[35m","\u001b[0m\u001b[30;47m"]] # Possible colour options, names and codes
-player_health = 50                                # Player hitpoints, when this reaches 0 you lose.
-weapon = ["I want twenty attack plz",20]          # Your weapon name, weapon points =len() of this string (- white space maybe?) 
-armour = ["Okay Armour",10]                       # Your armour name, armour points =len() of this string (- white space maybe?)
+player_health = 50                                      # Player hitpoints, when this reaches 0 you lose.
+weapon = ["",0]                                         # Your weapon name, weapon points =len() of this string 
+armour = ["",0]                                         # Your armour name, armour points =len() of this string
+combat_room_count = 0                                   # Logs the number of combat rooms passed
+puzzle_room_count = 0                                   # Logs the number of puzzle rooms passed
+damage_dealt = 0                                        # Logs how much damage player has dealt for scoring purposes
+damage_taken = 0                                        # Logs how much damage player has taken for scoring purposes
+kill_count = 0
 
     # Import functions from libraries
 
-import time
+from time import sleep
 from os import chdir, path                              # To set Working Directory
-from random import sample, randint, shuffle             # For sampling lists
+from random import sample, randint, shuffle, choice            # For sampling lists
 
     # Set Working directory to file directory
 
@@ -32,11 +38,24 @@ adjective = (open("storage/adjectives.txt","r").readlines())[0].split(",")
 wep_noun = (open("storage/weapon_nouns.txt", "r").readlines())[0].split(",")
 arm_noun = (open("storage/armour_nouns.txt", "r").readlines())[0].split(",")
 noun2 = (open("storage/nouns2.txt", "r").readlines())[0].split(",")
-combat_room = (open("storage/roomscombat.txt","r").readlines())[0].split(",")
-puzzle_room = (open("storage/roomspuzzle.txt", "r").readlines())[0].split(",")
-# print(highscore, adjective,wep_noun,arm_noun,noun2,combat_room,puzzle_room) # Debug line
+combat_room_desc = (open("storage/roomscombat.txt","r").readlines())[0].split(",")
+puzzle_room_desc = (open("storage/roomspuzzle.txt", "r").readlines())[0].split(",")
 
 # Functions
+
+def reset():
+    global player_health,weapon,armour,combat_room_count,puzzle_room_count,damage_dealt,damage_taken,kill_count,level
+    player_health = 50
+    weapon[0] = gen_weapon()
+    armour[0] = gen_armour()
+    weapon[1] = int(len(weapon[0].replace(" ","")))
+    armour[1] = int(len(armour[0].replace(" ","")))
+    combat_room_count = 0
+    puzzle_room_count = 0
+    damage_dealt = 0
+    damage_taken = 0
+    kill_count = 0
+    level = 1
 
 def start_function(): # Syed's start function (HAS PLACEHOLDER - line 31)
     print("\nstart screen\n")
@@ -50,7 +69,7 @@ def hs_creds_page():
     def print_highscore():
         print(f"\n=============HIGH SCORES============\n\n{hs1[0]} : {hs1[1]}\n\n{hs2[0]} : {hs2[1]}\n\n{hs3[0]} : {hs3[1]}\n")
     def print_credits():
-        print("\n========Codenation Blue-hats========\n\n        Crara Loft made by:\n\nPesh B\n\nSyed R\n\nAmir H\n\nMike D\n\nChris F\n")
+        print("\n========Codenation Blue-hats========\n\n        Cara Loft made by:\n\nPesh B\n\nSyed R\n\nAmir H\n\nMike D\n\nChris F\n")
     print_highscore()
     print_credits()
     print("====================================\n")
@@ -139,13 +158,55 @@ def player_stats(): # prints player inv/stats
     update_equipment() 
     print(f"You have:\n{player_health} hit points remaining\n{weapon[0]}: {weapon[1]} power\n{armour[0]}: {armour[1]} defence")
 
+def prize_give(buff_amount): # gives prizes - call to run a prize routine - takes an integer for power of reward
+    global player_health
+    global weapon
+    global armour
+    prize = sample(["a new weapon","some new armour","a weapon buff","an armour buff","some health"],1)
+    print("\nCongratulations!\n\nYou won {prize}!")
+    if prize in ["a weapon buff","an armour buff"]:
+        if prize == "a weapon buff":
+            weapon[0] = add_buff(weapon[0],buff_amount)
+            print(f"\nTake a look at your {weapon[0]}!")
+        else:
+            armour[0] = add_buff(armour[0],buff_amount)
+            print(f"\nTake a look at your {armour[0]}!")
+        return
+    elif prize in ["a new weapon","some new armour"]:
+        if prize == "a new weapon":
+            prize = add_buff(gen_weapon(),buff_amount)
+            accept = input(f"\nDo you want to swap your\n\n{weapon[0]}\n\nFOR\n\n{prize}?\n\n>>>")[0].lower()
+            while accept not in ["y","n"]:
+                accept = input(f"\nFor real this time, pick an option from yes or no :\n\n>>>")[0].lower()
+            if accept == "y":
+                weapon[0] = prize
+                player_stats
+                return
+            else:
+                return
+        else:
+            prize = add_buff(gen_armour(),buff_amount)
+            accept = input(f"\nDo you want to swap your\n\n{armour[0]}\n\nFOR\n\n{prize}?\n\n>>>")[0].lower()
+            while accept not in ["y","n"]:
+                accept = input(f"\nFor real this time, pick an option from yes or no :\n\n>>>")[0].lower()
+            if accept == "y":
+                armour[0] = prize
+                player_stats
+                return
+            else:
+                return
+    else:
+        print(f"\nYou gain {str(20*buff_amount)} Health Points!")
+        player_health += (20*buff_amount)
+        player_stats()
+
 def game_intro(): # gives intro - call to start game process - returns true for start game, false for you lose
-    print("You are Crara Loft, international burial chamber pilferer.\n\nYou approach the entrance of an ancient tomb, rumoured to harbour untold dangers and even less told treasures.\n")
-    print("ᒥつ⑉⚊⑉ᒣつ <---This is you\n")
+    print("\nYou are Cara Loft, international burial chamber pilferer.\n\nYou approach the entrance of an ancient tomb, rumoured to harbour untold dangers and even less told treasures.")
+    print("\nᒥつ⑉⚊⑉ᒣつ <---This is you")
     player_stats()
-    input_var = (input("\nHead forward? (y/n) : "))[0].lower()
+    input_var = (input("\nHead forward? (y/n) :\n\n>>>"))[0].lower()
     while input_var not in ["y","n"]:
-        input_var = (input("\nFor real this time, pick an option from yes or no : "))[0].lower()
+        input_var = (input("\nFor real this time, pick an option from yes or no :\n\n>>>"))[0].lower()
     if input_var == "y":
         print("\nYou enter the dungeon!")
         return True
@@ -155,7 +216,7 @@ def game_intro(): # gives intro - call to start game process - returns true for 
 
 def main_menu(): # is main menu - call to use menu - returns 1 (gamestart), 2(options), or 3(hs_creds)
     def print_main_menu():
-        print("\nWelcome to Crara Loft: Burial Chamber Pilferer!\n\n====================================\n\n    [1] Start Game\n    [2] Settings\n    [3] Highscores and Credits\n    [0] Quit\n")
+        print("\nWelcome to Cara Loft: Burial Chamber Pilferer!\n\n====================================\n\n    [1] Start Game\n    [2] Settings\n    [3] Highscores and Credits\n    [0] Quit\n")
     print_main_menu()
     option = int(input("Enter your selection "))
     while option != 0:
@@ -172,11 +233,10 @@ def main_menu(): # is main menu - call to use menu - returns 1 (gamestart), 2(op
             print("Invalid option")
     quit()
 
-def room_generator(): # generates rooms and takes player selection - returns true if combat room selected, false if puzzle room
+def gen_room(): # generates rooms and takes player selection - returns true if combat room selected, false if puzzle room
     combat_samples = randint(0, 3)   # Generates a random int from 0-3.
-    options = sample(combat_room, combat_samples) + sample(puzzle_room, 3 - combat_samples) # Creates a list of 3 randomised strings from roomscombat.txt and roomspuzzle.txt.
-    shuffle(options)   # Shuffles the list so they aren't always in combat-puzzle order. 
-
+    options = sample(combat_room_desc, combat_samples) + sample(puzzle_room_desc, 3 - combat_samples) # Creates a list of 3 randomised strings from roomscombat.txt and roomspuzzle.txt.
+    shuffle(options) # Shuffles the list so they aren't always in combat-puzzle order. 
     print(f"""There are 3 rooms before you:
     Door 1: {options[0]}
     Door 2: {options[1]}
@@ -186,7 +246,7 @@ def room_generator(): # generates rooms and takes player selection - returns tru
         input_var = (input("For real this time, pick an option from A, B or C : "))[0].lower()
     if input_var == "a":
         print("You open door A")
-        if options[0] in (open(path.join("storage", "roomscombat.txt"),"r").readlines())[0].split(","):
+        if options[0] in combat_room_desc:
             print("It's a combat room!")
             return True
         else:
@@ -194,7 +254,7 @@ def room_generator(): # generates rooms and takes player selection - returns tru
             return False
     elif input_var == "b":
         print("You open door B")
-        if options[1] in (open(path.join("storage", "roomscombat.txt"),"r").readlines())[0].split(","):
+        if options[1] in combat_room_desc:
             print("It's a combat room!")
             return True
         else:
@@ -202,16 +262,274 @@ def room_generator(): # generates rooms and takes player selection - returns tru
             return False
     else:
         print("You open door C")
-        if options[2] in (open(path.join("storage", "roomscombat.txt"),"r").readlines())[0].split(","):
+        if options[2] in combat_room_desc:
             print("It's a combat room!")
             return True
         else:
             print("It's a puzzle room!")
             return False
 
+def puzzle_room():
+    def riddler():
+        global player_health
+        print("\nYou walk into a peculiar room, indescribable by words.\n\nI'm really struggling here as a narrator actually, it's impossible to give an accurate account of the qualities of this room using mere words alone.\n\nOne thing about this room is for sure though, it's a room of riddles.\n\nA riddler approaches, they too are indescribable, with their short red hair and green top hat with little ? symbols all over it. This riddler riddles you this.\n\n\"What question can you never answer yes to?\"\n\nWhat is your answer?\n\nA: Do you think CodeNation is a bit rubbish?\n\nB: Would you please stop trying to use 漢字 in everything Mike? It breaks the code.\n\nC: Can someone think of something to put here later?")
+        input_var = input("A, B or C?")[0].lower()
+        while input_var not in ["a","b","c"]:
+            input_var = (input("\nFor real this time, pick an option from A, B or C :\n\n>>>"))[0].lower()
+        if input_var == "a":
+            print("\nCorrect! CodeNation is really really great!\n\nYou'd never say yes to that! Well done!")
+            prize_give(level)
+        else:
+            print("\nWrong you fool! take your punishment!")
+            player_health -= 20
+            player_stats()
+    def monty_hall():
+        global player_health
+        global weapon
+        global armour
+        doors = ["trap", "trap", "prize"]
+        ongoing = True
+        shuffle(doors)
+        print("\nAND OUR NEXT CONTESTANT... CARA LOFT!!!\n\nYou enter a room to thunderous applause, some sort of game show appears to be going on as a man in a crisp suit addresses a live studio audience.\n\nHe stands in front of 3 doors labelled A, B and C.\n\nBehind one of these doors is the equipment of your dreams, and behind the two others, deadly danger!\n\nStep right up Cara and choose a door!")
+        input_var = input("\nChoose a door, A, B or C\n\n>>>")[0].lower()
+        while input_var not in ["a","b","c"]:
+            input_var = (input("\nFor real this time, pick an option from A, B or C :\n\n>>>"))[0].lower()
+        while ongoing == True:
+            if input_var == "a":
+                print("\nYou chose door A!")
+                if doors[0] == "trap":
+                    print("\nDoor B is a trap door...\n\nDo you want to change to door C?")
+                    input_2 = input("\nYes or no?\n\n>>>")
+                    while input_2 not in ["y","n"]:
+                        input_2 = (input("\nFor real this time, pick an option from yes or no :\n\n>>>"))[0].lower()
+                        if input_2 == "y":
+                            ongoing = False
+                            input_var = "c"
+                        elif input_2 == "n":
+                            ongoing = False
+                elif doors[2] == "trap":
+                    print("\nDoor C is a trap door...\n\nDo you want to change to door B?\n\n>>>")
+                    input_2 = input("\nYes or no?\n\n>>>")
+                    while input_var not in ["y","n"]:
+                        input_2 = (input("\nFor real this time, pick an option from yes or no :\n\n>>>"))[0].lower()
+                        if input_2 == "y":
+                            ongoing = False
+                            input_var = "b"
+                        elif input_2 == "n":
+                            ongoing = False
+            if input_var == "b" and ongoing == True:
+                print("\nYou chose door B!")
+                if doors[0] == "trap":
+                    print("\nDoor A is a trap door...\n\nDo you want to change to door C?")
+                    input_2 = input("\nYes or no?\n\n>>>")
+                    while input_2 not in ["y","n"]:
+                        input_2 = (input("\nFor real this time, pick an option from yes or no :\n\n>>>"))[0].lower()
+                    if input_2 == "y":
+                        ongoing = False
+                        input_var = "c"
+                    elif input_2 == "n":
+                        ongoing = False
+                elif doors[2] == "trap":
+                    print("\nDoor C is a trap door...\n\nDo you want to change to door A?")
+                    input_2 = input("\nYes or no?\n\n>>>")
+                    while input_2 not in ["y","n"]:
+                        input_2 = (input("\nFor real this time, pick an option from yes or no :\n\n>>>"))[0].lower()
+                    if input_2 == "y":
+                        ongoing = False
+                        input_var = "a"
+                    elif input_2 == "n":
+                        ongoing = False
+            if input_var == "c" and ongoing == True:
+                print("\nYou chose door C!")
+                if doors[0] == "trap":
+                    print("\nDoor A is a trap door...\n\nDo you want to change to door B?")
+                    input_2 = input("\nYes or no?\n\n>>>")
+                    while input_2 not in ["y","n"]:
+                        input_2 = (input("\nFor real this time, pick an option from yes or no :\n\n>>>"))[0].lower()
+                    if input_2 == "y":
+                        ongoing = False
+                        input_var = "b"
+                    elif input_2 == "n":
+                        ongoing = False
+                elif doors[1] == "trap":
+                    print("\nDoor B is a trap door!\n\nDo you want to change to door A?")
+                    input_2 = input("\nYes or no?\n\n>>>")
+                    while input_2 not in ["y","n"]:
+                        input_2 = (input("\nFor real this time, pick an option from yes or no :\n\n>>>"))[0].lower()
+                    if input_2 == "y":
+                        ongoing = False
+                        input_var = "a"
+                    elif input_2 == "n":
+                        ongoing = False
+        if input_var == "a":
+            print(f"\nWhat's behind door {input_var}?")
+            print(f"\nIt's a {doors[0]}!")
+            if doors[0] == "prize":
+                prize_give(level)
+            else:
+                print("Oh no! the trap dealt 15 damage to you!")
+                player_health -= 10
+                player_stats()
+        elif input_var == "b":
+            print(f"What's behind door {input_var}?")
+            print(f"It's a {doors[1]}!")
+            if doors[0] == "prize":
+                prize_give(level)
+            else:
+                print("Oh no! the trap dealt 15 damage to you!")
+                player_health -= 10
+                player_stats()
+        elif input_var == "c":
+            print(f"What's behind door {input_var}?")
+            print(f"It's a {doors[2]}!")
+            if doors[0] == "prize":
+                prize_give(level)
+            else:
+                print("Oh no! the trap dealt 15 damage to you!")
+                player_health -= 10
+                player_stats()
+        print("\nI've been your host, Honty Mall.\n\nSee you next time on \"What the heck is going on behind that dooooooooor!\"")
+    def rock_paper_scissors():
+        global player_health
+        global weapon
+        global armour
+        enemy_choice = ["r","p","s"]
+        shuffle(enemy_choice)
+        print("You enter a large room filled with small gremlin like creatures. The gremlins are all sitting on picnic blankets playing rock paper scissors for food and weapons. A sign on the wall reads \"No Yogis\". You spot an empty place and decide to play.")
+        input_var = (input("Choose rock, paper or scissors!"))[0].lower()
+        while input_var not in ["r","p","s"]:
+            input_var = (input("For real this time, pick an option from rock, paper or scissors : "))[0].lower()
+        if input_var == "r":
+            print("You choose rock!")
+            if enemy_choice[0] == "p":
+                print("\nThe gruff gremlin chose paper.")
+                print("\nToo bad, you lost!")
+                print("\nOh no!\n\nThe gremlin dealt 10 damage to you!")
+                player_health -= 10
+                player_stats()
+            elif enemy_choice[0] == "s":
+                print("The gruff gremlin chose scissors.")
+                print("Congratulations, you win!")
+                prize_give(level)
+            else:
+                print("The gruff gremlint chose rock.")
+                print("It's a tie! Rematch!")
+                rock_paper_scissors()
+        elif input_var == "p":
+            print("You choose paper!")
+            if enemy_choice[0] == "s":
+                print("\nThe gruff gremlin chose paper.")
+                print("\nToo bad, you lost!")
+                print("\nOh no!\n\nThe gremlin dealt 10 damage to you!")
+                player_health -= 10
+                player_stats()
+            elif enemy_choice[0] == "r":
+                print("The gruff gremlin chose rock.")
+                print("Congratulations, you win!")
+                prize_give(level)
+            else:
+                print("The gruff gremlin chose paper.")
+                print("It's a tie! Rematch!")
+                rock_paper_scissors()
+        elif input_var == "s":
+            print("You choose scissors!")
+            if enemy_choice[0] == "r":
+                print("\nThe gruff gremlin chose paper.")
+                print("\nToo bad, you lost!")
+                print("\nOh no!\n\nThe gremlin dealt 10 damage to you!")
+                player_health -= 10
+                player_stats()
+            elif enemy_choice[0] == "p":
+                print("The gruff gremlin chose paper.")
+                print("Congratulations, you win!")
+                prize_give(level)
+            else:
+                print("The gruff gremlin chose scissors.")
+                print("It's a tie! Rematch!")
+                rock_paper_scissors()
+        else:
+            print("Hmmm, that was weird... Shame I can't describe it to you...")
+    def match_2():
+        global weapon
+        global armour
+        print("snap")
+    def fruit_and_anvil():
+        global player_health
+        global weapon
+        global armour
+        print("\nYou enter a room with a large pile of fruit and an anvil, the door locks behind you.\n\nA large sign above the opposite door informs you that you have 1 hour until you can proceed.\n\nSeems like you'll only have time to use one, what do you do?")
+        input_var = (input("\nEat the fruit or use the anvil?\n\n>>>"))[0].lower()
+        while input_var not in ["a","f","u","e"]:
+            input_var = (input("\nFor real this time, pick an option from eating the fruit or using the anvil :\n\n>>>"))[0].lower()
+        if input_var in ["a","u"]:
+            input_var = (input(f"\nWhat would you like to upgrade on?\n\nYour Weapon - {weapon[0]}?\nOR\nYour Armour - {armour[0]}?\n\n>>>"))[0].lower()
+            while input_var not in ["w","a"]:
+                input_var = (input("\nFor real this time, pick an option from eating the fruit or using the anvil :\n\n>>>"))[0].lower()
+            if input_var == "w":
+                print(f"\nYour weapon '{weapon[0]}' becomes:")
+                weapon[0] = add_buff(weapon[0],1)
+                print(f"\n'{weapon[0]}'")
+            else:
+                print(f"\nYour armour '{armour[0]}' becomes:")
+                armour[0] = add_buff(armour[0],1)
+                print(f"\n'{armour[0]}'")
+            player_stats()
+            return
+        else:
+            print("\nYou eat the pile of fruit and gain 50 Health Points!")
+            player_health += 50
+            player_stats()
+        return
+    puzzle_list = [monty_hall,rock_paper_scissors,match_2,fruit_and_anvil,riddler]
+    choice(puzzle_list)()
+    return
+
+def combat_room(): #DO THIS
+    print()
+
+def death_screen():
+    print(f"""
+    Oh no! You died!
+
+    You dealt {damage_dealt} damage, but received {damage_taken}.
+    
+    You visited {combat_room_count} Combat rooms and {puzzle_room_count} Puzzle rooms.
+
+    You killed {kill_count} enemies""")
+    input("\nEnter something to return to the main menu:\n\n>>>")
+
+def highscore_screen():
+    global hs1,hs2,hs3
+    score = combat_room_count+puzzle_room_count
+    if score < hs3[1]:
+        print("\nYou did not beat any highscores...")
+        reset()
+        return
+    else:
+        name = input("\nNew Highscore!\n\nEnter your name below :\n\n>>>").title()
+        if score < hs2[1]:
+            hs3 = [name,score]
+        elif score < hs1[1]:
+            hs3 = hs2
+            hs2 = [name,score]
+        elif score >= hs1[1]:
+            hs3 = hs2
+            hs2 = hs1
+            hs1 = [name,score]
+        reset()
+        return
+
+def store_highscore():
+    print("store_highscore")
+# Generate starting weapon and armour
+
+weapon[0] = gen_weapon()
+armour[0] = gen_armour()
+
 # Testing
 
 # Main block
+
 
 start_function()
 main_menu_selection = 0
@@ -220,359 +538,16 @@ while main_menu_selection != 1:
 intro_complete = game_intro()
 if intro_complete == False:
     print("THE END") # PLACEHOLDER
+    quit()
 else:
-    print("You play the game") # PLACEHOLDER
-
-# TEMP
-from os import chdir, path, scandir, walk                            # To set Working Directory
-from random import sample, randint, shuffle                              # For sampling lists
-
-
-chdir(path.dirname(__file__))
-
-
-def room_selecter():
-    combat_room = (open(path.join("storage", "roomscombat.txt"),"r").readlines())[0].split(",")
-    puzzle_room = (open(path.join("storage", "roomspuzzle.txt"), "r").readlines())[0].split(",")
-    combat_samples = randint(0, 3)   # Generates a random int from 0-3.
-    options = sample(combat_room, combat_samples) + sample(puzzle_room, 3 - combat_samples) # Creates a list of 3 randomised strings from roomscombat.txt and roomspuzzle.txt.
-    shuffle(options)   # Shuffles the list so they aren't always in combat-puzzle order. 
-
-    print(f"""There are 3 rooms before you:
-    Door 1: {options[0]}
-    Door 2: {options[1]}
-    Door 3: {options[2]}""")
-    input_var = (input("Please choose a door (A, B or C)"))[0].lower()
-    while input_var not in ["a","b","c"]:
-        input_var = (input("For real this time, pick an option from A, B or C : "))[0].lower()
-    if input_var == "a":
-        print("You open door A")
-        if options[0] in (open(path.join("storage", "roomscombat.txt"),"r").readlines())[0].split(","):
-            return True
+    while player_health > 0:
+        room_type = gen_room()
+        if room_type == True:
+            combat_room()
+            combat_room_count += 1
         else:
-            return False
-    elif input_var == "b":
-        print("You open door B")
-        if options[1] in (open(path.join("storage", "roomscombat.txt"),"r").readlines())[0].split(","):
-            return True
-        else:
-            return False
-    else:
-        print("You open door C")
-        if options[2] in (open(path.join("storage", "roomscombat.txt"),"r").readlines())[0].split(","):
-            return True
-        else:
-            return False
-# You choose between doors A, B and C and the function returns true if that door is a combat room and false if it is a puzzle room.
-
-# room_selecter()
-
-def room_generator():
-    global combat_rooms
-    global puzzle_rooms
-    room_type =room_selecter()
-    if room_type == True:
-        combat_rooms += 1
-        print("It's a combat room!")
-        # Code to call a random combat???
-    else:
-        puzzle_rooms += 1
-        print("It's a puzzle room!")
-        # Code to call a random puzzle???
-
-room_generator()
-
-from os import chdir, path, scandir, walk                            # To set Working Directory
-from random import sample, randint, shuffle                              # For sampling lists
-
-
-chdir(path.dirname(__file__))
-
-
-def room_selecter():
-    combat_room = (open(path.join("storage", "roomscombat.txt"),"r").readlines())[0].split(",")
-    puzzle_room = (open(path.join("storage", "roomspuzzle.txt"), "r").readlines())[0].split(",")
-    combat_samples = randint(0, 3)   # Generates a random int from 0-3.
-    options = sample(combat_room, combat_samples) + sample(puzzle_room, 3 - combat_samples) # Creates a list of 3 randomised strings from roomscombat.txt and roomspuzzle.txt.
-    shuffle(options)   # Shuffles the list so they aren't always in combat-puzzle order. 
-
-    print(f"""There are 3 rooms before you:
-    Door 1: {options[0]}
-    Door 2: {options[1]}
-    Door 3: {options[2]}""")
-    input_var = (input("Please choose a door (A, B or C)"))[0].lower()
-    while input_var not in ["a","b","c"]:
-        input_var = (input("For real this time, pick an option from A, B or C : "))[0].lower()
-    if input_var == "a":
-        print("You open door A")
-        if options[0] in (open(path.join("storage", "roomscombat.txt"),"r").readlines())[0].split(","):
-            return True
-        else:
-            return False
-    elif input_var == "b":
-        print("You open door B")
-        if options[1] in (open(path.join("storage", "roomscombat.txt"),"r").readlines())[0].split(","):
-            return True
-        else:
-            return False
-    else:
-        print("You open door C")
-        if options[2] in (open(path.join("storage", "roomscombat.txt"),"r").readlines())[0].split(","):
-            return True
-        else:
-            return False
-# You choose between doors A, B and C and the function returns true if that door is a combat room and false if it is a puzzle room.
-
-# room_selecter()
-
-def room_generator():
-    global combat_rooms
-    global puzzle_rooms
-    room_type =room_selecter()
-    if room_type == True:
-        combat_rooms += 1
-        print("It's a combat room!")
-        # Code to call a random combat???
-    else:
-        puzzle_rooms += 1
-        print("It's a puzzle room!")
-        # Code to call a random puzzle???
-
-room_generator()
-
-import random as r
-# Monty Hall problem
-def monty_hall():
-    a = ["a", "A"]
-    b = ["b", "B"]
-    c = ["c", "C"]
-    yes = ["Y", "y", "Yes", "yes", "YES"]
-    no = ["N", "n", "No", "no", "NO"]
-    invalid_ans = ("\nPlease use a valid input!\n")
-    doors = ["trap", "trap", "prize"]
-    ongoing = True
-
-    r.shuffle(doors)
-    # print(doors) #Debug code
-
-    print("Pick a door(a, b or c)")
-    choice_1 = input(">>>").lower()
-    if choice_1 in a and ongoing == True or choice_1 in b and ongoing == True or choice_1 in c and ongoing == True:
-        while choice_1 in a and ongoing == True:
-            if doors[0] == "trap":
-                print("Door b is a trap door! Do you want to change to door c? (y/n)")
-                choice_2 = input(">>>")
-                if choice_2 in yes:
-                    ongoing = False
-                    choice_1 = "c"
-                elif choice_2 in no:
-                    ongoing = False
-                else:
-                    print(invalid_ans)
-            elif doors[2] == "trap":
-                print("Door c is a trap door! Do you want to change to door b? (y/n)")
-                choice_2 = input(">>>")
-                if choice_2 in yes:
-                    ongoing = False
-                    choice_1 = "b"
-                elif choice_2 in no:
-                    ongoing = False
-                else:
-                    print(invalid_ans)
-        while choice_1 in b and ongoing == True:
-            if doors[0] == "trap":
-                print("Door a is a trap door! Do you want to change to door c? (y/n)")
-                choice_2 = input(">>>")
-                if choice_2 in yes:
-                    ongoing = False
-                    choice_1 = "c"
-                elif choice_2 in no:
-                    ongoing = False
-                else:
-                    print(invalid_ans)
-            elif doors[2] == "trap":
-                print("Door c is a trap door! Do you want to change to door a? (y/n)")
-                choice_2 = input(">>>")
-                if choice_2 in yes:
-                    ongoing = False
-                    choice_1 = "a"
-                elif choice_2 in no:
-                    ongoing = False
-                else:
-                    print(invalid_ans)
-        while choice_1 in c and ongoing == True:
-            if doors[0] == "trap":
-                print("Door a is a trap door! Do you want to change to door b? (y/n)")
-                choice_2 = input(">>>")
-                if choice_2 in yes:
-                    ongoing = False
-                    choice_1 = "b"
-                elif choice_2 in no:
-                    ongoing = False
-                else:
-                    print(invalid_ans)
-            elif doors[1] == "trap":
-                print("Door b is a trap door! Do you want to change to door a? (y/n)")
-                choice_2 = input(">>>")
-                if choice_2 in yes:
-                    ongoing = False
-                    choice_1 = "a"
-                elif choice_2 in no:
-                    ongoing = False
-                else:
-                    print(invalid_ans)
-
-    else:
-        print(invalid_ans)
-        monty_hall()
-
-    if choice_1 == "a":
-        print(f"What's behind door {choice_1}?")
-        print(f"{doors[0]}")
-    elif choice_1 == "b":
-        print(f"What's behind door {choice_1}?")
-        print(f"{doors[1]}")
-    elif choice_1 == "c":
-        print(f"What's behind door {choice_1}?")
-        print(f"{doors[2]}")
-
-import time
-import random as r
-import math
-
-battle_choice = "Attack, talk or run?"
-player_health = 9001                              # Player hitpoints, when this reaches 0 you lose.
-weapon = ["I want twenty attack plz", 20]         # Your weapon name, weapon points =len() of this string (- white space maybe?) 
-armour = ["Okay Armour", 10]                      # Your armour name, armour points =len() of this string (- white space maybe?) 
-damage_dealt = 0                                  # Logs how much damage player has dealt for scoring purposes
-damage_taken = 0                                  # Logs how much damage player has taken for scoring purposes
-
-def death_screen():
-    print("You died lol")
-
-def player_attack():
-    global enemy_health
-    global player_damage
-    global enemy_defence_p
-    global damage_dealt
-    player_damage = r.randint(int(round(weapon[1]-weapon[1]/2)), weapon[1])
-    enemy_block = r.randint(int(round(enemy_defence_p-enemy_defence_p/2)), enemy_defence_p)
-    damage = player_damage - enemy_block
-    
-    if damage > 0:
-        enemy_health = enemy_health - damage
-        damage_dealt = damage_dealt + damage
-        print(f"You attacked for {player_damage} damage!")
-        time.sleep(0.5)
-        print(f"{enemy_name} blocked {enemy_block}!")
-        time.sleep(0.5)
-        print(f"You dealt {damage} damage to the enemy!")
-    else:
-        print(f"You attacked {enemy_name} for {player_damage} damage!")
-        time.sleep(0.5)
-        print(f"{enemy_name} blocked {enemy_block}!")
-        time.sleep(0.5)
-        print(f"You dealt no damage to {enemy_name}!")
-# Function for player attacking the enemy.
-
-def enemy_attack():
-    global player_health
-    global enemy_damage
-    global damage_taken
-    enemy_damage = r.randint(int(round(enemy_attack_p-enemy_attack_p/2)), enemy_attack_p)
-    player_block = r.randint(int(round(armour[1]-armour[1]/2)), armour[1])
-    damage = enemy_damage - player_block
-    
-    if damage > 0:
-        player_health = player_health - damage
-        damage_taken = damage_taken + damage
-        print(f"{enemy_name} attacked for {enemy_damage} damage!")
-        time.sleep(0.5)
-        print(f"You blocked {player_block}!")
-        time.sleep(0.5)
-        print(f"{enemy_name} did {damage} damage to you!")
-        if player_health < 0:
-            death_screen()
-    else:
-        print(f"{enemy_name} attacked for {enemy_damage} damage!")
-        time.sleep(0.5)
-        print(f"You blocked {player_block}!")
-        time.sleep(0.5)
-        print(f"You blocked all the damage!")
-# Function for basic enemy attack, although more complex attacks can be made for specific enemies. See Mathemagician for example
-
-def enemy_1():
-    global enemy_name
-    global enemy_health
-    global enemy_attack_p
-    global enemy_defence_p
-    global player_defence_p
-    global player_health
-    global player_health
-    global enemy_damage
-    global player_block
-    global kill_count
-    combat = True
-    dead = False
-    battle = True
-    dead = False
-    enemy_name = "The enemy"
-    enemy_health = 100
-    enemy_attack_p = 20
-    enemy_defence_p = 2
-    print(f"An {enemy_name} appears! What do you do?")
-    while battle == True:
-        input_var = (input("Attack, talk or run?"))[0].lower()
-        while input_var not in ["a","t", "r"]:
-            input_var = (input("For real this time, pick an option from attack, talk or run : "))[0].lower()
-        if input_var == "a":
-            player_attack()
-            time.sleep(0.5)
-            if enemy_health > 0:
-                print(f"***{enemy_name}'s turn***")
-                enemy_attack()
-            else:
-                battle = False
-                dead = True
-        elif input_var == "t":
-            print("You try making smalltalk with the enemy.")
-            time.sleep(0.5)
-            print("...")
-            time.sleep(0.5)
-            print("The enemy ignores you.")
-            time.sleep(0.5)
-        else:
-            battle = False
-    if dead == True:
-        kill_count += 1
-        print("You killed the enemy!")
-        time.sleep(0.5)
-        print(f"You have {player_health} hit points left.")
-    else:
-        print(f"You casually walk past {enemy_name}")
-        time.sleep(0.5)
-        print(f"{enemy_name} watches you leave.")
-        time.sleep(0.5)
-        print(f"You managed to escape {enemy_name}!")
-    print(f"You have dealt {damage_dealt} damage.")    
-    print(f"You have taken {damage_taken} damage.")    
-# A basic enemy/ template for combats.
-
-
-combat_rooms = 0
-puzzle_rooms = 0
-kill_count = 0
-
-def death_screen():
-    print(f"""Oh no! You died.
-    Run statistics:
-    Total damage dealt: {damage_dealt}
-    Total damage taken: {damage_taken}
-    Combat rooms visited: {combat_rooms}
-    Puzzle rooms visited: {puzzle_rooms}
-    Enemies killed: {kill_count}
-    """)
-    input_var = input("Continue to credits?")
-    # Go to credits screen
-
-death_screen()
+            puzzle_room()
+            puzzle_room_count += 1
+    death_screen()
+    highscore_screen()
+    store_highscore()

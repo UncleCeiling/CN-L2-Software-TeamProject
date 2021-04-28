@@ -1,1 +1,5 @@
-a slime, a minotaur, a dinosaur, an army of mice, a skeleton
+Slime,10,5,2
+Minotaur,
+Dinosaur,
+An army of mice,
+Skeleton
