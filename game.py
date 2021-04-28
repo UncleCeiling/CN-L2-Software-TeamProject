@@ -520,6 +520,7 @@ def highscore_screen():
         return
 
 def store_highscore():
+    
     print("store_highscore")
 # Generate starting weapon and armour
 
