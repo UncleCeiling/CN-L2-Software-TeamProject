@@ -211,16 +211,14 @@ def room_generator(): # generates rooms and takes player selection - returns tru
 
 # Testing
 
-print(add_buff(gen_weapon(),2))
-
 # Main block
 
-# start_function()
-# main_menu_selection = 0
-# while main_menu_selection != 1:
-#     main_menu_selection = main_menu()
-# intro_complete = game_intro()
-# if intro_complete == False:
-#     print("THE END") # PLACEHOLDER
-# else:
-#     print("You play the game") # PLACEHOLDER
+start_function()
+main_menu_selection = 0
+while main_menu_selection != 1:
+    main_menu_selection = main_menu()
+intro_complete = game_intro()
+if intro_complete == False:
+    print("THE END") # PLACEHOLDER
+else:
+    print("You play the game") # PLACEHOLDER
