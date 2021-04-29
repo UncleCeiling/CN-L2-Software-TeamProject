@@ -67,10 +67,9 @@ def reset(): # Call to reset the player and tracking stats - returns nothing
 def start_function(): # Call to use start screen - returns nothing
     print("\nstart screen") # PLACEHOLDER
     var = input("\nPlease enter something to continue :\n\n>>>")
-    if var == "":
+    while var not in ["something"]:
         start_function()
-    else:
-        return
+    return
 
 def hs_creds_page(): # Call to display highscores and credits - returns nothing
     def print_highscore(): # Prints highscores
