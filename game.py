@@ -511,7 +511,7 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
             return
         else:
             print("\nYou eat the pile of fruit and gain some Health Points!")
-            player_health += (randint(10,50) * (int(round(level/2))) 
+            player_health += (randint(10,50) * (int(round(level/2)))) 
             player_stats()
         return
     def witches():
@@ -558,7 +558,7 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
             return
         else:
             print("\nMuhahaha! I'm the big pile of fruit witch, help yourself to my big pile of fruit! You eat the pile of fruit and gain some Health Points!")
-            player_health += (randint(10,50) * (int(round(level/2)))
+            player_health += (randint(10,50) * (int(round(level/2))))
             player_stats()
         return
     def aces():
