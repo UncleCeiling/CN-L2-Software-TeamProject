@@ -1,10 +1,10 @@
-Slime,50,30,8
-Minotaur,100,30,3
-Dinosaur,30,50,8
+A Slime,50,30,8
+A Minotaur,100,30,3
+A Dinosaur,30,50,8
 An army of mice,120,30,4
-Skeleton,10,30,15
-Mathemagician,50,69,1
-Ever Given,500,2,1
-Python,20,20,10
-Home alone Dracula,40,30,5
+A Skeleton,10,30,15
+A Mathemagician,50,69,1
+The Ever Given,500,2,1
+A Python,20,20,10
+The Home-Alone Dracula,40,30,5
 Three kids in a trenchcoat,18,21,9

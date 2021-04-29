@@ -108,11 +108,11 @@ def options_menu(): # Call to run options - does not return anything
             print(f"\n==========DIFFICULTY MENU===========\n\n  Difficulty is currently: {difficulty_options[difficulty]}\n\n    Easy       Normal       Hard\n\n================Exit================")
         global difficulty
         print_diff_menu() #print difficulty menu
-        option_choice_raw = (input("\nPlease select a difficulty : ")) + "   " #take diff input
+        option_choice_raw = (input("\nPlease select a difficulty :\n\n>>>")) + "   " #take diff input
         option_choice = option_choice_raw[0].lower()
         while option_choice not in ["e","n","h"]: #if invalid input, ask again, but sassy
             print_diff_menu
-            option_choice_raw = (input("Hmmm, not sure that's an option...\nWhy don't you try something else?\n\nPlease select an option : ")) + "   "
+            option_choice_raw = (input("\nHmmm, not sure that's an option...\n\nWhy don't you try something else?\n\nPlease select an option :\n\n>>>")) + "   "
             opion_choice = option_choice_raw[0].lower()
         if option_choice == "e": #easy
             print("\nSetting difficulty to Easy")
@@ -131,11 +131,11 @@ def options_menu(): # Call to run options - does not return anything
             print(f"{colour_options[2][colour_options[0].index(colour)]}============COLOUR MENU=============\n\n    Colour is currently: {colour_options[1][colour_options[0].index(colour)]}\n    \u001b[0m                            {colour_options[2][colour_options[0].index(colour)]}\n    \u001b[0m|Default |  \u001b[31mRed\u001b[0m   | \u001b[33mYellow\u001b[0m |{colour_options[2][colour_options[0].index(colour)]}\n    \u001b[0m                            {colour_options[2][colour_options[0].index(colour)]}\n    \u001b[0m| \u001b[32mGreen\u001b[0m  |  \u001b[36mCyan\u001b[0m  |  \u001b[34mBlue\u001b[0m  |{colour_options[2][colour_options[0].index(colour)]}\n    \u001b[0m                            {colour_options[2][colour_options[0].index(colour)]}\n    \u001b[0m|   \u001b[35mMagenta\u001b[0m  |\u001b[30;47m  Inverted   \u001b[0m|{colour_options[2][colour_options[0].index(colour)]}\n    \u001b[0m                            {colour_options[2][colour_options[0].index(colour)]}\n================Exit================")
         global colour # To change back to current colour, use f"{colour_options[2][colour_options[0].index(colour)]}TEXT HERE"
         print_colour_menu() # Print colour menu
-        colour_choice_raw = (input("\nPlease select a colour : ")) + "   "   # Take colour input
+        colour_choice_raw = (input("\nPlease select a colour :\n\n>>>")) + "   "   # Take colour input
         colour_choice = colour_choice_raw[0].lower()
         while colour_choice not in (colour_options[0]+["e"]):               # If invalid input, ask again, but sassy
             print_colour_menu
-            colour_choice_raw = (input("\nHmmm, not sure that's an option...\nWhy don't you try something else?\n\nPlease select an colour : ")) + "   "
+            colour_choice_raw = (input("\nHmmm, not sure that's an option...\n\nWhy don't you try something else?\n\nPlease select an colour :\n\n>>>")) + "   "
             colour_choice = colour_choice_raw[0].lower()
         if colour_choice in colour_options[0]:                              # If colour selected, change colour
             colour = colour_choice                                          # Make change in variables
@@ -146,11 +146,11 @@ def options_menu(): # Call to run options - does not return anything
             print("\nThat didn't work, sorry!\n\nReturning you to the options menu...\n") # Print Message
         return                                                              # Go back - I WANT TO BE MONKE
     print_options_main()                                                    # Print menu
-    option_choice_raw = (input("\nPlease select an option : "))[0] + "   "  # Ask for Input
+    option_choice_raw = (input("\nPlease select an option :\n\n>>>"))[0] + "   "  # Ask for Input
     option_choice = option_choice_raw[0].lower()
     while option_choice not in ["d","c","t","e"]:                           # Check if input is valid
         print_options_main()                                                # Print menu when not valid
-        option_choice_raw = (input("Hmmm, not sure that's an option...\nWhy don't you try something else?\n\nPlease select an option : ")) + "   " # Chastise and take new input
+        option_choice_raw = (input("Hmmm, not sure that's an option...\n\nWhy don't you try something else?\n\nPlease select an option :\n\n>>>")) + "   " # Chastise and take new input
         option_choice = option_choice_raw[0].lower()
     if option_choice == "d":                                                # Check if input was difficulty
         difficulty_menu()                                                   # Run diff menu
@@ -168,7 +168,7 @@ def update_equipment(): # Call to update weapon and armour values - does not ret
 
 def player_stats(): # Updates and prints player stats - does not return anyhting
     update_equipment() 
-    print(f"\nYou have:\n{player_health} health points remaining\n\nWeapon: {weapon[0]}\n\nArmour: {armour[0]}")
+    print(f"\nYou have {player_health} health points remaining\n\nWeapon: {weapon[0]}\n\nArmour: {armour[0]}")
 
 def prize_give(buff_amount): # Call to give a prize - takes integer for power of reward - returns nothing
     global player_health,weapon,armour
@@ -219,7 +219,7 @@ def game_intro(): # Call to do intro - returns true for start game, false for TH
     print("\nYou are Cara Loft, international burial chamber pilferer.\n\nYou approach the entrance of an ancient tomb, rumoured to harbour untold dangers and even less told treasures.")
     print("\nᒥつ⑉⚊⑉ᒣつ <---This is you")
     player_stats()
-    input_var_raw = (input("\nHead forward? (y/n) :\n\n>>>")) + "   "
+    input_var_raw = (input("\nHead forward?\n\n>>>")) + "   "
     input_var = input_var_raw[0].lower()
     while input_var not in ["y","n"]:
         input_var_raw = (input("\nFor real this time, pick an option from yes or no :\n\n>>>")) + "   "
@@ -259,10 +259,10 @@ def gen_room(): # Call to generate room and take player selection - returns true
     Door A: {options[0]}
     Door B: {options[1]}
     Door C: {options[2]}""")
-    input_var_raw = (input("\nPlease choose a door (A, B or C)")) + "   "
+    input_var_raw = (input("\nPlease choose a door (A, B or C)\n\n>>>")) + "   "
     input_var = input_var_raw[0].lower()
     while input_var not in ["a","b","c"]:
-        input_var_raw = (input("For real this time, pick an option from A, B or C : ")) + "   "
+        input_var_raw = (input("For real this time, pick an option from A, B or C :\n\n>>>")) + "   "
         input_var = input_var_raw[0].lower()
     if input_var == "a":
         print("You open door A")
@@ -293,7 +293,7 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
     def riddler(): # Simple question minigame - returns nothing
         global player_health
         print("\nYou walk into a peculiar room, indescribable by words.\n\nI'm really struggling here as a narrator actually, it's impossible to give an accurate account of the qualities of this room using mere words alone.\n\nOne thing about this room is for sure though, it's a room of riddles.\n\nA riddler approaches, they too are indescribable, with their short red hair and green top hat with little ? symbols all over it. This riddler riddles you this.\n\n\"What question can you never answer yes to?\"\n\nWhat is your answer?\n\nA: Do you think CodeNation is a bit rubbish?\n\nB: Would you please stop trying to use 漢字 in everything Mike? It breaks the code.\n\nC: Can someone think of something to put here later?")
-        input_var_raw = input("A, B or C?") + "   "
+        input_var_raw = input("\nA, B or C?\n\n>>>") + "   "
         input_var = input_var_raw[0].lower()
         while input_var not in ["a","b","c"]:
             input_var_raw = (input("\nFor real this time, pick an option from A, B or C :\n\n>>>")) + "   "
@@ -427,14 +427,14 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
         global player_health
         enemy_choice = ["r","p","s"]
         shuffle(enemy_choice)
-        print("You enter a large room filled with small gremlin like creatures. The gremlins are all sitting on picnic blankets playing rock paper scissors for food and weapons. A sign on the wall reads \"No Yogis\". You spot an empty place and decide to play.")
-        input_var_raw = (input("Choose rock, paper or scissors!")) + "   "
+        print("\nYou enter a large room filled with small gremlin like creatures.\n\nThe gremlins are all sitting on pic-a-nic blankets playing rock paper scissors for food and weapons.\n\nA sign on the wall reads \"No Yogis\".\n\nYou spot an empty place and decide to play.")
+        input_var_raw = (input("\nChoose rock, paper or scissors!\n\n>>>")) + "   "
         input_var = input_var_raw[0].lower()
         while input_var not in ["r","p","s"]:
-            input_var_raw = (input("For real this time, pick an option from rock, paper or scissors : ")) + "   "
+            input_var_raw = (input("\nFor real this time, pick an option from rock, paper or scissors :\n\n>>>")) + "   "
             input_var[0].lower()
         if input_var == "r":
-            print("You choose rock!")
+            print("\nYou choose rock!")
             if enemy_choice[0] == "p":
                 print("\nThe gruff gremlin chose paper.")
                 print("\nToo bad, you lost!")
@@ -442,15 +442,15 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
                 player_health -= 10
                 player_stats()
             elif enemy_choice[0] == "s":
-                print("The gruff gremlin chose scissors.")
-                print("Congratulations, you win!")
+                print("\nThe gruff gremlin chose scissors.")
+                print("\nCongratulations, you win!")
                 prize_give(level)
             else:
-                print("The gruff gremlint chose rock.")
-                print("It's a tie! Rematch!")
+                print("\nThe gruff gremlint chose rock.")
+                print("\nIt's a tie! Rematch!")
                 rock_paper_scissors()
         elif input_var == "p":
-            print("You choose paper!")
+            print("\nYou choose paper!")
             if enemy_choice[0] == "s":
                 print("\nThe gruff gremlin chose paper.")
                 print("\nToo bad, you lost!")
@@ -458,15 +458,15 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
                 player_health -= 10
                 player_stats()
             elif enemy_choice[0] == "r":
-                print("The gruff gremlin chose rock.")
-                print("Congratulations, you win!")
+                print("\nThe gruff gremlin chose rock.")
+                print("\nCongratulations, you win!")
                 prize_give(level)
             else:
-                print("The gruff gremlin chose paper.")
-                print("It's a tie! Rematch!")
+                print("\nThe gruff gremlin chose paper.")
+                print("\nIt's a tie! Rematch!")
                 rock_paper_scissors()
         elif input_var == "s":
-            print("You choose scissors!")
+            print("\nYou choose scissors!")
             if enemy_choice[0] == "r":
                 print("\nThe gruff gremlin chose paper.")
                 print("\nToo bad, you lost!")
@@ -474,12 +474,12 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
                 player_health -= 10
                 player_stats()
             elif enemy_choice[0] == "p":
-                print("The gruff gremlin chose paper.")
-                print("Congratulations, you win!")
+                print("\nThe gruff gremlin chose paper.")
+                print("\nCongratulations, you win!")
                 prize_give(level)
             else:
-                print("The gruff gremlin chose scissors.")
-                print("It's a tie! Rematch!")
+                print("\nThe gruff gremlin chose scissors.")
+                print("\nIt's a tie! Rematch!")
                 rock_paper_scissors()
         else:
             print("Hmmm, that was weird... Shame I can't describe it to you...")
@@ -615,12 +615,12 @@ def combat_room(): # Call to select enemy and do combat loop - returns nothing
     enemy_health = int(enemy_stats[1])
     enemy_attack = int(enemy_stats[2])
     enemy_defence = int(enemy_stats[3])
-    print(f"A {enemy_name} appears! What do you do?")
+    print(f"\n{enemy_name} appears! What do you do?")
     while combat == True:
-        input_var_raw = (input("Attack, talk or run?")) + "   "
+        input_var_raw = (input("\nAttack, talk or run?\n\n>>>")) + "   "
         input_var = input_var_raw[0].lower()
         while input_var not in ["a","t","r"]:
-            input_var_raw = (input("For real this time, pick an option from attack, talk or run : ")) + "   "
+            input_var_raw = (input("\nFor real this time, pick an option from attack, talk or run :\n\n>>>")) + "   "
             input_var = input_var_raw[0].lower()
         if input_var == "a":
             player_turn()
@@ -716,6 +716,7 @@ while main_menu_selection != 0:
                 else:
                     puzzle_room()
                     puzzle_room_count += 1
+                player_stats()
                 level = (((combat_room_count+puzzle_room_count)//10)+difficulty+1)
             death_screen()
             highscore_screen()
