@@ -575,40 +575,44 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
         score = 0
         card1 = deck.pop(0)
         correct = True
+        print("\nThe ghost of Fruce Borsyth ascends from the floor, chuckling to himself.\n\nHe spots you and his face immediately lights up as he hovers over to where you are standing.\n\nAn huge ethereal deck of cards materialises in front you and begins to shuffle it's self...")
+        print("\nThe cards finish their shuffle and two cards are laid out in front of you.\n\nFrucy, still chuckling, leans in and flips the first card and asks simply:\n\n'Higher or Lower'?")
         while correct == True:
-            print("\nYour score so far is:", score)
-            print("\nThe current card is:", card1[0])
+            print("\nThe current card reads:", card1[0])
             while True:
-                choice = input("\nHigher or Lower?\n\n>>>")
+                choice = input("\n Do you choose Higher or Lower?\n\n>>>")
                 if len(choice) > 0:
                     if choice[0].lower() in ["h","l"]:
                         break
             card2 = deck.pop(0)
-            print("\nThe next card picked is:", card2[0])
+            print("\nThe next card turns over to reveal...", card2[0])
             sleep(1)
             if choice[0].lower() == "h" and card2[1] > card1[1]:
-                print("\nCorrect!")
+                print("\nHigher!\n\nCorrect!")
                 score += 1
                 correct = True
             elif choice[0].lower() == "h" and card2[1] < card1[1]:
-                print("\nWrong!")
+                print("\nLower...\n\nYou got that Wrong...")
                 print("\nYou take some damage!")
                 player_health -= (randint(10,20)*level)
                 correct = False
             elif choice[0].lower() == "l" and card2[1] < card1[1]:
-                print("\nCorrect!")
+                print("\nLower!\n\nCorrect!")
                 score += 1
                 correct = True
             elif choice[0].lower() == "l" and card2[1] > card1[1]:
-                print("\nWrong!")
+                print("\nHigher...\n\nWhat a shame...")
                 print("\nYou take some damage!")
                 player_health -= (randint(10,20)*level)
                 correct = False
             else:
-                print("\nTie!")
+                print("\nIt's the same!\n\nWould you look at that!")
                 print("\nYou receive some health!")
                 player_health += ((randint(10,50))*(int(round(level/2))))
                 correct = False
+            if correct == True:
+                print("\nYour score so far is:", score)
+                print("\nFrucy pulls another cards from the deck, face down...")
         print("Game Over")
         if score == 0:
             print("\n'Wow! You really suck at this!'\n\n'I still have a present for you though...'")
