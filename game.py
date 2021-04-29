@@ -71,7 +71,7 @@ def start_function(): # Call to use start screen - returns nothing
     print("\nstart screen") # PLACEHOLDER
     var = input("\nPlease enter something to continue :\n\n>>>").lower()
     while var != "something":
-        start_function()
+        var = input("\nPlease enter something to continue :\n\n>>>").lower()
     return
 
 def hs_creds_page(): # Call to display highscores and credits - returns nothing
