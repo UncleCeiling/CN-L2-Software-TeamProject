@@ -9,3 +9,4 @@ A Python,20,20,10
 The Home-Alone Dracula,40,30,5
 Three kids in a trenchcoat,18,21,9
 example_enemy, 55,30,5
+Visual Studio Toad 150,20,5
