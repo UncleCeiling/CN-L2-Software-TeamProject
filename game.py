@@ -65,7 +65,7 @@ def reset(): # Call to reset the player and tracking stats - returns nothing
     level = 1
 
 def start_function(): # Call to use start screen - returns nothing
-    print("\nstart screen\n")
+    print("\nstart screen") # PLACEHOLDER
     var = input("\nPlease enter something to continue :\n\n>>>")
     if var == "":
         start_function()
@@ -162,8 +162,7 @@ def options_menu(): # Call to run options - does not return anything
     return
 
 def update_equipment(): # Call to update weapon and armour values - does not return anything
-    global weapon
-    global armour
+    global weapon,armour
     weapon[1] = len(weapon[0].replace(" ", "")) 
     armour[1] = len(armour[0].replace(" ", "")) 
 
@@ -172,9 +171,7 @@ def player_stats(): # Updates and prints player stats - does not return anyhting
     print(f"\nYou have:\n{player_health} health points remaining\n\nWeapon: {weapon[0]}\n\nArmour: {armour[0]}")
 
 def prize_give(buff_amount): # Call to give a prize - takes integer for power of reward - returns nothing
-    global player_health
-    global weapon
-    global armour
+    global player_health,weapon,armour
     prize = sample(["a new weapon","some new armour","a weapon buff","an armour buff","some health"],1)[0]
     print(f"\nCongratulations!\n\nYou won {prize}!")
     if prize in ["a weapon buff","an armour buff"]:
@@ -310,8 +307,6 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
             player_stats()
     def monty_hall(): # Monty hall minigame - returns nothing
         global player_health
-        global weapon
-        global armour
         doors = ["trap", "trap", "prize"]
         ongoing = True
         shuffle(doors)
@@ -430,8 +425,6 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
         print("\nI've been your host, Honty Mall.\n\nSee you next time on \"What the heck is going on behind that dooooooooor!\"")
     def rock_paper_scissors(): # Rock, Paper, Scissors minigame - returns nothing
         global player_health
-        global weapon
-        global armour
         enemy_choice = ["r","p","s"]
         shuffle(enemy_choice)
         print("You enter a large room filled with small gremlin like creatures. The gremlins are all sitting on picnic blankets playing rock paper scissors for food and weapons. A sign on the wall reads \"No Yogis\". You spot an empty place and decide to play.")
@@ -492,9 +485,7 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
             print("Hmmm, that was weird... Shame I can't describe it to you...")
 
     def fruit_and_anvil(): # Fruit and Anvil minigame - returns nothing
-        global player_health
-        global weapon
-        global armour
+        global player_health,weapon,armour
         print("\nYou enter a room with a large pile of fruit and an anvil, the door locks behind you.\n\nA large sign above the opposite door informs you that you have 1 hour until you can proceed.\n\nSeems like you'll only have time to use one, what do you do?")
         input_var_raw = (input("\nEat the fruit or use the anvil?\n\n>>>")) + "   "
         input_var = input_var_raw[0].lower()
@@ -523,9 +514,7 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
             player_stats()
         return
     def witches():
-        global player_health
-        global weapon
-        global armour
+        global player_health,weapon,armour
         print("\nYou enter a room with two witches stirring away at bubbling cauldrons. Who do you approach:\nA:The muscular witch\nB:The witch with a big pile of fruit")
         input_var_raw = (input("\nA or B?\n\n>>>")) + "   "
         input_var = input_var_raw[0].lower()
@@ -547,7 +536,7 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
                 accept = accept_raw[0].lower()
                 if accept == "y":
                     weapon[0] = prize
-                    player_stats
+                    player_stats()
                     return
                 else:
                     return
@@ -560,7 +549,7 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
                     accept = accept_raw[0].lower()
                 if accept == "y":
                     armour[0] = prize
-                    player_stats
+                    player_stats()
                     return
                 else:
                     return
@@ -576,12 +565,10 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
     return
 
 def player_turn(): # Call for player attack enemy - returns nothing
-    global enemy_health
-    global damage_dealt
+    global enemy_health,damage_dealt
     player_damage = randint(int(round(weapon[1]-weapon[1]/2)), weapon[1])
     enemy_block = randint(int(round(enemy_defence-enemy_defence/2)), enemy_defence)
     damage = player_damage - enemy_block
-    
     if damage > 0:
         enemy_health = enemy_health - damage
         damage_dealt = damage_dealt + damage
@@ -598,12 +585,10 @@ def player_turn(): # Call for player attack enemy - returns nothing
         print(f"You dealt no damage to {enemy_name}!")
 
 def enemy_turn(): # Call for enemy attack player - returns nothing
-    global player_health
-    global damage_taken
+    global player_health,damage_taken
     enemy_damage = randint(int(round(enemy_attack-enemy_attack/2)), enemy_attack)
     player_block = randint(int(round(armour[1]-armour[1]/2)), armour[1])
     damage = enemy_damage - player_block
-    
     if damage > 0:
         player_health = player_health - damage
         damage_taken = damage_taken + damage
@@ -625,9 +610,7 @@ def combat_room(): # Call to select enemy and do combat loop - returns nothing
     global player_health,enemy_name,enemy_health,enemy_attack,enemy_defence,kill_count
     combat = True
     dead = False
-    dead = False
     enemy_stats = sample(enemies,1)[0]
-    print(enemy_stats)
     enemy_name = enemy_stats[0]
     enemy_health = int(enemy_stats[1])
     enemy_attack = int(enemy_stats[2])
@@ -636,7 +619,7 @@ def combat_room(): # Call to select enemy and do combat loop - returns nothing
     while combat == True:
         input_var_raw = (input("Attack, talk or run?")) + "   "
         input_var = input_var_raw[0].lower()
-        while input_var not in ["a","t", "r"]:
+        while input_var not in ["a","t","r"]:
             input_var_raw = (input("For real this time, pick an option from attack, talk or run : ")) + "   "
             input_var = input_var_raw[0].lower()
         if input_var == "a":
@@ -669,7 +652,6 @@ def combat_room(): # Call to select enemy and do combat loop - returns nothing
     else:
         print("You managed to escape with your life! But at what cost?")
         sleep(0.5)
-
 
 def death_screen(): # Call when health <= 0 to show damage screen - returns nothing
     print(f"""
