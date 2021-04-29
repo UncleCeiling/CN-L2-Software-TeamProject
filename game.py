@@ -234,7 +234,7 @@ def main_menu(): # Call to use main menu - returns 1(start game), 2(options),3(c
     def print_main_menu(): # Prints main menu
         print("\nWelcome to Cara Loft: Burial Chamber Pilferer!\n\n====================================\n\n    [1] Start Game\n    [2] Settings\n    [3] Highscores and Credits\n    [0] Quit\n")
     print_main_menu()
-    option = int(input("Enter your selection "))
+    option = int(input("\nEnter the number of your selection\n\n>>>"))
     while option in [1,2,3]:
         if option == 1:
             print("Lets Goooo!")
