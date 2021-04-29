@@ -304,9 +304,8 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
             print("\nCorrect! CodeNation is really really great!\n\nYou'd never say yes to that! Well done!")
             prize_give(level)
         else:
-            print("\nWrong you fool! take your punishment!\nThe riddler's riddle proved to be indescribably difficult. You lost 20 Health points!")
-            player_health -= 20
-            player_stats()
+            print("\nWrong you fool! take your punishment!\nThe riddler's riddle proved to be indescribably difficult. You some damage!")
+            player_health -= randint(10,20) * level
     def monty_hall(): # Monty hall minigame - returns nothing
         global player_health
         doors = ["trap", "trap", "prize"]
@@ -403,33 +402,30 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
             if doors[0] == "prize":
                 prize_give(level)
             else:
-                print("Oh no! the trap dealt 10 damage to you!")
-                player_health -= 10
-                player_stats()
+                print("Oh no! the trap dealt some damage to you!")
+                player_health -= randint(10,20) * level
         elif input_var == "b":
             print(f"What's behind door {input_var}?")
             print(f"It's a {doors[1]}!")
             if doors[1] == "prize":
                 prize_give(level)
             else:
-                print("Oh no! the trap dealt 10 damage to you!")
-                player_health -= 10
-                player_stats()
+                print("Oh no! the trap dealt some damage to you!")
+                player_health -= randint(10,20) * level
         elif input_var == "c":
             print(f"What's behind door {input_var}?")
             print(f"It's a {doors[2]}!")
             if doors[2] == "prize":
                 prize_give(level)
             else:
-                print("Oh no! the trap dealt 10 damage to you!")
-                player_health -= 10
-                player_stats()
+                print("Oh no! the trap dealt some damage to you!")
+                player_health -= randint(10,20) * level
         print("\nI've been your host, Honty Mall.\n\nSee you next time on \"What the heck is going on behind that dooooooooor!\"")
     def rock_paper_scissors(): # Rock, Paper, Scissors minigame - returns nothing
         global player_health
         enemy_choice = ["r","p","s"]
         shuffle(enemy_choice)
-        print("\nYou enter a large room filled with small gremlin like creatures.\n\nThe gremlins are all sitting on pic-a-nic blankets playing rock paper scissors for food and weapons.\n\nA sign on the wall reads \"No Yogis\".\n\nYou spot an empty place and decide to play.")
+        print("\nYou enter a large room filled with small gremlin like creatures.\n\nThe gremlins are all sitting on pic-a-nic blankets with pic-a-nic baskets filled with all sorts of equipment and food.\n\nA sign on the wall reads \"No Yogis\".\n\nYou spot an empty place next to a gruff looking gremlin and decide to play.")
         input_var_raw = (input("\nChoose rock, paper or scissors!\n\n>>>")) + "   "
         input_var = input_var_raw[0].lower()
         while input_var not in ["r","p","s"]:
@@ -440,9 +436,8 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
             if enemy_choice[0] == "p":
                 print("\nThe gruff gremlin chose paper.")
                 print("\nToo bad, you lost!")
-                print("\nOh no!\n\nThe gremlin dealt 10 damage to you!")
-                player_health -= 10
-                player_stats()
+                print("\nOh no!\n\nThe gremlins powerful paper damaged you!")
+                player_health -= randint(10,20) * level
             elif enemy_choice[0] == "s":
                 print("\nThe gruff gremlin chose scissors.")
                 print("\nCongratulations, you win!")
@@ -454,11 +449,10 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
         elif input_var == "p":
             print("\nYou choose paper!")
             if enemy_choice[0] == "s":
-                print("\nThe gruff gremlin chose paper.")
+                print("\nThe gruff gremlin chose scissors.")
                 print("\nToo bad, you lost!")
-                print("\nOh no!\n\nThe gremlin dealt 10 damage to you!")
-                player_health -= 10
-                player_stats()
+                print("\nOh no!\n\nThe gruff gremlin' slices you with scissors! You take some damage!")
+                player_health -= randint(10,20) * level
             elif enemy_choice[0] == "r":
                 print("\nThe gruff gremlin chose rock.")
                 print("\nCongratulations, you win!")
@@ -470,11 +464,10 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
         elif input_var == "s":
             print("\nYou choose scissors!")
             if enemy_choice[0] == "r":
-                print("\nThe gruff gremlin chose paper.")
+                print("\nThe gruff gremlin chose rock.")
                 print("\nToo bad, you lost!")
-                print("\nOh no!\n\nThe gremlin dealt 10 damage to you!")
-                player_health -= 10
-                player_stats()
+                print("\nOh no!\n\nThe gruss gremlin stabs you! You take some damage!")
+                player_health -= randint(10,20) * level
             elif enemy_choice[0] == "p":
                 print("\nThe gruff gremlin chose paper.")
                 print("\nCongratulations, you win!")
@@ -507,12 +500,10 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
                 print(f"\nYour armour '{armour[0]}' becomes:")
                 armour[0] = add_buff(armour[0],1)
                 print(f"\n'{armour[0]}'")
-            player_stats()
             return
         else:
             print("\nYou eat the pile of fruit and gain some Health Points!")
-            player_health += randint(10,50)
-            player_stats()
+            player_health += (randint(10,50) * (int(round(level/2)))) 
         return
     def witches():
         global player_health,weapon,armour
@@ -537,7 +528,6 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
                 accept = accept_raw[0].lower()
                 if accept == "y":
                     weapon[0] = prize
-                    player_stats()
                     return
                 else:
                     return
@@ -550,16 +540,13 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
                     accept = accept_raw[0].lower()
                 if accept == "y":
                     armour[0] = prize
-                    player_stats()
                     return
                 else:
                     return
-            player_stats()
             return
         else:
             print("\nMuhahaha! I'm the big pile of fruit witch, help yourself to my big pile of fruit! You eat the pile of fruit and gain some Health Points!")
-            player_health += randint(10,50)
-            player_stats()
+            player_health += (randint(10,50) * (int(round(level/2))))
         return
     def aces():
         global player_health
