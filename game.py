@@ -169,13 +169,13 @@ def update_equipment(): # Updates integer values for equipment
 
 def player_stats(): # prints player inv/stats
     update_equipment() 
-    print(f"You have:\n{player_health} hit points remaining\n{weapon[0]}: {weapon[1]} power\n{armour[0]}: {armour[1]} defence")
+    print(f"\nYou have:\n{player_health} health points remaining\n\nWeapon: {weapon[0]}\n\nArmour: {armour[0]}")
 
 def prize_give(buff_amount): # gives prizes - call to run a prize routine - takes an integer for power of reward
     global player_health
     global weapon
     global armour
-    prize = sample(["a new weapon","some new armour","a weapon buff","an armour buff","some health"],1)
+    prize = sample(["a new weapon","some new armour","a weapon buff","an armour buff","some health"],1)[0]
     print(f"\nCongratulations!\n\nYou won {prize}!")
     if prize in ["a weapon buff","an armour buff"]:
         if prize == "a weapon buff":
@@ -212,10 +212,11 @@ def prize_give(buff_amount): # gives prizes - call to run a prize routine - take
                 return
             else:
                 return
-    else:
+    elif prize in ["some health"]:
         print(f"\nYou gain {str(20*buff_amount)} Health Points!")
         player_health += (20*buff_amount)
         player_stats()
+        return
 
 def game_intro(): # gives intro - call to start game process - returns true for start game, false for you lose
     print("\nYou are Cara Loft, international burial chamber pilferer.\n\nYou approach the entrance of an ancient tomb, rumoured to harbour untold dangers and even less told treasures.")
@@ -621,7 +622,6 @@ def combat_room():
             print("Can't escape!")
             enemy_turn()
 
-
 def death_screen():
     print(f"""
     Oh no! You died!
@@ -656,12 +656,15 @@ def highscore_screen():
 
 def store_highscore():
     print("store_highscore")
+
 # Generate starting weapon and armour
 
 weapon[0] = gen_weapon()
 armour[0] = gen_armour()
 
 # Testing
+
+
 
 # Main block
 
