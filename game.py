@@ -716,7 +716,7 @@ while main_menu_selection != 0:
                     puzzle_room()
                     puzzle_room_count += 1
                 player_stats()
-                level = (((combat_room_count+puzzle_room_count)//10)+difficulty+1)
+                level = (((combat_room_count+puzzle_room_count)//10)+(2-difficulty))
             death_screen()
             highscore_screen()
             store_highscore()
