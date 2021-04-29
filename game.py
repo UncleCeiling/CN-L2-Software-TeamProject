@@ -1,7 +1,7 @@
 # pylint: disable=unused-variable
 # Initialisation
 
-    # Declare Variables
+# Declare Variables
 
 difficulty = 1                                          # Current difficulty setting - indexes via: difficulty_options[difficulty]
 difficulty_options = ["Easy","Normal","Hard"]           # Possible difficulty options
@@ -21,18 +21,18 @@ enemy_health = 0
 enemy_attack = 0
 enemy_defence = 0
 
-    # Import functions from libraries
+# Import functions from libraries
 
 from time import sleep
 from os import chdir, path                              # To set Working Directory
 from random import sample, randint, shuffle, choice            # For sampling lists
 
-    # Set Working directory to file directory
+# Set Working directory to file directory
 
 chdir(path.dirname(__file__))
 
-    # Import data from .txt into arrays - example layout:
-    # var_name = (open("txt_file_name.txt","r").readlines())[0].split(",")
+# Import data from .txt into arrays - example layout:
+# var_name = (open("txt_file_name.txt","r").readlines())[0].split(",")
 
 highscore = (open("storage/highscore.txt","r").read()).split("\n")
 hs1 = str(highscore[0]).split(",")
@@ -50,7 +50,7 @@ for x in range(len(enemies)):
 
 # Functions
 
-def reset():
+def reset(): # Call to reset the player and tracking stats - returns nothing
     global player_health,weapon,armour,combat_room_count,puzzle_room_count,damage_dealt,damage_taken,kill_count,level
     player_health = 100
     weapon[0] = gen_weapon()
@@ -64,47 +64,47 @@ def reset():
     kill_count = 0
     level = 1
 
-def start_function(): # Syed's start function (HAS PLACEHOLDER - line 31)
+def start_function(): # Call to use start screen - returns nothing
     print("\nstart screen\n")
-    var = input("Please enter something to continue : ")
-    if var == (""):
+    var = input("\nPlease enter something to continue :\n\n>>>")
+    if var == "":
         start_function()
     else:
         return
 
-def hs_creds_page():
-    def print_highscore():
+def hs_creds_page(): # Call to display highscores and credits - returns nothing
+    def print_highscore(): # Prints highscores
         print(f"\n=============HIGH SCORES============\n\n{hs1[0]} : {hs1[1]}\n\n{hs2[0]} : {hs2[1]}\n\n{hs3[0]} : {hs3[1]}\n")
-    def print_credits():
+    def print_credits(): # Prints credits
         print("\n========Codenation Blue-hats========\n\n        Cara Loft made by:\n\nPesh B\n\nSyed R\n\nAmir H\n\nMike D\n\nChris F\n")
     print_highscore()
     print_credits()
     print("====================================\n")
-    taken_input = input("\nType something to return to the menu : ")
+    taken_input = input("\nType something to return to the menu :\n\n>>>")
     while taken_input == "":
-        taken_input = input("\nType something to return to the menu : ")
+        taken_input = input("\nType something to return to the menu :\n\n>>>")
     return
 
-def gen_weapon(): # Weapon Generator - call to generate a weapon - returns a string
+def gen_weapon(): # Call to generate a weapon - returns a string
     sample_noun1 = sample(wep_noun,1)[0]
     sample_noun2 = sample(noun2,1)[0]
     return (f"{sample_noun1} of {sample_noun2}".title())
 
-def gen_armour(): # Weapon Generator - call to generate armour - returns a string
+def gen_armour(): # Call to generate armour - returns a string
     sample_noun1 = sample(arm_noun,1)[0]
     sample_noun2 = sample(noun2,1)[0]
     return (f"{sample_noun1} of {sample_noun2}".title())
 
-def add_buff(equip_in,num_of_buffs): # adds adjectives to weapon_in - returns a string
+def add_buff(equip_in,num_of_buffs): # Call to add adjective to equipment - takes equipment name and number of buffs needed- returns a string
     sample_adj = sample(adjective,num_of_buffs)
     buff = ' '.join(sample_adj)
     return (f"{buff} {equip_in}".title())
 
-def options_menu(): # Options Menu - call to run options - does not return anything
-    def print_options_main():                                               # Prints the options menu
+def options_menu(): # Call to run options - does not return anything
+    def print_options_main(): # Prints the options menu
         print(f"\n============OPTIONS MENU============\n\n       Difficulty||{difficulty_options[difficulty]}\n\n      Text Colour||{colour_options[1][colour_options[0].index(colour)]}\n\n================Exit================\n") #36 characters wide - print menu
-    def difficulty_menu():                                                  # Difficulty Menu - call to run diff options - does not return anything
-        def print_diff_menu(): # Prints the diff menu
+    def difficulty_menu(): # Call to run difficulty options - does not return anything
+        def print_diff_menu(): # Prints the difficulty menu
             print(f"\n==========DIFFICULTY MENU===========\n\n  Difficulty is currently: {difficulty_options[difficulty]}\n\n    Easy       Normal       Hard\n\n================Exit================")
         global difficulty
         print_diff_menu() #print difficulty menu
@@ -126,7 +126,7 @@ def options_menu(): # Options Menu - call to run options - does not return anyth
         else: #shouldn't happen, but here just in case
             print("\nThat didn't work, sorry!\n\nReturning you to the options menu...\n")
         return
-    def colour_menu():                                                      # Colour Menu - call to run colour options - does not return anything
+    def colour_menu(): # Call to run colour options - does not return anything
         def print_colour_menu(): # Prints the colour menu
             print(f"{colour_options[2][colour_options[0].index(colour)]}============COLOUR MENU=============\n\n    Colour is currently: {colour_options[1][colour_options[0].index(colour)]}\n    \u001b[0m                            {colour_options[2][colour_options[0].index(colour)]}\n    \u001b[0m|Default |  \u001b[31mRed\u001b[0m   | \u001b[33mYellow\u001b[0m |{colour_options[2][colour_options[0].index(colour)]}\n    \u001b[0m                            {colour_options[2][colour_options[0].index(colour)]}\n    \u001b[0m| \u001b[32mGreen\u001b[0m  |  \u001b[36mCyan\u001b[0m  |  \u001b[34mBlue\u001b[0m  |{colour_options[2][colour_options[0].index(colour)]}\n    \u001b[0m                            {colour_options[2][colour_options[0].index(colour)]}\n    \u001b[0m|   \u001b[35mMagenta\u001b[0m  |\u001b[30;47m  Inverted   \u001b[0m|{colour_options[2][colour_options[0].index(colour)]}\n    \u001b[0m                            {colour_options[2][colour_options[0].index(colour)]}\n================Exit================")
         global colour # To change back to current colour, use f"{colour_options[2][colour_options[0].index(colour)]}TEXT HERE"
@@ -161,17 +161,17 @@ def options_menu(): # Options Menu - call to run options - does not return anyth
     print("\nReturning to Main Menu...")                                    # Exit must have been selected so print a message and exit
     return
 
-def update_equipment(): # Updates integer values for equipment
+def update_equipment(): # Call to update weapon and armour values - does not return anything
     global weapon
     global armour
     weapon[1] = len(weapon[0].replace(" ", "")) 
     armour[1] = len(armour[0].replace(" ", "")) 
 
-def player_stats(): # prints player inv/stats
+def player_stats(): # Updates and prints player stats - does not return anyhting
     update_equipment() 
     print(f"\nYou have:\n{player_health} health points remaining\n\nWeapon: {weapon[0]}\n\nArmour: {armour[0]}")
 
-def prize_give(buff_amount): # gives prizes - call to run a prize routine - takes an integer for power of reward
+def prize_give(buff_amount): # Call to give a prize - takes integer for power of reward - returns nothing
     global player_health
     global weapon
     global armour
@@ -218,7 +218,7 @@ def prize_give(buff_amount): # gives prizes - call to run a prize routine - take
         player_stats()
         return
 
-def game_intro(): # gives intro - call to start game process - returns true for start game, false for you lose
+def game_intro(): # Call to do intro - returns true for start game, false for THE END
     print("\nYou are Cara Loft, international burial chamber pilferer.\n\nYou approach the entrance of an ancient tomb, rumoured to harbour untold dangers and even less told treasures.")
     print("\nᒥつ⑉⚊⑉ᒣつ <---This is you")
     player_stats()
@@ -234,26 +234,25 @@ def game_intro(): # gives intro - call to start game process - returns true for 
         print("\nGo home, the burial chamber will remain unpilfered.")
         return False
 
-def main_menu(): # is main menu - call to use menu - returns 1 (gamestart), 2(options), or 3(hs_creds)
-    def print_main_menu():
+def main_menu(): # Call to use main menu - returns 1(start game), 2(options),3(credits),0(quit)
+    def print_main_menu(): # Prints main menu
         print("\nWelcome to Cara Loft: Burial Chamber Pilferer!\n\n====================================\n\n    [1] Start Game\n    [2] Settings\n    [3] Highscores and Credits\n    [0] Quit\n")
     print_main_menu()
     option = int(input("Enter your selection "))
-    while option != 0:
+    while option in [1,2,3]:
         if option == 1:
             print("Lets Goooo!")
+            main_menu_selection = 1
             return 1
         elif option == 2:
             options_menu()
-            return
+            return 2
         elif option == 3:
             hs_creds_page()
-            return
-        else:
-            print("Invalid option")
-    quit()
+            return 3
+    return 0
 
-def gen_room(): # generates rooms and takes player selection - returns true if combat room selected, false if puzzle room
+def gen_room(): # Call to generate room and take player selection - returns true (combat room) or false (puzzle room)
     combat_samples = randint(0, 3)   # Generates a random int from 0-3.
     options = sample(combat_room_desc, combat_samples) + sample(puzzle_room_desc, 3 - combat_samples) # Creates a list of 3 randomised strings from roomscombat.txt and roomspuzzle.txt.
     shuffle(options) # Shuffles the list so they aren't always in combat-puzzle order. 
@@ -293,8 +292,8 @@ def gen_room(): # generates rooms and takes player selection - returns true if c
             print("It's a puzzle room!")
             return False
 
-def puzzle_room():
-    def riddler():
+def puzzle_room(): # Call to select and run a puzzle room - returns nothing
+    def riddler(): # Simple question minigame - returns nothing
         global player_health
         print("\nYou walk into a peculiar room, indescribable by words.\n\nI'm really struggling here as a narrator actually, it's impossible to give an accurate account of the qualities of this room using mere words alone.\n\nOne thing about this room is for sure though, it's a room of riddles.\n\nA riddler approaches, they too are indescribable, with their short red hair and green top hat with little ? symbols all over it. This riddler riddles you this.\n\n\"What question can you never answer yes to?\"\n\nWhat is your answer?\n\nA: Do you think CodeNation is a bit rubbish?\n\nB: Would you please stop trying to use 漢字 in everything Mike? It breaks the code.\n\nC: Can someone think of something to put here later?")
         input_var_raw = input("A, B or C?") + "   "
@@ -309,7 +308,7 @@ def puzzle_room():
             print("\nWrong you fool! take your punishment!\nThe riddler's riddle proved to be indescribably difficult. You lost 20 Health points!")
             player_health -= 20
             player_stats()
-    def monty_hall():
+    def monty_hall(): # Monty hall minigame - returns nothing
         global player_health
         global weapon
         global armour
@@ -407,7 +406,7 @@ def puzzle_room():
             if doors[0] == "prize":
                 prize_give(level)
             else:
-                print("Oh no! the trap dealt 15 damage to you!")
+                print("Oh no! the trap dealt 10 damage to you!")
                 player_health -= 10
                 player_stats()
         elif input_var == "b":
@@ -416,7 +415,7 @@ def puzzle_room():
             if doors[1] == "prize":
                 prize_give(level)
             else:
-                print("Oh no! the trap dealt 15 damage to you!")
+                print("Oh no! the trap dealt 10 damage to you!")
                 player_health -= 10
                 player_stats()
         elif input_var == "c":
@@ -425,11 +424,11 @@ def puzzle_room():
             if doors[2] == "prize":
                 prize_give(level)
             else:
-                print("Oh no! the trap dealt 15 damage to you!")
+                print("Oh no! the trap dealt 10 damage to you!")
                 player_health -= 10
                 player_stats()
         print("\nI've been your host, Honty Mall.\n\nSee you next time on \"What the heck is going on behind that dooooooooor!\"")
-    def rock_paper_scissors():
+    def rock_paper_scissors(): # Rock, Paper, Scissors minigame - returns nothing
         global player_health
         global weapon
         global armour
@@ -491,11 +490,7 @@ def puzzle_room():
                 rock_paper_scissors()
         else:
             print("Hmmm, that was weird... Shame I can't describe it to you...")
-    def match_2():
-        global weapon
-        global armour
-        print("snap")
-    def fruit_and_anvil():
+    def fruit_and_anvil(): # Fruit and Anvil minigame - returns nothing
         global player_health
         global weapon
         global armour
@@ -526,11 +521,11 @@ def puzzle_room():
             player_health += 50
             player_stats()
         return
-    puzzle_list = [monty_hall,rock_paper_scissors,match_2,fruit_and_anvil,riddler]
+    puzzle_list = [monty_hall,rock_paper_scissors,fruit_and_anvil,riddler]
     choice(puzzle_list)()
     return
 
-def player_turn(): # Function for player attacking the enemy.
+def player_turn(): # Call for player attack enemy - returns nothing
     global enemy_health
     global damage_dealt
     player_damage = randint(int(round(weapon[1]-weapon[1]/2)), weapon[1])
@@ -552,7 +547,7 @@ def player_turn(): # Function for player attacking the enemy.
         sleep(0.5)
         print(f"You dealt no damage to {enemy_name}!")
 
-def enemy_turn(): # Function for basic enemy attack
+def enemy_turn(): # Call for enemy attack player - returns nothing
     global player_health
     global damage_taken
     enemy_damage = randint(int(round(enemy_attack-enemy_attack/2)), enemy_attack)
@@ -568,7 +563,7 @@ def enemy_turn(): # Function for basic enemy attack
         sleep(0.5)
         print(f"{enemy_name} did {damage} damage to you!")
         if player_health < 0:
-            death_screen()
+            return
     else:
         print(f"{enemy_name} attacked for {enemy_damage} damage!")
         sleep(0.5)
@@ -576,7 +571,7 @@ def enemy_turn(): # Function for basic enemy attack
         sleep(0.5)
         print(f"You blocked all the damage!")
 
-def combat_room():
+def combat_room(): # Call to select enemy and do combat loop - returns nothing 
     global player_health,enemy_name,enemy_health,enemy_attack,enemy_defence,kill_count
     combat = True
     dead = False
@@ -624,7 +619,7 @@ def combat_room():
             print("Can't escape!")
             enemy_turn()
 
-def death_screen():
+def death_screen(): # Call when health <= 0 to show damage screen - returns nothing
     print(f"""
     Oh no! You died!
 
@@ -635,7 +630,7 @@ def death_screen():
     You killed {kill_count} enemies""")
     input("\nEnter something to return to the main menu:\n\n>>>")
 
-def highscore_screen():
+def highscore_screen(): # Call to check if highscore - returns nothing
     global hs1,hs2,hs3
     score = combat_room_count+puzzle_room_count
     if score < hs3[1]:
@@ -653,42 +648,42 @@ def highscore_screen():
             hs3 = hs2
             hs2 = hs1
             hs1 = [name,score]
-        reset()
         return
 
-def store_highscore():
-    
-    print("store_highscore")
+def store_highscore(): # Call to store highscores and reset scores - returns nothing
+    lines = f"{hs1[0]},{hs1[1]}\n{hs2[0]},{hs2[1]}\n{hs3[0]},{hs3[1]}"
+    store = open("storage/highscore.txt","w")
+    store.write(lines)
+    store.close
+    reset()
 
 # Generate starting weapon and armour
 
 weapon[0] = gen_weapon()
 armour[0] = gen_armour()
 
-# Testing
-
-
-
 # Main block
-
-
-start_function()
-main_menu_selection = 0
-while main_menu_selection != 1:
-    main_menu_selection = main_menu()
-intro_complete = game_intro()
-if intro_complete == False:
-    print("THE END") # PLACEHOLDER
-    quit()
-else:
-    while player_health > 0:
-        room_type = gen_room()
-        if room_type == True:
-            combat_room()
-            combat_room_count += 1
+main_menu_selection = 10
+while main_menu_selection != 0:
+    start_function()
+    while main_menu_selection != 1:
+        main_menu_selection = main_menu()
+    else:
+        intro_complete = game_intro()
+        if intro_complete == False:
+            print("\n==============THE END===============")
+            quit()
         else:
-            puzzle_room()
-            puzzle_room_count += 1
-    death_screen()
-    highscore_screen()
-    store_highscore()
+            while player_health > 0:
+                room_type = gen_room()
+                if room_type == True:
+                    combat_room()
+                    combat_room_count += 1
+                else:
+                    puzzle_room()
+                    puzzle_room_count += 1
+                level = (((combat_room_count+puzzle_room_count)//10)+difficulty+1)
+            death_screen()
+            highscore_screen()
+            store_highscore()
+quit()
