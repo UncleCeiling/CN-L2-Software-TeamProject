@@ -68,8 +68,12 @@ def reset(): # Call to reset the player and tracking stats - returns nothing
     level = 1
 
 def start_function(): # Call to use start screen - returns nothing
-    print("\nstart screen") # PLACEHOLDER
-    var = input("\nPlease enter something to continue :\n\n>>>").lower()
+    print("""
+     ___    __    ____    __      __    _____  ____  ____
+    / __)  /__\\  (  _ \\  /__\\    (  )  (  _  )( ___)(_  _)
+   ( (__  /(__)\\  )   / /(__)\\    )(__  )(_)(  )__)   )(  
+    \\___)(__)(__)(_)\\_)(__)(__)  (____)(_____)(__)   (__)""")
+    var = input("\nPlease enter 'something' to continue :\n\n>>>").lower()
     while var != "something":
         var = input("\nPlease enter something to continue :\n\n>>>").lower()
     return
@@ -797,6 +801,7 @@ weapon[0] = gen_weapon()
 armour[0] = gen_armour()
 
 # Main block
+
 main_menu_selection = 10
 while main_menu_selection != 0:
     start_function()
