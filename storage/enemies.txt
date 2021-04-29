@@ -1,5 +1,5 @@
-Slime,20,30,10
+Slime,50,30,10
 Minotaur,100,30,5
-Dinosaur,20,35,30
-An army of mice,20,30,25
-Skeleton,1,30,45
+Dinosaur,30,35,10
+An army of mice,120,30,5
+Skeleton,10,40,15

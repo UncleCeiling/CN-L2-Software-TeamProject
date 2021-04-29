@@ -8,7 +8,7 @@ difficulty_options = ["Easy","Normal","Hard"]           # Possible difficulty op
 level = 1
 colour = "d"                                            # Current colour setting - indexes via: colour_options[0][colour_options.index(colour)]
 colour_options = [["d","r","y","g","c","b","m","i"],["Default","Red","Yellow","Green","Cyan","Blue","Magenta","Default Inverted"],["\u001b[0m","\u001b[0m\u001b[31m","\u001b[0m\u001b[33m","\u001b[0m\u001b[32m","\u001b[0m\u001b[36m","\u001b[0m\u001b[34m","\u001b[0m\u001b[35m","\u001b[0m\u001b[30;47m"]] # Possible colour options, names and codes
-player_health = 50                                      # Player hitpoints, when this reaches 0 you lose.
+player_health = 100                                     # Player hitpoints, when this reaches 0 you lose.
 weapon = ["",0]                                         # Your weapon name, weapon points =len() of this string 
 armour = ["",0]                                         # Your armour name, armour points =len() of this string
 combat_room_count = 0                                   # Logs the number of combat rooms passed
@@ -287,7 +287,7 @@ def puzzle_room():
             print("\nCorrect! CodeNation is really really great!\n\nYou'd never say yes to that! Well done!")
             prize_give(level)
         else:
-            print("\nWrong you fool! take your punishment!")
+            print("\nWrong you fool! take your punishment!\nThe riddler's riddle proved to be indescribably difficult. You lost 20 Health points!")
             player_health -= 20
             player_stats()
     def monty_hall():
@@ -317,7 +317,7 @@ def puzzle_room():
                 elif doors[2] == "trap":
                     print("\nDoor C is a trap door...\n\nDo you want to change to door B?\n\n>>>")
                     input_2 = input("\nYes or no?\n\n>>>")
-                    while input_var not in ["y","n"]:
+                    while input_2 not in ["y","n"]:
                         input_2 = (input("\nFor real this time, pick an option from yes or no :\n\n>>>"))[0].lower()
                         if input_2 == "y":
                             ongoing = False
