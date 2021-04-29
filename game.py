@@ -611,11 +611,11 @@ def combat_room(): # Call to select enemy and do combat loop - returns nothing
     dead = False
     enemy_stats = sample(enemies,1)[0]
     enemy_name = enemy_stats[0]
-    enemy_health = int(enemy_stats[1])
-    enemy_attack = int(enemy_stats[2])
-    enemy_defence = int(enemy_stats[3])
+    enemy_health = int(enemy_stats[1]) * level
+    enemy_attack = int(enemy_stats[2]) * level
+    enemy_defence = int(enemy_stats[3]) * level
     print(f"\n{enemy_name} appears! What do you do?")
-    while combat == True:
+    while combat == True and int(player_health) > 0:
         input_var_raw = (input("\nAttack, talk or run?\n\n>>>")) + "   "
         input_var = input_var_raw[0].lower()
         while input_var not in ["a","t","r"]:
