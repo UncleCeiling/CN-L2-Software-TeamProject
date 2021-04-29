@@ -489,10 +489,6 @@ def puzzle_room():
                 rock_paper_scissors()
         else:
             print("Hmmm, that was weird... Shame I can't describe it to you...")
-    def match_2():
-        global weapon
-        global armour
-        print("snap")
     def fruit_and_anvil():
         global player_health
         global weapon
@@ -507,7 +503,7 @@ def puzzle_room():
             input_var_raw = (input(f"\nWhat would you like to upgrade on?\n\nYour Weapon - {weapon[0]}?\nOR\nYour Armour - {armour[0]}?\n\n>>>")) + "   "
             input_var = input_var_raw[0].lower()
             while input_var not in ["w","a"]:
-                input_var_raw = (input("\nFor real this time, pick an option from eating the fruit or using the anvil :\n\n>>>")) + "   "
+                input_var_raw = (input("\nFor real this time, pick an option from armour or weapon :\n\n>>>")) + "   "
                 input_var = input_var_raw[0].lower()
             if input_var == "w":
                 print(f"\nYour weapon '{weapon[0]}' becomes:")
@@ -520,11 +516,60 @@ def puzzle_room():
             player_stats()
             return
         else:
-            print("\nYou eat the pile of fruit and gain 50 Health Points!")
-            player_health += 50
+            print("\nYou eat the pile of fruit and gain some Health Points!")
+            player_health += randint(10,50)
             player_stats()
         return
-    puzzle_list = [monty_hall,rock_paper_scissors,match_2,fruit_and_anvil,riddler]
+    def witches():
+        global player_health
+        global weapon
+        global armour
+        print("\nYou enter a room with two witches stirring away at bubbling cauldrons. Who do you approach:\nA:The muscular witch\nB:The witch with a big pile of fruit")
+        input_var_raw = (input("\nA or B?\n\n>>>")) + "   "
+        input_var = input_var_raw[0].lower()
+        while input_var not in ["a","b"]:
+            input_var_raw = (input("\nFor real this time, pick an option from A or B :\n\n>>>")) + "   "
+            input_var = input_var_raw[0].lower()
+        if input_var in ["a","u"]:
+            input_var_raw = (input(f"\nMuhahaha! I'm the muscle witch, I'll forge you some new gear! Weapon or armour?\n\nYour Weapon - {weapon[0]}?\nOR\nYour Armour - {armour[0]}?\n\n>>>")) + "   "
+            input_var = input_var_raw[0].lower()
+            while input_var not in ["w","a"]:
+                input_var_raw = (input("\nFor real this time, pick an option from armour or weapon :\n\n>>>")) + "   "
+                input_var = input_var_raw[0].lower()
+            if input_var == "w":
+                prize = add_buff(gen_weapon(),level)
+                accept_raw = input(f"\nDo you want to swap your\n\n{weapon[0]}\n\nFOR\n\n{prize}?\n\n>>>") + "   "
+                accept = accept_raw[0].lower()
+                while accept not in ["y","n"]:
+                    accept_raw = input(f"\nFor real this time, pick an option from yes or no :\n\n>>>") + "   "
+                accept = accept_raw[0].lower()
+                if accept == "y":
+                    weapon[0] = prize
+                    player_stats
+                    return
+                else:
+                    return
+            else:
+                prize = add_buff(gen_armour(),level)
+                accept_raw = input(f"\nDo you want to swap your\n\n{armour[0]}\n\nFOR\n\n{prize}?\n\n>>>") + "   "
+                accept = accept_raw[0].lower()
+                while accept not in ["y","n"]:
+                    accept_raw = input(f"\nFor real this time, pick an option from yes or no :\n\n>>>") + "   "
+                    accept = accept_raw[0].lower()
+                if accept == "y":
+                    armour[0] = prize
+                    player_stats
+                    return
+                else:
+                    return
+            player_stats()
+            return
+        else:
+            print("\nMuhahaha! I'm the big pile of fruit witch, help yourself to my big pile of fruit! You eat the pile of fruit and gain some Health Points!")
+            player_health += randint(10,50)
+            player_stats()
+        return
+    puzzle_list = [monty_hall,rock_paper_scissors,match_2,fruit_and_anvil,riddler,witches]
     choice(puzzle_list)()
     return
 
@@ -609,18 +654,20 @@ def combat_room():
             print("The enemy attacks you!")
             enemy_turn()
         else:
-            combat = False
+            if weapon[1] < enemy_defence:
+                combat = False
+            else:
+                print("Can't escape!")
+                enemy_turn()
     if dead == True:
         kill_count += 1
         print("You killed the enemy!")
         sleep(0.5)
         prize_give(level)
     else:
-        if weapon[1] < enemy_defence:
-            print(f"You managed to escape {enemy_name}!")
-        else:
-            print("Can't escape!")
-            enemy_turn()
+        print("You managed to escape with your life! But at what cost?")
+        sleep(0.5)
+
 
 def death_screen():
     print(f"""
