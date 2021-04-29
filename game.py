@@ -498,10 +498,10 @@ def puzzle_room():
         global armour
         print("\nYou enter a room with a large pile of fruit and an anvil, the door locks behind you.\n\nA large sign above the opposite door informs you that you have 1 hour until you can proceed.\n\nSeems like you'll only have time to use one, what do you do?")
         input_var_raw = (input("\nEat the fruit or use the anvil?\n\n>>>")) + "   "
-        input_var = input_raw_var[0].lower()
+        input_var = input_var_raw[0].lower()
         while input_var not in ["a","f","u","e"]:
             input_var_raw = (input("\nFor real this time, pick an option from eating the fruit or using the anvil :\n\n>>>")) + "   "
-            input_var = input_raw[0].lower()
+            input_var = input_var_raw[0].lower()
         if input_var in ["a","u"]:
             input_var_raw = (input(f"\nWhat would you like to upgrade on?\n\nYour Weapon - {weapon[0]}?\nOR\nYour Armour - {armour[0]}?\n\n>>>")) + "   "
             input_var = input_var_raw[0].lower()
