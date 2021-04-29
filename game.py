@@ -71,7 +71,7 @@ def start_function(): # Call to use start screen - returns nothing
     print("\nstart screen") # PLACEHOLDER
     var = input("\nPlease enter something to continue :\n\n>>>").lower()
     while var != "something":
-        start_function()
+        var = input("\nPlease enter something to continue :\n\n>>>").lower()
     return
 
 def hs_creds_page(): # Call to display highscores and credits - returns nothing
@@ -549,6 +549,7 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
             player_health += (randint(10,50) * (int(round(level/2))))
         return
     def aces():
+        global player_health
         ranks = ["Ace","2","3","4","5","6","7","8","9","10","Jack","Queen","King"]
         suits = ["Clubs","Hearts","Diamonds","Spades"]
         deck = []
@@ -556,43 +557,67 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
         for rank in ranks:
             for suit in suits:
                 deck.append([rank + " of " + suit, value])
-            value = value + 1
+            value += 1
         shuffle(deck)
         score = 0
         card1 = deck.pop(0)
-        while True:
-            print("\nYour score so far is:", score)
-            print("\nThe current card is:", card1[0])
+        correct = True
+        print("\nThe ghost of Fruce Borsyth ascends from the floor, chuckling to himself.\n\nHe spots you and his face immediately lights up as he hovers over to where you are standing.\n\nAn huge ethereal deck of cards materialises in front you and begins to shuffle it's self...")
+        print("\nThe cards finish their shuffle and two cards are laid out in front of you.\n\nFrucy, still chuckling, leans in and flips the first card and asks simply:\n\n'Higher or Lower'?")
+        while correct == True:
+            print("\nThe current card reads:", card1[0])
             while True:
-                choice = input("\nHigher or Lower?\n\n>>>")
+                choice = input("\n Do you choose Higher or Lower?\n\n>>>")
                 if len(choice) > 0:
                     if choice[0].lower() in ["h","l"]:
                         break
             card2 = deck.pop(0)
-            print("\nThe next card picked is:", card2[0])
+            print("\nThe next card turns over to reveal...", card2[0])
             sleep(1)
             if choice[0].lower() == "h" and card2[1] > card1[1]:
-                print("\nCorrect!")
-                score +=1
+                print("\nHigher!\n\nCorrect!")
+                score += 1
+                correct = True
+            elif choice[0].lower() == "h" and card2[1] < card1[1]:
+                print("\nLower...\n\nYou got that Wrong...")
+                print("\nYou take some damage!")
+                player_health -= (randint(10,20)*level)
+                correct = False
+            elif choice[0].lower() == "l" and card2[1] < card1[1]:
+                print("\nLower!\n\nCorrect!")
+                score += 1
+                correct = True
+            elif choice[0].lower() == "l" and card2[1] > card1[1]:
+                print("\nHigher...\n\nWhat a shame...")
+                print("\nYou take some damage!")
+                player_health -= (randint(10,20)*level)
+                correct = False
+            else:
+                print("\nIt's the same!\n\nWould you look at that!")
+                print("\nYou receive some health!")
+                player_health += ((randint(10,50))*(int(round(level/2))))
+                correct = False
+            if correct == True:
+                print("\nYour score so far is:", score)
+                print("\nFrucy pulls another cards from the deck, face down...")
+        print("Game Over")
+        if score == 0:
+            print("\n'Wow! You really suck at this!'\n\n'I still have a present for you though...'")
+            sleep(1)
+            print("\n[Drumroll...]")
+            for x in range(5):
                 sleep(1)
-            if choice[0].lower() == "h" and card2[1] < card1[1]:
-                print("\nWrong!")
-                sleep(1)
-                break
-            if choice[0].lower() == "l" and card2[1]:
-                print ("\n** Hi Lo Game **")
-        x = (randint(1,20))
-        num1 = int(input("\nEnter your number:\n\n>>>"))
-        while num1 < x:
-            print ("\nToo Low")
-            num1 = int(input("\nEnter your number:\n\n>>>"))
-        while num1 > x:
-            print ("\nToo High")
-            num1 = int(input("\nEnter your number:\n\n>>>"))
-        if num1 == x:
-            print ("\nCongratulations!\n\nYou are Correct!")
-            prize_give(level)
-    puzzle_list = [monty_hall,rock_paper_scissors,fruit_and_anvil,riddler,witches]
+                print("\n[Drumroll intensifies...]")
+            sleep(2)
+            print("\n'HAVE SOME DAMAGE!'")
+            sleep(1)
+            print("\n You take some damage!")
+            player_health -= (randint(10,20)*level)
+        else:
+            print ("\nBad luck, but hey, at least you scored something!\n\nTake your prize!")
+            prize_give((score+(level/2)))
+        return
+    puzzle_list = [monty_hall,rock_paper_scissors,fruit_and_anvil,riddler,witches,aces]
     choice(puzzle_list)()
     return
 
