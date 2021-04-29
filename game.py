@@ -170,7 +170,7 @@ def prize_give(buff_amount): # gives prizes - call to run a prize routine - take
     global weapon
     global armour
     prize = sample(["a new weapon","some new armour","a weapon buff","an armour buff","some health"],1)
-    print("\nCongratulations!\n\nYou won {prize}!")
+    print(f"\nCongratulations!\n\nYou won {prize}!")
     if prize in ["a weapon buff","an armour buff"]:
         if prize == "a weapon buff":
             weapon[0] = add_buff(weapon[0],buff_amount)
@@ -309,21 +309,21 @@ def puzzle_room():
                     input_2 = input("\nYes or no?\n\n>>>")
                     while input_2 not in ["y","n"]:
                         input_2 = (input("\nFor real this time, pick an option from yes or no :\n\n>>>"))[0].lower()
-                        if input_2 == "y":
-                            ongoing = False
-                            input_var = "c"
-                        elif input_2 == "n":
-                            ongoing = False
+                    if input_2 == "y":
+                        ongoing = False
+                        input_var = "c"
+                    elif input_2 == "n":
+                        ongoing = False
                 elif doors[2] == "trap":
                     print("\nDoor C is a trap door...\n\nDo you want to change to door B?\n\n>>>")
                     input_2 = input("\nYes or no?\n\n>>>")
                     while input_2 not in ["y","n"]:
                         input_2 = (input("\nFor real this time, pick an option from yes or no :\n\n>>>"))[0].lower()
-                        if input_2 == "y":
-                            ongoing = False
-                            input_var = "b"
-                        elif input_2 == "n":
-                            ongoing = False
+                    if input_2 == "y":
+                        ongoing = False
+                        input_var = "b"
+                    elif input_2 == "n":
+                        ongoing = False
             if input_var == "b" and ongoing == True:
                 print("\nYou chose door B!")
                 if doors[0] == "trap":
