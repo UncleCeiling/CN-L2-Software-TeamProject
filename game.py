@@ -411,7 +411,7 @@ def puzzle_room():
         elif input_var == "b":
             print(f"What's behind door {input_var}?")
             print(f"It's a {doors[1]}!")
-            if doors[0] == "prize":
+            if doors[1] == "prize":
                 prize_give(level)
             else:
                 print("Oh no! the trap dealt 15 damage to you!")
@@ -420,7 +420,7 @@ def puzzle_room():
         elif input_var == "c":
             print(f"What's behind door {input_var}?")
             print(f"It's a {doors[2]}!")
-            if doors[0] == "prize":
+            if doors[2] == "prize":
                 prize_give(level)
             else:
                 print("Oh no! the trap dealt 15 damage to you!")
