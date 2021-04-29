@@ -66,8 +66,8 @@ def reset(): # Call to reset the player and tracking stats - returns nothing
 
 def start_function(): # Call to use start screen - returns nothing
     print("\nstart screen") # PLACEHOLDER
-    var = input("\nPlease enter something to continue :\n\n>>>")
-    while var not in ["something"]:
+    var = input("\nPlease enter something to continue :\n\n>>>").lower()
+    while var != "something":
         start_function()
     return
 
