@@ -54,7 +54,7 @@ for x in range(len(enemies)):
 # Functions
 
 def reset(): # Call to reset the player and tracking stats - returns nothing
-    global player_health,weapon,armour,combat_room_count,puzzle_room_count,damage_dealt,damage_taken,kill_count,level
+    global player_health, weapon, armour, combat_room_count, puzzle_room_count, damage_dealt, damage_taken, kill_count, level
     player_health = 100
     weapon[0] = gen_weapon()
     armour[0] = gen_armour()
@@ -168,7 +168,7 @@ def options_menu(): # Call to run options - does not return anything
     return
 
 def update_equipment(): # Call to update weapon and armour values - does not return anything
-    global weapon,armour
+    global weapon, armour
     weapon[1] = len(weapon[0].replace(" ", "")) 
     armour[1] = len(armour[0].replace(" ", "")) 
 
@@ -177,7 +177,7 @@ def player_stats(): # Updates and prints player stats - does not return anyhting
     print(f"\nYou have {player_health} health points remaining\n\nWeapon: {weapon[0]}\n\nArmour: {armour[0]}")
 
 def prize_give(buff_amount): # Call to give a prize - takes integer for power of reward - returns nothing
-    global player_health,weapon,armour
+    global player_health, weapon, armour
     prize = sample(["a new weapon","some new armour","a weapon buff","an armour buff","some health"],1)[0]
     print(f"\nCongratulations!\n\nYou won {prize}!")
     if prize in ["a weapon buff","an armour buff"]:
@@ -198,7 +198,6 @@ def prize_give(buff_amount): # Call to give a prize - takes integer for power of
                 accept = accept_raw[0].lower()
             if accept == "y":
                 weapon[0] = prize
-                player_stats
                 return
             else:
                 return
@@ -211,14 +210,12 @@ def prize_give(buff_amount): # Call to give a prize - takes integer for power of
                 accept = accept_raw[0].lower()
             if accept == "y":
                 armour[0] = prize
-                player_stats
                 return
             else:
                 return
     elif prize in ["some health"]:
         print(f"\nYou gain {str(20*buff_amount)} Health Points!")
         player_health += (20*buff_amount)
-        player_stats()
         return
 
 def game_intro(): # Call to do intro - returns true for start game, false for THE END
@@ -483,7 +480,7 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
         else:
             print("Hmmm, that was weird... Shame I can't describe it to you...")
     def fruit_and_anvil(): # Fruit and Anvil minigame - returns nothing
-        global player_health,weapon,armour
+        global player_health, weapon, armour
         print("\nYou enter a room with a large pile of fruit and an anvil, the door locks behind you.\n\nA large sign above the opposite door informs you that you have 1 hour until you can proceed.\n\nSeems like you'll only have time to use one, what do you do?")
         input_var_raw = (input("\nEat the fruit or use the anvil?\n\n>>>")) + "   "
         input_var = input_var_raw[0].lower()
@@ -510,7 +507,7 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
             player_health += (randint(10,50) * (int(round(level/2)))) 
         return
     def witches():
-        global player_health,weapon,armour
+        global player_health, weapon, armour
         print("\nYou enter a room with two witches stirring away at bubbling cauldrons. Who do you approach:\nA:The muscular witch\nB:The witch with a big pile of fruit")
         input_var_raw = (input("\nA or B?\n\n>>>")) + "   "
         input_var = input_var_raw[0].lower()
@@ -627,7 +624,7 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
         fake_death = False
         current_bullet = 6
         def player_turn():
-            global fake_death,current_bullet,player_health
+            global fake_death, current_bullet, player_health
             input("\nPull the trigger...")
             if current_bullet == fatal_bullet:
                 print("\nBANG!\n\nConfetti blasts from the barrel of the gun!\n\nYou have a small heart attack and take some damage!")
@@ -640,7 +637,7 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
                 current_bullet -= 1
                 return
         def dimitri_turn():
-            global fake_death,current_bullet
+            global fake_death, current_bullet
             sleep(2)
             print("\nDimitri takes the gun from you and slowly pulls the trigger...")
             sleep(4)
@@ -669,7 +666,7 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
     return
 
 def player_turn(): # Call for player attack enemy - returns nothing
-    global enemy_health,damage_dealt
+    global enemy_health, damage_dealt
     player_damage = randint(int(round(weapon[1]-weapon[1]/2)), weapon[1])
     enemy_block = randint(int(round(enemy_defence-enemy_defence/2)), enemy_defence)
     damage = player_damage - enemy_block
@@ -689,7 +686,7 @@ def player_turn(): # Call for player attack enemy - returns nothing
         print(f"You dealt no damage to {enemy_name}!")
 
 def enemy_turn(): # Call for enemy attack player - returns nothing
-    global player_health,damage_taken
+    global player_health, damage_taken
     enemy_damage = randint(int(round(enemy_attack-enemy_attack/2)), enemy_attack)
     player_block = randint(int(round(armour[1]-armour[1]/2)), armour[1])
     damage = enemy_damage - player_block
@@ -711,7 +708,7 @@ def enemy_turn(): # Call for enemy attack player - returns nothing
         print(f"You blocked all the damage!")
 
 def combat_room(): # Call to select enemy and do combat loop - returns nothing 
-    global player_health,enemy_name,enemy_health,enemy_attack,enemy_defence,kill_count
+    global player_health, enemy_name, enemy_health, enemy_attack, enemy_defence, kill_count
     combat = True
     dead = False
     enemy_stats = sample(enemies,1)[0]
@@ -769,7 +766,7 @@ def death_screen(): # Call when health <= 0 to show damage screen - returns noth
     input("\nEnter something to return to the main menu:\n\n>>>")
 
 def highscore_screen(): # Call to check if highscore - returns nothing
-    global hs1,hs2,hs3
+    global hs1, hs2, hs3
     score = combat_room_count+puzzle_room_count
     if score < hs3[1]:
         print("\nYou did not beat any highscores...")
