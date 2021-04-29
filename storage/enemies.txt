@@ -1,5 +1,8 @@
-Slime,10,5,2
-Minotaur,
-Dinosaur,
-An army of mice,
-Skeleton
+Slime,50,30,8
+Minotaur,100,30,5
+Dinosaur,30,50,8
+An army of mice,120,30,4
+Skeleton,10,40,15
+Mathemagician,50,60,1
+Ever Given,500,2,1
+Python,20,20,10
