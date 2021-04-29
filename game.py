@@ -267,28 +267,28 @@ def gen_room(): # Call to generate room and take player selection - returns true
         input_var_raw = (input("For real this time, pick an option from A, B or C :\n\n>>>")) + "   "
         input_var = input_var_raw[0].lower()
     if input_var == "a":
-        print("You open door A")
+        print("\nYou open door A")
         if options[0] in combat_room_desc:
-            print("It's a combat room!")
+            print("\nIt's a combat room!")
             return True
         else:
-            print("It's a puzzle room!")
+            print("\nIt's a puzzle room!")
             return False
     elif input_var == "b":
-        print("You open door B")
+        print("\nYou open door B")
         if options[1] in combat_room_desc:
-            print("It's a combat room!")
+            print("\nIt's a combat room!")
             return True
         else:
-            print("It's a puzzle room!")
+            print("\nIt's a puzzle room!")
             return False
     else:
-        print("You open door C")
+        print("\nYou open door C")
         if options[2] in combat_room_desc:
-            print("It's a combat room!")
+            print("\nIt's a combat room!")
             return True
         else:
-            print("It's a puzzle room!")
+            print("\nIt's a puzzle room!")
             return False
 
 def puzzle_room(): # Call to select and run a puzzle room - returns nothing
