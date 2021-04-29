@@ -306,7 +306,6 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
         else:
             print("\nWrong you fool! take your punishment!\nThe riddler's riddle proved to be indescribably difficult. You some damage!")
             player_health -= randint(10,20) * level
-            player_stats()
     def monty_hall(): # Monty hall minigame - returns nothing
         global player_health
         doors = ["trap", "trap", "prize"]
@@ -405,7 +404,6 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
             else:
                 print("Oh no! the trap dealt some damage to you!")
                 player_health -= randint(10,20) * level
-                player_stats()
         elif input_var == "b":
             print(f"What's behind door {input_var}?")
             print(f"It's a {doors[1]}!")
@@ -414,7 +412,6 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
             else:
                 print("Oh no! the trap dealt some damage to you!")
                 player_health -= randint(10,20) * level
-                player_stats()
         elif input_var == "c":
             print(f"What's behind door {input_var}?")
             print(f"It's a {doors[2]}!")
@@ -423,7 +420,6 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
             else:
                 print("Oh no! the trap dealt some damage to you!")
                 player_health -= randint(10,20) * level
-                player_stats()
         print("\nI've been your host, Honty Mall.\n\nSee you next time on \"What the heck is going on behind that dooooooooor!\"")
     def rock_paper_scissors(): # Rock, Paper, Scissors minigame - returns nothing
         global player_health
@@ -442,7 +438,6 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
                 print("\nToo bad, you lost!")
                 print("\nOh no!\n\nThe gremlins powerful paper damaged you!")
                 player_health -= randint(10,20) * level
-                player_stats()
             elif enemy_choice[0] == "s":
                 print("\nThe gruff gremlin chose scissors.")
                 print("\nCongratulations, you win!")
@@ -458,7 +453,6 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
                 print("\nToo bad, you lost!")
                 print("\nOh no!\n\nThe gruff gremlin' slices you with scissors! You take some damage!")
                 player_health -= randint(10,20) * level
-                player_stats()
             elif enemy_choice[0] == "r":
                 print("\nThe gruff gremlin chose rock.")
                 print("\nCongratulations, you win!")
@@ -474,7 +468,6 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
                 print("\nToo bad, you lost!")
                 print("\nOh no!\n\nThe gruss gremlin stabs you! You take some damage!")
                 player_health -= randint(10,20) * level
-                player_stats()
             elif enemy_choice[0] == "p":
                 print("\nThe gruff gremlin chose paper.")
                 print("\nCongratulations, you win!")
@@ -507,12 +500,10 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
                 print(f"\nYour armour '{armour[0]}' becomes:")
                 armour[0] = add_buff(armour[0],1)
                 print(f"\n'{armour[0]}'")
-            player_stats()
             return
         else:
             print("\nYou eat the pile of fruit and gain some Health Points!")
-            player_health += (randint(10,50) * (int(round(level/2))) 
-            player_stats()
+            player_health += (randint(10,50) * (int(round(level/2)))) 
         return
     def witches():
         global player_health,weapon,armour
@@ -537,7 +528,6 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
                 accept = accept_raw[0].lower()
                 if accept == "y":
                     weapon[0] = prize
-                    player_stats()
                     return
                 else:
                     return
@@ -550,16 +540,13 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
                     accept = accept_raw[0].lower()
                 if accept == "y":
                     armour[0] = prize
-                    player_stats()
                     return
                 else:
                     return
-            player_stats()
             return
         else:
             print("\nMuhahaha! I'm the big pile of fruit witch, help yourself to my big pile of fruit! You eat the pile of fruit and gain some Health Points!")
-            player_health += (randint(10,50) * (int(round(level/2)))
-            player_stats()
+            player_health += (randint(10,50) * (int(round(level/2))))
         return
     def aces():
         global player_health
@@ -575,40 +562,44 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
         score = 0
         card1 = deck.pop(0)
         correct = True
+        print("\nThe ghost of Fruce Borsyth ascends from the floor, chuckling to himself.\n\nHe spots you and his face immediately lights up as he hovers over to where you are standing.\n\nAn huge ethereal deck of cards materialises in front you and begins to shuffle it's self...")
+        print("\nThe cards finish their shuffle and two cards are laid out in front of you.\n\nFrucy, still chuckling, leans in and flips the first card and asks simply:\n\n'Higher or Lower'?")
         while correct == True:
-            print("\nYour score so far is:", score)
-            print("\nThe current card is:", card1[0])
+            print("\nThe current card reads:", card1[0])
             while True:
-                choice = input("\nHigher or Lower?\n\n>>>")
+                choice = input("\n Do you choose Higher or Lower?\n\n>>>")
                 if len(choice) > 0:
                     if choice[0].lower() in ["h","l"]:
                         break
             card2 = deck.pop(0)
-            print("\nThe next card picked is:", card2[0])
+            print("\nThe next card turns over to reveal...", card2[0])
             sleep(1)
             if choice[0].lower() == "h" and card2[1] > card1[1]:
-                print("\nCorrect!")
+                print("\nHigher!\n\nCorrect!")
                 score += 1
                 correct = True
             elif choice[0].lower() == "h" and card2[1] < card1[1]:
-                print("\nWrong!")
+                print("\nLower...\n\nYou got that Wrong...")
                 print("\nYou take some damage!")
                 player_health -= (randint(10,20)*level)
                 correct = False
             elif choice[0].lower() == "l" and card2[1] < card1[1]:
-                print("\nCorrect!")
+                print("\nLower!\n\nCorrect!")
                 score += 1
                 correct = True
             elif choice[0].lower() == "l" and card2[1] > card1[1]:
-                print("\nWrong!")
+                print("\nHigher...\n\nWhat a shame...")
                 print("\nYou take some damage!")
                 player_health -= (randint(10,20)*level)
                 correct = False
             else:
-                print("\nTie!")
+                print("\nIt's the same!\n\nWould you look at that!")
                 print("\nYou receive some health!")
                 player_health += ((randint(10,50))*(int(round(level/2))))
                 correct = False
+            if correct == True:
+                print("\nYour score so far is:", score)
+                print("\nFrucy pulls another cards from the deck, face down...")
         print("Game Over")
         if score == 0:
             print("\n'Wow! You really suck at this!'\n\n'I still have a present for you though...'")
