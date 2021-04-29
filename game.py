@@ -257,11 +257,13 @@ def gen_room(): # generates rooms and takes player selection - returns true if c
     combat_samples = randint(0, 3)   # Generates a random int from 0-3.
     options = sample(combat_room_desc, combat_samples) + sample(puzzle_room_desc, 3 - combat_samples) # Creates a list of 3 randomised strings from roomscombat.txt and roomspuzzle.txt.
     shuffle(options) # Shuffles the list so they aren't always in combat-puzzle order. 
-    print(f"""There are 3 doors before you:
+    print(f"""
+    There are 3 doors before you:
+    
     Door A: {options[0]}
     Door B: {options[1]}
     Door C: {options[2]}""")
-    input_var_raw = (input("Please choose a door (A, B or C)")) + "   "
+    input_var_raw = (input("\nPlease choose a door (A, B or C)")) + "   "
     input_var = input_var_raw[0].lower()
     while input_var not in ["a","b","c"]:
         input_var_raw = (input("For real this time, pick an option from A, B or C : ")) + "   "
@@ -655,6 +657,7 @@ def highscore_screen():
         return
 
 def store_highscore():
+    
     print("store_highscore")
 
 # Generate starting weapon and armour
