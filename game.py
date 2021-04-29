@@ -38,6 +38,9 @@ highscore = (open("storage/highscore.txt","r").read()).split("\n")
 hs1 = str(highscore[0]).split(",")
 hs2 = str(highscore[1]).split(",")
 hs3 = str(highscore[2]).split(",")
+hs1[1] = int(hs1[1])
+hs2[1] = int(hs2[1])
+hs3[1] = int(hs3[1])
 adjective = (open("storage/adjectives.txt","r").readlines())[0].split(",")
 wep_noun = (open("storage/weapon_nouns.txt", "r").readlines())[0].split(",")
 arm_noun = (open("storage/armour_nouns.txt", "r").readlines())[0].split(",")
@@ -175,15 +178,15 @@ def prize_give(buff_amount): # Call to give a prize - takes integer for power of
     print(f"\nCongratulations!\n\nYou won {prize}!")
     if prize in ["a weapon buff","an armour buff"]:
         if prize == "a weapon buff":
-            weapon[0] = add_buff(weapon[0],buff_amount)
+            weapon[0] = add_buff(weapon[0],1)
             print(f"\nTake a look at your {weapon[0]}!")
         else:
-            armour[0] = add_buff(armour[0],buff_amount)
+            armour[0] = add_buff(armour[0],1)
             print(f"\nTake a look at your {armour[0]}!")
         return
     elif prize in ["a new weapon","some new armour"]:
         if prize == "a new weapon":
-            prize = add_buff(gen_weapon(),buff_amount)
+            prize = add_buff(gen_weapon(),int(round(buff_amount*1.5)))
             accept_raw = input(f"\nDo you want to swap your\n\n{weapon[0]}\n\nFOR\n\n{prize}?\n\n>>>") + "   "
             accept = accept_raw[0].lower()
             while accept not in ["y","n"]:
@@ -196,7 +199,7 @@ def prize_give(buff_amount): # Call to give a prize - takes integer for power of
             else:
                 return
         else:
-            prize = add_buff(gen_armour(),buff_amount)
+            prize = add_buff(gen_armour(),int(round(buff_amount*1.5)))
             accept_raw = input(f"\nDo you want to swap your\n\n{armour[0]}\n\nFOR\n\n{prize}?\n\n>>>") + "   "
             accept = accept_raw[0].lower()
             while accept not in ["y","n"]:
@@ -482,7 +485,6 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
                 rock_paper_scissors()
         else:
             print("Hmmm, that was weird... Shame I can't describe it to you...")
-
     def fruit_and_anvil(): # Fruit and Anvil minigame - returns nothing
         global player_health,weapon,armour
         print("\nYou enter a room with a large pile of fruit and an anvil, the door locks behind you.\n\nA large sign above the opposite door informs you that you have 1 hour until you can proceed.\n\nSeems like you'll only have time to use one, what do you do?")
@@ -559,6 +561,51 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
             player_health += randint(10,50)
             player_stats()
         return
+    def aces():
+        ranks = ["Ace","2","3","4","5","6","7","8","9","10","Jack","Queen","King"]
+        suits = ["Clubs","Hearts","Diamonds","Spades"]
+        deck = []
+        value = 1
+        for rank in ranks:
+            for suit in suits:
+                deck.append([rank + " of " + suit, value])
+            value = value + 1
+        shuffle(deck)
+        score = 0
+        card1 = deck.pop(0)
+        while True:
+            print("\nYour score so far is:", score)
+            print("\nThe current card is:", card1[0])
+            while True:
+                choice = input("\nHigher or Lower?\n\n>>>")
+                if len(choice) > 0:
+                    if choice[0].lower() in ["h","l"]:
+                        break
+            card2 = deck.pop(0)
+            print("\nThe next card picked is:", card2[0])
+            sleep(1)
+            if choice[0].lower() == "h" and card2[1] > card1[1]:
+                print("\nCorrect!")
+                score +=1
+                sleep(1)
+            if choice[0].lower() == "h" and card2[1] < card1[1]:
+                print("\nWrong!")
+                sleep(1)
+                break
+            if choice[0].lower() == "l" and card2[1]:
+                print ("\n** Hi Lo Game **")
+        x = (randint(1,20))
+        num1 = int(input("\nEnter your number:\n\n>>>"))
+        while num1 < x:
+            print ("\nToo Low")
+            num1 = int(input("\nEnter your number:\n\n>>>"))
+        while num1 > x:
+            print ("\nToo High")
+            num1 = int(input("\nEnter your number:\n\n>>>"))
+        if num1 == x:
+            print ("\nCongratulations!\n\nYou are Correct!")
+            prize_give(level)
+            player_stats()
     puzzle_list = [monty_hall,rock_paper_scissors,fruit_and_anvil,riddler,witches]
     choice(puzzle_list)()
     return
