@@ -626,26 +626,25 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
             prize_give(int((score+level)/2))
         return
     def rusky_roulette():
-        global current_bullet
+        global fatal_bullet, current_bullet, fake_death
         input("\nYou've entered an eerie dark room and encounter a tall person sat next to a round table.\n\nDracula's drunk half-brother Dimitri is sat, cradling a bottle of potato-vodka, humming impatiently.\n\nHe utters:\n\n'Play zis silly game wis me, or I kill you'\n\nHe then loads a round into one of the six chambers of his magnum and hands it to you...")
-        fatal_bullet = randint(1,6)
         fake_death = False
+        fatal_bullet = randint(1,6)
         current_bullet = 6
-        def player_turn():
-            global fake_death, player_health, current_bullet
+        def player_turn_rusky():
+            global player_health, current_bullet
             input("\nPull the trigger...")
             if current_bullet == fatal_bullet:
                 print("\nBANG!\n\nConfetti blasts from the barrel of the gun!\n\nYou have a small heart attack and take some damage!")
                 player_health -= (randint(10,20)*level)
                 print("\nDimitri's face pulls into a wry smile and he waves in a way that indicates you should leave.")
-                fake_death = True
-                return
+                return True
             else:
                 print("\nCLICK!\n\nYour pulse settles and you hand the gun to Dimitri.")
                 current_bullet -= 1
-                return
+                return False
         def dimitri_turn():
-            global fake_death, current_bullet
+            global current_bullet
             sleep(2)
             print("\nDimitri takes the gun from you and slowly pulls the trigger...")
             sleep(4)
@@ -653,23 +652,23 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
                 sleep(1)
                 print("\nBANG!")
                 sleep(3)
-                print("\nDimitri sits before, looking very disappointed...")
+                print("\nDimitri sits before you, looking very disappointed...")
                 sleep(1)
-                print("\n'This is immortallity gig is a real downer' he mumbles.\n\nDimitri thanks you for your efforts and awards you appropriately.")
+                print("\n'This is immortality...\n\ngig is a real downer' he mumbles.\n\nDimitri thanks you for your efforts and awards you appropriately.")
                 prize_give(level)
-                fake_death = True
-                return
+                return True
             else:
                 print("\nCLICK!")
                 sleep(2)
                 print("\nDimitri passes the gun back to you.")
                 current_bullet -= 1
-                return
+                return False
         while fake_death == False:
-            player_turn()
-            dimitri_turn()
+            fake_death = player_turn_rusky()
+            if fake_death == False:
+                fake_death = dimitri_turn()
         return
-    puzzle_list = [monty_hall,rock_paper_scissors,fruit_and_anvil,riddler,witches,aces,rusky_roulette]
+    puzzle_list = [rusky_roulette] #[monty_hall,rock_paper_scissors,fruit_and_anvil,riddler,witches,aces,rusky_roulette]
     choice(puzzle_list)()
     return
 
