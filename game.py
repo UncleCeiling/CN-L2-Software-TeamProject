@@ -668,7 +668,7 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
             if fake_death == False:
                 fake_death = dimitri_turn()
         return
-    puzzle_list = [rusky_roulette] #[monty_hall,rock_paper_scissors,fruit_and_anvil,riddler,witches,aces,rusky_roulette]
+    puzzle_list = [monty_hall,rock_paper_scissors,fruit_and_anvil,riddler,witches,aces,rusky_roulette]
     choice(puzzle_list)()
     return
 
