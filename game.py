@@ -432,7 +432,7 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
         input_var = input_var_raw[0].lower()
         while input_var not in ["r","p","s"]:
             input_var_raw = (input("\nFor real this time, pick an option from rock, paper or scissors :\n\n>>>")) + "   "
-            input_var[0].lower()
+            input_var = input_var_raw[0].lower()
         if input_var == "r":
             print("\nYou choose rock!")
             if enemy_choice[0] == "p":
