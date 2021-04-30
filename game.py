@@ -26,7 +26,7 @@ enemy_defence = 0
 from time import sleep
 from os import chdir, path                              # To set Working Directory
 from random import sample, randint, shuffle, choice            # For sampling lists
-from math inport ceil                                   #For rounding purposes
+from math import ceil                                   #For rounding purposes
 
 # Set Working directory to file directory
 
