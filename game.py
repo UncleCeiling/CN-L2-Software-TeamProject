@@ -87,9 +87,7 @@ def hs_creds_page(): # Call to display highscores and credits - returns nothing
     print_highscore()
     print_credits()
     print("====================================\n")
-    taken_input = input("\nType something to return to the menu :\n\n>>>")
-    while taken_input == "":
-        taken_input = input("\nType something to return to the menu :\n\n>>>")
+    input("\nType something to return to the menu :\n\n>>>")
     return
 
 def gen_weapon(): # Call to generate a weapon - returns a string
@@ -112,7 +110,7 @@ def options_menu(): # Call to run options - does not return anything
         print(f"\n============OPTIONS MENU============\n\n       Difficulty||{difficulty_options[difficulty]}\n\n      Text Colour||{colour_options[1][colour_options[0].index(colour)]}\n\n================Exit================\n") #36 characters wide - print menu
     def difficulty_menu(): # Call to run difficulty options - does not return anything
         def print_diff_menu(): # Prints the difficulty menu
-            print(f"\n==========DIFFICULTY MENU===========\n\n  Difficulty is currently: {difficulty_options[difficulty]}\n\n    Easy       Normal       Hard\n\n================Exit================")
+            print(f"\n==========DIFFICULTY MENU===========\n\n  Difficulty is currently: {difficulty_options[difficulty]}\n\n    Easy       Normal       Hard\n\n====================================")
         global difficulty
         print_diff_menu() #print difficulty menu
         option_choice_raw = (input("\nPlease select a difficulty :\n\n>>>")) + "   " #take diff input
@@ -153,7 +151,7 @@ def options_menu(): # Call to run options - does not return anything
             print("\nThat didn't work, sorry!\n\nReturning you to the options menu...\n") # Print Message
         return                                                              # Go back - I WANT TO BE MONKE
     print_options_main()                                                    # Print menu
-    option_choice_raw = (input("\nPlease select an option :\n\n>>>"))[0] + "   "  # Ask for Input
+    option_choice_raw = (input("\nPlease select an option :\n\n>>>")) + "   "  # Ask for Input
     option_choice = option_choice_raw[0].lower()
     while option_choice not in ["d","c","t","e"]:                           # Check if input is valid
         print_options_main()                                                # Print menu when not valid
@@ -239,18 +237,20 @@ def main_menu(): # Call to use main menu - returns 1(start game), 2(options),3(c
     def print_main_menu(): # Prints main menu
         print("\nWelcome to Cara Loft: Burial Chamber Pilferer!\n\n====================================\n\n    [1] Start Game\n    [2] Settings\n    [3] Highscores and Credits\n    [0] Quit\n")
     print_main_menu()
-    option = int(input("\nEnter the number of your selection\n\n>>>"))
-    while option in [1,2,3]:
-        if option == 1:
-            print("Lets Goooo!")
-            main_menu_selection = 1
-            return 1
-        elif option == 2:
-            options_menu()
-            return 2
-        elif option == 3:
-            hs_creds_page()
-            return 3
+    option_raw = input("\nEnter the number of your selection\n\n>>>")+"  "
+    option = option_raw[0]
+    while option not in ["1","2","3","0"]:
+        option_raw = input("\nEnter the number of your selection\n\n>>>")+"  "
+        option = option_raw[0]
+    if option == "1":
+        print("\nLets Goooo!")
+        return 1
+    elif option == "2":
+        options_menu()
+        return 2
+    elif option == "3":
+        hs_creds_page()
+        return 3
     return 0
 
 def gen_room(): # Call to generate room and take player selection - returns true (combat room) or false (puzzle room)
@@ -807,27 +807,29 @@ armour[0] = gen_armour()
 # Main block
 
 main_menu_selection = 10
-while main_menu_selection != 0:
-    start_function()
-    while main_menu_selection != 1:
-        main_menu_selection = main_menu()
+
+start_function()
+while main_menu_selection != 1:
+    main_menu_selection = main_menu()
+    if main_menu_selection == 0:
+        quit()
+else:
+    intro_complete = game_intro()
+    if intro_complete == False:
+        print("\n==============THE END===============")
+        quit()
     else:
-        intro_complete = game_intro()
-        if intro_complete == False:
-            print("\n==============THE END===============")
-            quit()
-        else:
-            while player_health > 0:
-                room_type = gen_room()
-                if room_type == True:
-                    combat_room()
-                    combat_room_count += 1
-                else:
-                    puzzle_room()
-                    puzzle_room_count += 1
-                player_stats()
-                level = (((combat_room_count+puzzle_room_count)//10)+difficulty)
-            death_screen()
-            highscore_screen()
-            store_highscore()
-quit()
+        while player_health > 0:
+            room_type = gen_room()
+            if room_type == True:
+                combat_room()
+                combat_room_count += 1
+            else:
+                puzzle_room()
+                puzzle_room_count += 1
+            player_stats()
+            level = (((combat_room_count+puzzle_room_count)//10)+difficulty)
+        death_screen()
+        highscore_screen()
+        store_highscore()
+
