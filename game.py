@@ -26,6 +26,7 @@ enemy_defence = 0
 from time import sleep
 from os import chdir, path                              # To set Working Directory
 from random import sample, randint, shuffle, choice            # For sampling lists
+from math inport ceil                                   #For rounding purposes
 
 # Set Working directory to file directory
 
@@ -504,7 +505,7 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
             return
         else:
             print("\nYou eat the pile of fruit and gain some Health Points!")
-            player_health += (randint(10,50) * (int(round(level/2)))) 
+            player_health += (randint(10,50) * (int(ceil(level/2)))) 
         return
     def witches():
         global player_health, weapon, armour
@@ -547,7 +548,7 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
             return
         else:
             print("\nMuhahaha! I'm the big pile of fruit witch, help yourself to my big pile of fruit! You eat the pile of fruit and gain some Health Points!")
-            player_health += (randint(10,50) * (int(round(level/2))))
+            player_health += (randint(10,50) * (int(ceil(level/2))))
         return
     def aces():
         global player_health
@@ -596,7 +597,7 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
             else:
                 print("\nIt's the same!\n\nWould you look at that!")
                 print("\nYou receive some health!")
-                player_health += ((randint(10,50))*(int(round(level/2))))
+                player_health += ((randint(10,50))*(int(ceil(level/2))))
                 correct = False
             if correct == True:
                 print("\nYour score so far is:", score)
@@ -727,7 +728,7 @@ def combat_room(): # Call to select enemy and do combat loop - returns nothing
             player_turn()
             sleep(0.5)
             if enemy_health > 0:
-                print(f"***{enemy_name}'s turn***")
+                print(f"\n***{enemy_name}'s turn***")
                 enemy_turn()
             else:
                 combat = False
