@@ -425,61 +425,67 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
         print("\nI've been your host, Honty Mall.\n\nSee you next time on \"What the heck is going on behind that dooooooooor!\"")
     def rock_paper_scissors(): # Rock, Paper, Scissors minigame - returns nothing
         global player_health
+        ongoing = True
         enemy_choice = ["r","p","s"]
-        shuffle(enemy_choice)
         print("\nYou enter a large room filled with small gremlin like creatures.\n\nThe gremlins are all sitting on pic-a-nic blankets with pic-a-nic baskets filled with all sorts of equipment and food.\n\nA sign on the wall reads \"No Yogis\".\n\nYou spot an empty place next to a gruff looking gremlin and decide to play.")
-        input_var_raw = (input("\nChoose rock, paper or scissors!\n\n>>>")) + "   "
-        input_var = input_var_raw[0].lower()
-        while input_var not in ["r","p","s"]:
-            input_var_raw = (input("\nFor real this time, pick an option from rock, paper or scissors :\n\n>>>")) + "   "
+        while ongoing == True:
+            shuffle(enemy_choice)
+            print("Let's throw hands!")
+            input_var_raw = (input("\nChoose rock, paper or scissors!\n\n>>>")) + "   "
             input_var = input_var_raw[0].lower()
-        if input_var == "r":
-            print("\nYou choose rock!")
-            if enemy_choice[0] == "p":
-                print("\nThe gruff gremlin chose paper.")
-                print("\nToo bad, you lost!")
-                print("\nOh no!\n\nThe gremlins powerful paper damaged you!")
-                player_health -= randint(10,20) * level
-            elif enemy_choice[0] == "s":
-                print("\nThe gruff gremlin chose scissors.")
-                print("\nCongratulations, you win!")
-                prize_give(level)
+            while input_var not in ["r","p","s"]:
+                input_var_raw = (input("\nFor real this time, pick an option from rock, paper or scissors :\n\n>>>")) + "   "
+                input_var = input_var_raw[0].lower()
+            if input_var == "r":
+                print("\nYou choose rock!")
+                if enemy_choice[0] == "p":
+                    print("\nThe gruff gremlin chose paper.")
+                    print("\nToo bad, you lost!")
+                    print("\nOh no!\n\nThe gremlins powerful paper damaged you!")
+                    player_health -= randint(10,20) * level
+                    ongoing = False
+                elif enemy_choice[0] == "s":
+                    print("\nThe gruff gremlin chose scissors.")
+                    print("\nCongratulations, you win!")
+                    prize_give(level)
+                    ongoing = False
+                else:
+                    print("\nThe gruff gremlint chose rock.")
+                    print("\nIt's a tie! Rematch!")
+            elif input_var == "p":
+                print("\nYou choose paper!")
+                if enemy_choice[0] == "s":
+                    print("\nThe gruff gremlin chose scissors.")
+                    print("\nToo bad, you lost!")
+                    print("\nOh no!\n\nThe gruff gremlin' slices you with scissors! You take some damage!")
+                    player_health -= randint(10,20) * level
+                    ongoing = False
+                elif enemy_choice[0] == "r":
+                    print("\nThe gruff gremlin chose rock.")
+                    print("\nCongratulations, you win!")
+                    prize_give(level)
+                    ongoing = False
+                else:
+                    print("\nThe gruff gremlin chose paper.")
+                    print("\nIt's a tie! Rematch!")
+            elif input_var == "s":
+                print("\nYou choose scissors!")
+                if enemy_choice[0] == "r":
+                    print("\nThe gruff gremlin chose rock.")
+                    print("\nToo bad, you lost!")
+                    print("\nOh no!\n\nThe gruss gremlin stabs you! You take some damage!")
+                    player_health -= randint(10,20) * level
+                    ongoing = False
+                elif enemy_choice[0] == "p":
+                    print("\nThe gruff gremlin chose paper.")
+                    print("\nCongratulations, you win!")
+                    prize_give(level)
+                    ongoing = False
+                else:
+                    print("\nThe gruff gremlin chose scissors.")
+                    print("\nIt's a tie! Rematch!")
             else:
-                print("\nThe gruff gremlint chose rock.")
-                print("\nIt's a tie! Rematch!")
-                rock_paper_scissors()
-        elif input_var == "p":
-            print("\nYou choose paper!")
-            if enemy_choice[0] == "s":
-                print("\nThe gruff gremlin chose scissors.")
-                print("\nToo bad, you lost!")
-                print("\nOh no!\n\nThe gruff gremlin' slices you with scissors! You take some damage!")
-                player_health -= randint(10,20) * level
-            elif enemy_choice[0] == "r":
-                print("\nThe gruff gremlin chose rock.")
-                print("\nCongratulations, you win!")
-                prize_give(level)
-            else:
-                print("\nThe gruff gremlin chose paper.")
-                print("\nIt's a tie! Rematch!")
-                rock_paper_scissors()
-        elif input_var == "s":
-            print("\nYou choose scissors!")
-            if enemy_choice[0] == "r":
-                print("\nThe gruff gremlin chose rock.")
-                print("\nToo bad, you lost!")
-                print("\nOh no!\n\nThe gruss gremlin stabs you! You take some damage!")
-                player_health -= randint(10,20) * level
-            elif enemy_choice[0] == "p":
-                print("\nThe gruff gremlin chose paper.")
-                print("\nCongratulations, you win!")
-                prize_give(level)
-            else:
-                print("\nThe gruff gremlin chose scissors.")
-                print("\nIt's a tie! Rematch!")
-                rock_paper_scissors()
-        else:
-            print("Hmmm, that was weird... Shame I can't describe it to you...")
+                print("Hmmm, that was weird... Shame I can't describe it to you...")
     def fruit_and_anvil(): # Fruit and Anvil minigame - returns nothing
         global player_health, weapon, armour
         print("\nYou enter a room with a large pile of fruit and an anvil, the door locks behind you.\n\nA large sign above the opposite door informs you that you have 1 hour until you can proceed.\n\nSeems like you'll only have time to use one, what do you do?")
@@ -799,32 +805,30 @@ def store_highscore(): # Call to store highscores and reset scores - returns not
 weapon[0] = gen_weapon()
 armour[0] = gen_armour()
 
-puzzle_room()
-
 # Main block
 
-# main_menu_selection = 10
-# while main_menu_selection != 0:
-#     start_function()
-#     while main_menu_selection != 1:
-#         main_menu_selection = main_menu()
-#     else:
-#         intro_complete = game_intro()
-#         if intro_complete == False:
-#             print("\n==============THE END===============")
-#             quit()
-#         else:
-#             while player_health > 0:
-#                 room_type = gen_room()
-#                 if room_type == True:
-#                     combat_room()
-#                     combat_room_count += 1
-#                 else:
-#                     puzzle_room()
-#                     puzzle_room_count += 1
-#                 player_stats()
-#                 level = (((combat_room_count+puzzle_room_count)//10)+difficulty)
-#             death_screen()
-#             highscore_screen()
-#             store_highscore()
-# quit()
+main_menu_selection = 10
+while main_menu_selection != 0:
+    start_function()
+    while main_menu_selection != 1:
+        main_menu_selection = main_menu()
+    else:
+        intro_complete = game_intro()
+        if intro_complete == False:
+            print("\n==============THE END===============")
+            quit()
+        else:
+            while player_health > 0:
+                room_type = gen_room()
+                if room_type == True:
+                    combat_room()
+                    combat_room_count += 1
+                else:
+                    puzzle_room()
+                    puzzle_room_count += 1
+                player_stats()
+                level = (((combat_room_count+puzzle_room_count)//10)+difficulty)
+            death_screen()
+            highscore_screen()
+            store_highscore()
+quit()
