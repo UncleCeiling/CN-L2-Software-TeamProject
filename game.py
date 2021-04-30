@@ -569,7 +569,7 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
         while correct == True:
             print("\nThe current card reads:", card1[0])
             while True:
-                choice = input("\n Do you choose Higher or Lower?\n\n>>>")
+                choice = input("\nDo you choose Higher or Lower?\n\n>>>")
                 if len(choice) > 0:
                     if choice[0].lower() in ["h","l"]:
                         break
@@ -597,7 +597,7 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
             else:
                 print("\nIt's the same!\n\nWould you look at that!")
                 print("\nYou receive some health!")
-                player_health += ((randint(10,50))*(int(ceil(level/2))))
+                player_health += int((randint(10,50))*(int(ceil(level/2))))
                 correct = False
             if correct == True:
                 print("\nYour score so far is:", score)
@@ -617,15 +617,16 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
             player_health -= (randint(10,20)*level)
         else:
             print ("\nBad luck, but hey, at least you scored something!\n\nTake your prize!")
-            prize_give((score+(level/2)))
+            prize_give(int((score+level)/2))
         return
     def rusky_roulette():
-        chambers = input("\nYou've entered an eerie dark room and encounter a tall person sat next to a round table.\n\nDracula's drunk half-brother Dimitri is sat, cradling a bottle of potato-vodka, humming impatiently.\n\nHe utters:\n\n'Play zis silly game wis me, or I kill you'\n\nHe then loads a round into one of the six chambers of his magnum and hands it to you...")
+        global current_bullet
+        input("\nYou've entered an eerie dark room and encounter a tall person sat next to a round table.\n\nDracula's drunk half-brother Dimitri is sat, cradling a bottle of potato-vodka, humming impatiently.\n\nHe utters:\n\n'Play zis silly game wis me, or I kill you'\n\nHe then loads a round into one of the six chambers of his magnum and hands it to you...")
         fatal_bullet = randint(1,6)
         fake_death = False
         current_bullet = 6
         def player_turn():
-            global fake_death, current_bullet, player_health
+            global fake_death, player_health, current_bullet
             input("\nPull the trigger...")
             if current_bullet == fatal_bullet:
                 print("\nBANG!\n\nConfetti blasts from the barrel of the gun!\n\nYou have a small heart attack and take some damage!")
@@ -798,30 +799,32 @@ def store_highscore(): # Call to store highscores and reset scores - returns not
 weapon[0] = gen_weapon()
 armour[0] = gen_armour()
 
+puzzle_room()
+
 # Main block
 
-main_menu_selection = 10
-while main_menu_selection != 0:
-    start_function()
-    while main_menu_selection != 1:
-        main_menu_selection = main_menu()
-    else:
-        intro_complete = game_intro()
-        if intro_complete == False:
-            print("\n==============THE END===============")
-            quit()
-        else:
-            while player_health > 0:
-                room_type = gen_room()
-                if room_type == True:
-                    combat_room()
-                    combat_room_count += 1
-                else:
-                    puzzle_room()
-                    puzzle_room_count += 1
-                player_stats()
-                level = (((combat_room_count+puzzle_room_count)//10)+difficulty)
-            death_screen()
-            highscore_screen()
-            store_highscore()
-quit()
+# main_menu_selection = 10
+# while main_menu_selection != 0:
+#     start_function()
+#     while main_menu_selection != 1:
+#         main_menu_selection = main_menu()
+#     else:
+#         intro_complete = game_intro()
+#         if intro_complete == False:
+#             print("\n==============THE END===============")
+#             quit()
+#         else:
+#             while player_health > 0:
+#                 room_type = gen_room()
+#                 if room_type == True:
+#                     combat_room()
+#                     combat_room_count += 1
+#                 else:
+#                     puzzle_room()
+#                     puzzle_room_count += 1
+#                 player_stats()
+#                 level = (((combat_room_count+puzzle_room_count)//10)+difficulty)
+#             death_screen()
+#             highscore_screen()
+#             store_highscore()
+# quit()
