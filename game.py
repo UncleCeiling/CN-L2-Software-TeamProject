@@ -770,7 +770,6 @@ def death_screen(): # Call when health <= 0 to show damage screen - returns noth
     You visited {combat_room_count} Combat rooms and {puzzle_room_count} Puzzle rooms.
 
     You killed {kill_count} enemies""")
-    input("\nEnter something to return to the main menu:\n\n>>>")
 
 def highscore_screen(): # Call to check if highscore - returns nothing
     global hs1, hs2, hs3
@@ -780,7 +779,7 @@ def highscore_screen(): # Call to check if highscore - returns nothing
         reset()
         return
     else:
-        name = input("\nNew Highscore!\n\nEnter your name below :\n\n>>>").title()
+        name = input(f"\nNew Highscore!\n\n{score}\n\nEnter your name :\n\n>>>").title().replace(","," ")
         if score < hs2[1]:
             hs3 = [name,score]
         elif score < hs1[1]:
@@ -797,6 +796,7 @@ def store_highscore(): # Call to store highscores and reset scores - returns not
     store = open("storage/highscore.txt","w")
     store.write(lines)
     store.close
+    print("\nHighscore stored...")
     reset()
 
 # Generate starting weapon and armour
@@ -807,7 +807,6 @@ armour[0] = gen_armour()
 # Main block
 
 main_menu_selection = 10
-
 start_function()
 while main_menu_selection != 1:
     main_menu_selection = main_menu()
@@ -832,4 +831,4 @@ else:
         death_screen()
         highscore_screen()
         store_highscore()
-
+        input("\nThank you for playing!\n\nBe sure to check out the highscores and credits in the main menu\n\n>>>")
