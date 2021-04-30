@@ -155,7 +155,7 @@ def options_menu(): # Call to run options - does not return anything
     option_choice = option_choice_raw[0].lower()
     while option_choice not in ["d","c","t","e"]:                           # Check if input is valid
         print_options_main()                                                # Print menu when not valid
-        option_choice_raw = (input("Hmmm, not sure that's an option...\n\nWhy don't you try something else?\n\nPlease select an option :\n\n>>>")) + "   " # Chastise and take new input
+        option_choice_raw = (input("\nHmmm, not sure that's an option...\n\nWhy don't you try something else?\n\nPlease select an option :\n\n>>>")) + "   " # Chastise and take new input
         option_choice = option_choice_raw[0].lower()
     if option_choice == "d":                                                # Check if input was difficulty
         difficulty_menu()                                                   # Run diff menu
@@ -266,7 +266,7 @@ def gen_room(): # Call to generate room and take player selection - returns true
     input_var_raw = (input("\nPlease choose a door (A, B or C)\n\n>>>")) + "   "
     input_var = input_var_raw[0].lower()
     while input_var not in ["a","b","c"]:
-        input_var_raw = (input("For real this time, pick an option from A, B or C :\n\n>>>")) + "   "
+        input_var_raw = (input("\nFor real this time, pick an option from A, B or C :\n\n>>>")) + "   "
         input_var = input_var_raw[0].lower()
     if input_var == "a":
         print("\nYou open door A")
@@ -404,23 +404,23 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
             if doors[0] == "prize":
                 prize_give(level)
             else:
-                print("Oh no! the trap dealt some damage to you!")
+                print("\nOh no! the trap dealt some damage to you!")
                 player_health -= randint(10,20) * level
         elif input_var == "b":
-            print(f"What's behind door {input_var}?")
-            print(f"It's a {doors[1]}!")
+            print(f"\nWhat's behind door {input_var}?")
+            print(f"\nIt's a {doors[1]}!")
             if doors[1] == "prize":
                 prize_give(level)
             else:
-                print("Oh no! the trap dealt some damage to you!")
+                print("\nOh no! the trap dealt some damage to you!")
                 player_health -= randint(10,20) * level
         elif input_var == "c":
-            print(f"What's behind door {input_var}?")
-            print(f"It's a {doors[2]}!")
+            print(f"\nWhat's behind door {input_var}?")
+            print(f"\nIt's a {doors[2]}!")
             if doors[2] == "prize":
                 prize_give(level)
             else:
-                print("Oh no! the trap dealt some damage to you!")
+                print("\nOh no! the trap dealt some damage to you!")
                 player_health -= randint(10,20) * level
         print("\nI've been your host, Honty Mall.\n\nSee you next time on \"What the heck is going on behind that dooooooooor!\"")
     def rock_paper_scissors(): # Rock, Paper, Scissors minigame - returns nothing
@@ -430,7 +430,7 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
         print("\nYou enter a large room filled with small gremlin like creatures.\n\nThe gremlins are all sitting on pic-a-nic blankets with pic-a-nic baskets filled with all sorts of equipment and food.\n\nA sign on the wall reads \"No Yogis\".\n\nYou spot an empty place next to a gruff looking gremlin and decide to play.")
         while ongoing == True:
             shuffle(enemy_choice)
-            print("Let's throw hands!")
+            print("\nLet's throw hands!")
             input_var_raw = (input("\nChoose rock, paper or scissors!\n\n>>>")) + "   "
             input_var = input_var_raw[0].lower()
             while input_var not in ["r","p","s"]:
@@ -485,7 +485,7 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
                     print("\nThe gruff gremlin chose scissors.")
                     print("\nIt's a tie! Rematch!")
             else:
-                print("Hmmm, that was weird... Shame I can't describe it to you...")
+                print("\nHmmm, that was weird... Shame I can't describe it to you...")
     def fruit_and_anvil(): # Fruit and Anvil minigame - returns nothing
         global player_health, weapon, armour
         print("\nYou enter a room with a large pile of fruit and an anvil, the door locks behind you.\n\nA large sign above the opposite door informs you that you have 1 hour until you can proceed.\n\nSeems like you'll only have time to use one, what do you do?")
@@ -608,7 +608,7 @@ def puzzle_room(): # Call to select and run a puzzle room - returns nothing
             if correct == True:
                 print("\nYour score so far is:", score)
                 print("\nFrucy pulls another cards from the deck, face down...")
-        print("Game Over")
+        print("\nGame Over")
         if score == 0:
             print("\n'Wow! You really suck at this!'\n\n'I still have a present for you though...'")
             sleep(1)
@@ -734,31 +734,31 @@ def combat_room(): # Call to select enemy and do combat loop - returns nothing
             player_turn()
             sleep(0.5)
             if enemy_health > 0:
-                print(f"\n***{enemy_name}'s turn***")
+                print(f"\n==={enemy_name}'s turn===")
                 enemy_turn()
             else:
                 combat = False
                 dead = True
         elif input_var == "t":
-            print("You try making smalltalk with the enemy.")
+            print("\nYou try making smalltalk with the enemy.")
             sleep(0.5)
-            print("...")
+            print("\n...")
             sleep(0.5)
-            print("The enemy attacks you!")
+            print("\nThe enemy attacks you!")
             enemy_turn()
         else:
             if weapon[1] < enemy_defence:
                 combat = False
             else:
-                print("Can't escape!")
+                print("\nCan't escape!")
                 enemy_turn()
     if dead == True:
         kill_count += 1
-        print("You killed the enemy!")
+        print("\nYou killed the enemy!")
         sleep(0.5)
         prize_give(level)
     else:
-        print("You managed to escape with your life! But at what cost?")
+        print("\nYou managed to escape with your life! But at what cost?")
         sleep(0.5)
 
 def death_screen(): # Call when health <= 0 to show damage screen - returns nothing
